@@ -3,20 +3,20 @@ import { View, Text, TouchableOpacity } from "react-native";
 
 const SpecialOfferCard = () => {
   return (
-    <View className="bg-white rounded-xl p-4 flex-row items-center shadow-md w-[95%] mx-auto">
+    <View className="bg-[#fdfdfd] rounded-xl p-4 flex-row items-center shadow-md w-[95%] h-[185px] px-8 mx-auto">
       {/* Left Side: Offer Text */}
-      <View className="flex-1 gap-1">
-        <Text className="text-[20px] font-bold">Special Offer</Text>
-        <Text className="text-gray-500 text-[16px] leading-5 w-[80%]">
+      <View className="flex-1 gap-2">
+        <Text className="text-[22px] font-bold">Special Offer</Text>
+        <Text className="text-gray-500 text-[16px] leading-6 w-[80%]">
           Discount 20% off{"\n"}applied at checkout
         </Text>
         <TouchableOpacity className="bg-red-500 px-3 py-2 rounded-full self-start mt-2">
-          <Text className="text-white text-sm font-medium">Order Now</Text>
+          <Text className="text-white text-md font-medium px-2">Order Now</Text>
         </TouchableOpacity>
       </View>
 
       {/* Right Side: Bigger Rounded Placeholder */}
-      <View className="w-36 h-36 bg-gray-300 rounded-full ml-4" />
+      <View className="w-40 h-40 bg-gray-300 rounded-full" />
     </View>
   );
 };

@@ -38,6 +38,7 @@
     "react-native": "0.76.7",
     "react-native-country-picker-modal": "^2.0.0",
     "react-native-gesture-handler": "~2.20.2",
+    "react-native-heroicons": "^4.0.0",
     "react-native-otp-inputs": "^7.4.0",
     "react-native-otp-textinput": "^1.1.6",
     "react-native-reanimated": "^3.16.2",

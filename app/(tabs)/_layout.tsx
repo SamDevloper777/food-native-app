@@ -8,7 +8,7 @@ export default function TabLayout() {
         tabBarShowLabel: true,
       }}
     >
-      <Tabs.Screen name="index" options={{ title: "Home" }} />
+      <Tabs.Screen name="aindex" options={{ title: "Home" }} />
       <Tabs.Screen name="profile" options={{ title: "Profile" }} />
     </Tabs>
   );

@@ -16,7 +16,7 @@ const SpecialOfferCard = () => {
       </View>
 
       {/* Right Side: Bigger Rounded Placeholder */}
-      <View className="w-40 h-40 bg-gray-300 rounded-full" />
+      <View className="w-40 h-40 bg-gray-200 rounded-full" />
     </View>
   );
 };

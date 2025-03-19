@@ -1,10 +1,11 @@
+import { router } from "expo-router";
+import { ChevronDown, ChevronLeft } from "lucide-react-native";
 import React, { useState } from "react";
-import { View, Text, TextInput, TouchableOpacity, Image } from "react-native";
-import CountryPicker, { Country } from "react-native-country-picker-modal";
-import { ChevronLeft, ChevronDown } from "lucide-react-native";
+import { Text, TextInput, TouchableOpacity, View } from "react-native";
+import CountryPicker, { Country, CountryCode } from "react-native-country-picker-modal";
 
-const Login: React.FC = () => {
-  const [countryCode, setCountryCode] = useState<string>("IN"); 
+const Login = () => {
+  const [countryCode, setCountryCode] = useState<CountryCode>("IN");
   const [callingCode, setCallingCode] = useState<string>("+91");
   const [phoneNumber, setPhoneNumber] = useState<string>("");
 
@@ -23,7 +24,9 @@ const Login: React.FC = () => {
 
       {/* Welcome Text */}
       <Text className="text-2xl font-bold mt-6">Welcome to Ovenly</Text>
-      <Text className="text-gray-600 mt-1">We'll send you a verification code to get started</Text>
+      <Text className="text-gray-600 mt-1">
+        We'll send you a verification code to get started
+      </Text>
 
       {/* Phone Number Input */}
       <Text className="text-sm font-semibold mt-5 text-gray-800">
@@ -36,7 +39,7 @@ const Login: React.FC = () => {
           withFilter
           countryCode={countryCode}
           onSelect={(country: Country) => {
-            setCountryCode(country.cca2);
+            setCountryCode(country.cca2 as CountryCode);
             setCallingCode(`+${country.callingCode[0]}`);
           }}
         />
@@ -56,6 +59,9 @@ const Login: React.FC = () => {
           phoneNumber.length < 8 ? "bg-gray-200" : "bg-black"
         }`}
         disabled={phoneNumber.length < 8}
+        onPress={() => router.replace(
+          '/(auth)/VerifyOtp'
+        )}
       >
         <Text
           className={`text-center text-lg font-semibold ${

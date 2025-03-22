@@ -1,85 +1,88 @@
-import { router } from "expo-router";
-import { ChevronDown, ChevronLeft } from "lucide-react-native";
-import React, { useState } from "react";
-import { Text, TextInput, TouchableOpacity, View } from "react-native";
-import CountryPicker, { Country, CountryCode } from "react-native-country-picker-modal";
+import { router } from 'expo-router';
+import { setParams } from 'expo-router/build/global-state/routing';
+import { ChevronDown } from 'lucide-react-native';
+import React, { useState } from 'react';
+import {
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View
+} from 'react-native';
 
-const Login = () => {
-  const [countryCode, setCountryCode] = useState<CountryCode>("IN");
-  const [callingCode, setCallingCode] = useState<string>("+91");
-  const [phoneNumber, setPhoneNumber] = useState<string>("");
+const EmailLoginScreen = () => {
+  const [email, setEmail] = useState('');
+  const isValidEmail = email.includes('@') && email.includes('.com');
 
   return (
-    <View className="flex-1 bg-white p-5">
-      {/* Top Navigation */}
-      <View className="flex-row items-center justify-between">
-        <TouchableOpacity>
-          <ChevronLeft size={24} color="black" />
-        </TouchableOpacity>
-        <TouchableOpacity className="flex-row items-center bg-gray-100 px-3 py-1 rounded-full">
-          <Text className="text-gray-600 mr-1">English</Text>
-          <ChevronDown size={16} color="black" />
+    <View className="flex-1 bg-white px-6 pt-2">
+      {/* Language Selector */}
+      <View className="flex-row justify-end items-end mb-8">
+        <TouchableOpacity className="flex-row items-center gap-1">
+          <Text className="text-sm text-gray-700">English</Text>
+          <ChevronDown size={18} color="#666" />
         </TouchableOpacity>
       </View>
 
       {/* Welcome Text */}
-      <Text className="text-2xl font-bold mt-6">Welcome to Ovenly</Text>
-      <Text className="text-gray-600 mt-1">
-        We'll send you a verification code to get started
+      <Text className="text-3xl font-bold text-gray-900 mb-2">
+        Welcome to Ovenly
+      </Text>
+      <Text className="text-sm text-gray-500 mb-6">
+        Enter your email address to get started
       </Text>
 
-      {/* Phone Number Input */}
-      <Text className="text-sm font-semibold mt-5 text-gray-800">
-        Phone number <Text className="text-red-500">*</Text>
+      {/* Email Input */}
+      <Text className="text-xs font-semibold text-gray-600 mb-1">
+        Email Address <Text className="text-red-500">*</Text>
       </Text>
-      <View className="flex-row items-center border-b border-gray-400 pb-2 mt-2">
-        <CountryPicker
-          withCallingCode
-          withFlag
-          withFilter
-          countryCode={countryCode}
-          onSelect={(country: Country) => {
-            setCountryCode(country.cca2 as CountryCode);
-            setCallingCode(`+${country.callingCode[0]}`);
-          }}
-        />
-        <Text className="text-lg ml-2">{callingCode}</Text>
-        <TextInput
-          className="flex-1 text-lg ml-3"
-          keyboardType="phone-pad"
-          placeholder="9876XXXXXX"
-          value={phoneNumber}
-          onChangeText={setPhoneNumber}
-        />
-      </View>
+      <TextInput
+        placeholder="Enter your email"
+        placeholderTextColor="#999"
+        keyboardType="email-address"
+        autoCapitalize="none"
+        value={email}
+        onChangeText={setEmail}
+        className="w-full border-b border-gray-300 text-base text-gray-800 py-2 mb-6"
+      />
 
       {/* Continue Button */}
       <TouchableOpacity
-        className={`py-3 mt-6 rounded-lg ${
-          phoneNumber.length < 8 ? "bg-gray-200" : "bg-black"
-        }`}
-        disabled={phoneNumber.length < 8}
-        onPress={() => router.replace(
-          '/(auth)/VerifyOtp'
-        )}
+        disabled={!isValidEmail}
+        className={`w-full py-4 rounded-lg ${isValidEmail ? 'bg-gray-800' : 'bg-gray-300'
+          }`}
+        onPress={() => {
+          if (isValidEmail) {
+            router.replace({ pathname: '/(auth)/VerifyOtp', params: { email: email } });
+          }
+        }}
       >
         <Text
-          className={`text-center text-lg font-semibold ${
-            phoneNumber.length < 8 ? "text-gray-400" : "text-white"
-          }`}
+          className={`text-center font-semibold ${isValidEmail ? 'text-white' : 'text-gray-500'
+            }`}
         >
           Continue
         </Text>
       </TouchableOpacity>
 
-      {/* Terms & Policy */}
-      <Text className="text-center text-sm text-gray-600 mt-4">
-        You agree to our{" "}
-        <Text className="text-red-500 font-bold">Terms of Service</Text> &{" "}
-        <Text className="text-red-500 font-bold">Privacy Policy</Text>.
+      {/* Terms & Privacy Policy */}
+      <Text className="text-xs text-center text-gray-500 mt-4">
+        You agree to our{' '}
+        <Text className="text-red-500 font-semibold">Terms of Service</Text> &{' '}
+        <Text className="text-red-500 font-semibold">Privacy Policy</Text>.
+      </Text>
+
+      {/* Create Account Button */}
+      <Text className="text-xs text-center text-gray-500 mt-4">
+        Don't have an account?{' '}
+        <Text
+          className="text-red-500 font-semibold"
+          onPress={() => router.replace('/(auth)/SignUp')}
+        >
+          Create Account
+        </Text>
       </Text>
     </View>
   );
 };
 
-export default Login;
+export default EmailLoginScreen;

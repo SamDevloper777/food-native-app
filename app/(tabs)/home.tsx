@@ -1,13 +1,13 @@
 import { ScrollView } from 'react-native';
-import FoodCard from '../components/Home/FoodCard';
-import LocationHeader from '../components/Home/LocationHeader';
-import PopularPizzaCard from '../components/Home/PopularPizzaCard';
-import SearchBar from '../components/Home/SearchBar';
-import SpecialOfferCard from '../components/Home/SpecialOfferCard';
+import FoodCard from '../../components/Home/FoodCard';
+import LocationHeader from '../../components/Home/LocationHeader';
+import PopularPizzaCard from '../../components/Home/PopularPizzaCard';
+import SearchBar from '../../components/Home/SearchBar';
+import SpecialOfferCard from '../../components/Home/SpecialOfferCard';
 
 const Index = () => {
   return (
-    <ScrollView className="flex-1 bg-white px-4 pt-6" contentContainerStyle={{ flexGrow: 1 }}>
+    <ScrollView className="flex-1 bg-white px-4" contentContainerStyle={{ flexGrow: 1 }}>
       <LocationHeader />
       <SearchBar />
       <SpecialOfferCard />

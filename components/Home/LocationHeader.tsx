@@ -8,11 +8,11 @@ import {
 
 const LocationHeader = () => {
   return (
-    <View className="flex-row items-center justify-between px-4 py-2">
-      <View>
+    <View className="flex-row items-center justify-between px-4 py-4">
+      <View> 
         <Text className="text-gray-400 text-md">Location</Text>
         <View className="flex-row items-center mt-1">
-          <MapPinIcon size={18} color="#B45309" />
+          <MapPinIcon size={18} color="#ef4444" />
           <Text className="text-black font-bold ml-1 text-[18px]">
             New York, USA
           </Text>

@@ -2,7 +2,7 @@ import React from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 
 const SpecialOfferCard = () => {
-  return (
+  return ( 
     <View className="bg-[#fdfdfd] rounded-xl p-4 flex-row items-center shadow-md w-[95%] h-[185px] px-8 mx-auto">
       {/* Left Side: Offer Text */}
       <View className="flex-1 gap-2">

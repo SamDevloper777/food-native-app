@@ -4,7 +4,7 @@ import { MagnifyingGlassIcon, AdjustmentsHorizontalIcon } from "react-native-her
 
 const SearchBar = () => {
   return (
-    <View className="flex-row items-center justify-between bg-[#fcfcfc] rounded-full px-4 py-3 mb-9">
+    <View className="flex-row items-center justify-between bg-[#fcfcfc] rounded-full px-4 py-3 mb-6 shadow-md">
       <View className="flex-row items-center flex-1 gap-2">
         <MagnifyingGlassIcon size={26} color="gray" />
         <TextInput

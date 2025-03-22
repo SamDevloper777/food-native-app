@@ -1,0 +1,168 @@
+import { router } from 'expo-router';
+import React, { useState } from 'react';
+import {
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+  Alert,
+  ActivityIndicator,
+} from 'react-native';
+import axios from 'axios';
+
+const SignUp = () => {
+  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  const isValidEmail = email.includes('@') && email.includes('.com');
+  const isValidForm =
+    isValidEmail &&
+    username.length >= 3 &&
+    password.length >= 6 &&
+    password === confirmPassword;
+
+  // Function to handle API request using Axios
+  const handleSignUp = async () => {
+    if (!isValidForm) {
+      Alert.alert('Error', 'Please fill all the fields correctly.');
+      return;
+    }
+
+    setLoading(true); // Show loader
+
+    const formData = {
+      email: email,
+      name: username,
+      password: password,
+    };
+
+    console.log('📤 Sending Data:', formData);
+
+    try {
+      const response = await axios.post(
+        'http://192.168.1.6:8000/api/user/register/customer/',
+        formData,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+
+      console.log('✅ Registration Successful:', response.data);
+      setLoading(false); // Hide loader
+      router.replace('/(tabs)/home');
+    } catch (error: any) {
+      console.error('❌ API Error:', error.response?.data || error.message);
+      setLoading(false); // Hide loader
+      Alert.alert(
+        'Error',
+        error.response?.data?.message || 'Registration failed!'
+      );
+    }
+  };
+
+  return (
+    <View className="flex-1 bg-white px-6 pt-8">
+      {/* Header */}
+      <Text className="text-3xl font-bold text-gray-900 mb-2">
+        Create Your Account
+      </Text>
+      <Text className="text-sm text-gray-500 mb-6">
+        Enter the details below to sign up
+      </Text>
+
+      {/* Email */}
+      <Text className="text-xs font-semibold text-gray-600 mb-1">
+        Email Address <Text className="text-red-500">*</Text>
+      </Text>
+      <TextInput
+        placeholder="Enter your email"
+        placeholderTextColor="#999"
+        keyboardType="email-address"
+        autoCapitalize="none"
+        value={email}
+        onChangeText={setEmail}
+        className="w-full border-b border-gray-300 text-base text-gray-800 py-2 mb-4"
+      />
+
+      {/* Username */}
+      <Text className="text-xs font-semibold text-gray-600 mb-1">
+        Username (at least 3 characters)
+        <Text className="text-red-500">*</Text>
+      </Text>
+      <TextInput
+        placeholder="Enter your username"
+        placeholderTextColor="#999"
+        autoCapitalize="none"
+        value={username}
+        onChangeText={setUsername}
+        className="w-full border-b border-gray-300 text-base text-gray-800 py-2 mb-4"
+      />
+
+      {/* Password */}
+      <Text className="text-xs font-semibold text-gray-600 mb-1">
+        Password (at least 6 characters)
+        <Text className="text-red-500">*</Text>
+      </Text>
+      <TextInput
+        placeholder="Enter your password"
+        placeholderTextColor="#999"
+        secureTextEntry
+        value={password}
+        onChangeText={setPassword}
+        className="w-full border-b border-gray-300 text-base text-gray-800 py-2 mb-4"
+      />
+
+      {/* Confirm Password */}
+      <Text className="text-xs font-semibold text-gray-600 mb-1">
+        Confirm Password <Text className="text-red-500">*</Text>
+      </Text>
+      <TextInput
+        placeholder="Confirm your password"
+        placeholderTextColor="#999"
+        secureTextEntry
+        value={confirmPassword}
+        onChangeText={setConfirmPassword}
+        className="w-full border-b border-gray-300 text-base text-gray-800 py-2 mb-6"
+      />
+
+      {/* Continue Button */}
+      <TouchableOpacity
+        disabled={!isValidForm || loading}
+        className={`w-full py-4 rounded-lg ${
+          isValidForm ? 'bg-gray-800' : 'bg-gray-300'
+        }`}
+        onPress={handleSignUp}
+      >
+        {loading ? (
+          <ActivityIndicator size="small" color="#fff" />
+        ) : (
+          <Text
+            className={`text-center font-semibold ${
+              isValidForm ? 'text-white' : 'text-gray-500'
+            }`}
+          >
+            Continue
+          </Text>
+        )}
+      </TouchableOpacity>
+
+      {/* Already have an account? */}
+      <Text className="text-xs text-center text-gray-500 mt-4">
+        Already have an account?{' '}
+        <Text
+          className="text-red-500 font-semibold"
+          onPress={() => router.replace('/(auth)')}
+        >
+          Log in
+        </Text>
+      </Text>
+    </View>
+  );
+};
+
+export default SignUp;

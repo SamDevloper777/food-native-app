@@ -2,8 +2,8 @@ import React from "react";
 import { View, Text, Image, TouchableOpacity, ScrollView } from "react-native";
 import { FontAwesome, Ionicons, Feather } from "@expo/vector-icons";
 import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "../redux/store";
-import { logout } from "../redux/authSlice";
+import { RootState } from "@/utils/store";
+import { logout } from "@/utils/authSlice";
 import { router } from "expo-router";
 
 const ProfileHeader = ({ name, image }: any) => (

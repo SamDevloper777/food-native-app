@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { loginSuccess } from "../redux/authSlice";
+import { loginSuccess } from "@/utils/authSlice";
 import { router } from "expo-router";
 import React, { useState } from "react";
 import {
@@ -71,61 +71,92 @@ const SignUp = () => {
       <Text className="text-3xl font-bold text-gray-900 mb-2">
         Create Your Account
       </Text>
-
+      <Text className="text-sm text-gray-500 mb-6">
+        Enter the details below to sign up
+      </Text>
       {/* Email Input */}
+      <Text className="text-xs font-semibold text-gray-600 mb-1">
+        Email Address <Text className="text-red-500">*</Text>
+      </Text>
       <TextInput
         placeholder="Enter your email"
         value={email}
         onChangeText={setEmail}
-        className="border-b border-gray-300 py-2 mb-4"
+        placeholderTextColor="#999"
+        keyboardType="email-address"
+        autoCapitalize="none"
+        className="w-full border-b border-gray-300 text-base text-gray-800 py-2 mb-4"
       />
 
       {/* Username Input */}
+      <Text className="text-xs font-semibold text-gray-600 mb-1">
+        Username (at least 3 characters)
+        <Text className="text-red-500">*</Text>
+      </Text>
       <TextInput
         placeholder="Enter your username"
+        placeholderTextColor="#999"
+        autoCapitalize="none"
         value={username}
         onChangeText={setUsername}
-        className="border-b border-gray-300 py-2 mb-4"
+        className="w-full border-b border-gray-300 text-base text-gray-800 py-2 mb-4"
       />
 
-      {/* Password Input */}
+      {/* Password */}
+      <Text className="text-xs font-semibold text-gray-600 mb-1">
+        Password (at least 6 characters)
+        <Text className="text-red-500">*</Text>
+      </Text>
       <TextInput
         placeholder="Enter your password"
+        placeholderTextColor="#999"
         secureTextEntry
         value={password}
         onChangeText={setPassword}
-        className="border-b border-gray-300 py-2 mb-4"
+        className="w-full border-b border-gray-300 text-base text-gray-800 py-2 mb-4"
       />
 
       {/* Confirm Password */}
+      <Text className="text-xs font-semibold text-gray-600 mb-1">
+        Confirm Password <Text className="text-red-500">*</Text>
+      </Text>
       <TextInput
-        placeholder="Confirm password"
+        placeholder="Confirm your password"
+        placeholderTextColor="#999"
         secureTextEntry
         value={confirmPassword}
         onChangeText={setConfirmPassword}
-        className="border-b border-gray-300 py-2 mb-6"
+        className="w-full border-b border-gray-300 text-base text-gray-800 py-2 mb-6"
       />
 
       {/* Continue Button */}
       <TouchableOpacity
         onPress={handleSignUp}
         disabled={!isValidForm || loading}
-        className={`w-full py-4 rounded-lg ${
-          isValidForm ? "bg-black" : "bg-gray-300"
-        }`}
+        className={`w-full py-4 rounded-lg ${isValidForm ? "bg-black" : "bg-gray-300"
+          }`}
       >
         {loading ? (
           <ActivityIndicator size="small" color="#fff" />
         ) : (
           <Text
-            className={`text-center font-semibold ${
-              isValidForm ? "text-white" : "text-gray-500"
-            }`}
+            className={`text-center font-semibold ${isValidForm ? "text-white" : "text-gray-500"
+              }`}
           >
             Continue
           </Text>
         )}
       </TouchableOpacity>
+      {/* Already have an account? */}
+      <Text className="text-xs text-center text-gray-500 mt-4">
+        Already have an account?{' '}
+        <Text
+          onPress={() => router.replace('/(auth)')}
+          className="text-red-500 font-bold"
+        >
+          Log in
+        </Text>
+      </Text>
     </View>
   );
 };

@@ -1,5 +1,8 @@
 import { Stack } from "expo-router";
 import './global.css';
+import { LogBox } from "react-native";
+
+LogBox.ignoreAllLogs(true)
 
 export default function RootLayout() {
   return (

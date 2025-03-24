@@ -39,11 +39,11 @@ const SignUp = () => {
       password: password,
     };
 
-    console.log('📤 Sending Data:', formData);
+    console.log('Sending Data:', formData);
 
     try {
       const response = await axios.post(
-        'http://192.168.1.6:8000/api/user/register/customer/',
+        'http://192.168.1.5:8000/api/user/register/customer/',
         formData,
         {
           headers: {
@@ -58,10 +58,32 @@ const SignUp = () => {
     } catch (error: any) {
       console.error('❌ API Error:', error.response?.data || error.message);
       setLoading(false); // Hide loader
-      Alert.alert(
-        'Error',
-        error.response?.data?.message || 'Registration failed!'
-      );
+
+      // ✅ Handle API Errors Safely
+      if (error.response) {
+        // Handle specific email already exists error
+        if (error.response?.data?.email?.[0] === 'custom user with this email already exists.') {
+          Alert.alert(
+            'Email Exists',
+            'An account with this email already exists. Redirecting to login...',
+            [
+              {
+                text: 'OK',
+                onPress: () => router.replace('/(auth)'), // 🚀 Redirect to login
+              },
+            ]
+          );
+        } else {
+          Alert.alert(
+            'Error',
+            error.response?.data?.message || 'Registration failed!'
+          );
+        }
+      } else if (error.request) {
+        Alert.alert('Error', 'No response from server. Please try again later.');
+      } else {
+        Alert.alert('Error', 'An unexpected error occurred.');
+      }
     }
   };
 
@@ -133,18 +155,16 @@ const SignUp = () => {
       {/* Continue Button */}
       <TouchableOpacity
         disabled={!isValidForm || loading}
-        className={`w-full py-4 rounded-lg ${
-          isValidForm ? 'bg-gray-800' : 'bg-gray-300'
-        }`}
+        className={`w-full py-4 rounded-lg ${isValidForm ? 'bg-gray-800' : 'bg-gray-300'
+          }`}
         onPress={handleSignUp}
       >
         {loading ? (
           <ActivityIndicator size="small" color="#fff" />
         ) : (
           <Text
-            className={`text-center font-semibold ${
-              isValidForm ? 'text-white' : 'text-gray-500'
-            }`}
+            className={`text-center font-semibold ${isValidForm ? 'text-white' : 'text-gray-500'
+              }`}
           >
             Continue
           </Text>

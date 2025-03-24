@@ -13,17 +13,17 @@ const VerifyOtp = () => {
 
   // 🔥 Call API to verify email
   const handleVerifyOtp = async () => {
-    if (otp.length !== 6) {
-      Alert.alert("Invalid OTP", "Please enter a 6-digit OTP.");
+    if (otp.length !== 4) {
+      Alert.alert("Invalid OTP", "Please enter a 4-digit OTP.");
       return;
     }
 
     setIsLoading(true);
-    console.log("📤 Sending OTP:", otp);
+    console.log("Sending OTP:", otp);
 
     try {
       const response = await axios.post(
-        "http://192.168.1.6:8000/api/user/verifyemail/",
+        "http://192.168.1.5:8000/api/user/verifyemail/",
         {
           email: email,
           otp: otp,
@@ -72,7 +72,7 @@ const VerifyOtp = () => {
         <OTPTextInput
           ref={otpInputRef}
           handleTextChange={(code) => setOtp(code)}
-          inputCount={6}
+          inputCount={4} // ✅ Updated to 4 digits
           keyboardType="numeric"
           textInputStyle={{
             width: 50,
@@ -87,7 +87,7 @@ const VerifyOtp = () => {
       </View>
 
       {/* Show Entered OTP */}
-      {otp.length === 6 && (
+      {otp.length === 4 && (
         <Text className="text-center text-gray-600 mt-3">
           Entered OTP: {otp}
         </Text>
@@ -99,14 +99,14 @@ const VerifyOtp = () => {
       ) : (
         <TouchableOpacity
           className={`py-3 mt-6 rounded-lg ${
-            otp.length === 6 ? "bg-black" : "bg-gray-200"
+            otp.length === 4 ? "bg-black" : "bg-gray-200"
           }`}
-          disabled={otp.length !== 6 || isLoading}
+          disabled={otp.length !== 4 || isLoading}
           onPress={handleVerifyOtp}
         >
           <Text
             className={`text-center text-lg font-semibold ${
-              otp.length === 6 ? "text-white" : "text-gray-400"
+              otp.length === 4 ? "text-white" : "text-gray-400"
             }`}
           >
             Continue

@@ -5,7 +5,7 @@ import PopularPizzaCard from '../../components/Home/PopularPizzaCard';
 import SearchBar from '../../components/Home/SearchBar';
 import SpecialOfferCard from '../../components/Home/SpecialOfferCard';
 
-const Index = () => {
+const Home = () => {
   return (
     <ScrollView className="flex-1 bg-white px-4" contentContainerStyle={{ flexGrow: 1 }}>
       <LocationHeader />
@@ -40,4 +40,4 @@ const Index = () => {
   );
 };
 
-export default Index;
+export default Home;

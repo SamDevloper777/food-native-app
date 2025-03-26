@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { loginSuccess } from "@/utils/authSlice";
+import { loginSuccess } from "@/utils/slice/authSlice";
 import { router } from "expo-router";
 import React, { useState } from "react";
 import {

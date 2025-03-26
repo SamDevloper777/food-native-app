@@ -11,7 +11,7 @@ import {
 } from "react-native";
 import OTPTextInput from "react-native-otp-textinput";
 import { useDispatch } from "react-redux";
-import { loginSuccess } from "@/utils/authSlice";
+import { loginSuccess } from "@/utils/slice/authSlice";
 
 const VerifyOtp = () => {
   const { email } = useLocalSearchParams<{ email: string }>();

@@ -1,4 +1,4 @@
-import { loginSuccess } from '@/utils/authSlice';
+import { loginSuccess } from '@/utils/slice/authSlice';
 import { router } from 'expo-router';
 import { setParams } from 'expo-router/build/global-state/routing';
 import { ChevronDown } from 'lucide-react-native';

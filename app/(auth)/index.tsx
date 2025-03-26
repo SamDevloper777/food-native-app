@@ -1,3 +1,4 @@
+import { loginSuccess } from '@/utils/authSlice';
 import { router } from 'expo-router';
 import { setParams } from 'expo-router/build/global-state/routing';
 import { ChevronDown } from 'lucide-react-native';
@@ -8,10 +9,12 @@ import {
   TouchableOpacity,
   View
 } from 'react-native';
+import { useDispatch } from 'react-redux';
 
 const EmailLoginScreen = () => {
   const [email, setEmail] = useState('');
   const isValidEmail = email.includes('@') && email.includes('.com');
+  const dispatch = useDispatch();
 
   return (
     <View className="flex-1 bg-white px-6 pt-2">
@@ -81,6 +84,33 @@ const EmailLoginScreen = () => {
           Create Account
         </Text>
       </Text>
+
+      // TODO : Remove this in production
+      <Text className="text-xs text-center text-gray-500 mt-4">
+        Dev Mode:{' '}
+        <Text
+          className="text-red-500 font-semibold"
+          onPress={() => {
+            // ✅ Set Dummy User and Token for Dev Mode
+            dispatch(
+              loginSuccess({
+                user: {
+                  id: 1,
+                  name: "Dev User",
+                  email: "dev@ovenly.com",
+                },
+                token: "dummy_dev_token",
+              })
+            );
+            // ✅ Now navigate to /home successfully
+            router.replace("/(tabs)/home");
+          }}
+        >
+          Skip
+        </Text>
+
+      </Text>
+
     </View>
   );
 };

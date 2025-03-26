@@ -1,17 +1,25 @@
 import { router, useLocalSearchParams } from "expo-router";
 import { ChevronLeft } from "lucide-react-native";
 import axios from "axios";
-import React, { useEffect, useRef, useState } from "react";
-import { ActivityIndicator, Alert, Text, TouchableOpacity, View } from "react-native";
+import React, { useRef, useState } from "react";
+import {
+  ActivityIndicator,
+  Alert,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import OTPTextInput from "react-native-otp-textinput";
+import { useDispatch } from "react-redux";
+import { loginSuccess } from "@/utils/authSlice";
 
 const VerifyOtp = () => {
   const { email } = useLocalSearchParams<{ email: string }>();
   const [otp, setOtp] = useState<string>("");
   const [isLoading, setIsLoading] = useState(false);
   const otpInputRef = useRef<OTPTextInput>(null);
+  const dispatch = useDispatch();
 
-  // 🔥 Call API to verify email
   const handleVerifyOtp = async () => {
     if (otp.length !== 4) {
       Alert.alert("Invalid OTP", "Please enter a 4-digit OTP.");
@@ -35,11 +43,19 @@ const VerifyOtp = () => {
         }
       );
 
-      console.log("✅ Verification Success:", response.data);
+      console.log("Verification Success:", response.data);
+
+      dispatch(
+        loginSuccess({
+          user: response.data.user,
+          token: response.data.token,
+        })
+      );
+
       Alert.alert("Success", "OTP Verified Successfully!");
-      router.replace("/(tabs)/home"); // Go to home after success
+      router.replace("/(tabs)/home");
     } catch (error: any) {
-      console.error("❌ API Error:", error.response?.data || error.message);
+      console.error("API Error:", error.response?.data || error.message);
       Alert.alert(
         "Error",
         error.response?.data?.message || "Verification failed!"
@@ -51,7 +67,6 @@ const VerifyOtp = () => {
 
   return (
     <View className="flex-1 bg-white px-5 pt-2">
-      {/* Top Navigation */}
       <View className="flex-row items-center justify-between">
         <TouchableOpacity onPress={() => router.replace("/(auth)")}>
           <ChevronLeft size={24} color="black" />
@@ -61,18 +76,16 @@ const VerifyOtp = () => {
         </TouchableOpacity>
       </View>
 
-      {/* Title & Subtitle */}
       <Text className="text-2xl font-bold mt-6">Verify Your Email</Text>
       <Text className="text-gray-500 mt-1">
         Enter the PIN sent to <Text className="font-semibold">{email}</Text>
       </Text>
 
-      {/* OTP Input */}
       <View className="flex-row justify-center mt-6">
         <OTPTextInput
           ref={otpInputRef}
           handleTextChange={(code) => setOtp(code)}
-          inputCount={4} // ✅ Updated to 4 digits
+          inputCount={4}
           keyboardType="numeric"
           textInputStyle={{
             width: 50,
@@ -82,18 +95,16 @@ const VerifyOtp = () => {
             borderWidth: 1,
             borderColor: "#E5E5E5",
           }}
-          tintColor="#A52A2A" // Focus color
+          tintColor="#A52A2A"
         />
       </View>
 
-      {/* Show Entered OTP */}
       {otp.length === 4 && (
         <Text className="text-center text-gray-600 mt-3">
           Entered OTP: {otp}
         </Text>
       )}
 
-      {/* Loader or Continue Button */}
       {isLoading ? (
         <ActivityIndicator size="large" color="#A52A2A" className="mt-6" />
       ) : (
@@ -113,11 +124,6 @@ const VerifyOtp = () => {
           </Text>
         </TouchableOpacity>
       )}
-
-      {/* Try Another Way */}
-      <TouchableOpacity className="mt-5">
-        <Text className="text-red-500 font-semibold">Try another way</Text>
-      </TouchableOpacity>
     </View>
   );
 };

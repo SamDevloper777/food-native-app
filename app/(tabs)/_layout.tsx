@@ -11,8 +11,8 @@ export default function TabLayout() {
         }}
       >
         <Tabs.Screen name="home" options={{ title: "Home" }} />
-        <Tabs.Screen name="profile" options={{ title: "Profile" }} />
         <Tabs.Screen name="cart" options={{ title: "Cart" }} />
+        <Tabs.Screen name="profile" options={{ title: "Profile" }} />
       </Tabs>
     </ProtectedRoute>
   );

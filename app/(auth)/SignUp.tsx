@@ -44,9 +44,9 @@ const SignUp = () => {
         }
       );
 
-      console.log("✅ Registration Successful:", response.data);
+      console.log("Registration Successful:", response.data);
 
-      // ✅ Save User & Token in Redux
+      // Save User & Token in Redux
       dispatch(
         loginSuccess({
           user: response.data.user,

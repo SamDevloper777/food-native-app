@@ -23,7 +23,7 @@ const LocationHeader = () => {
         <View className="bg-gray-100 rounded-full p-2">
           <BellIcon size={32} color="black" />
         </View>
-        <View className="w-3 h-3 bg-red-500 rounded-full absolute top-1 right-1" />
+        <View className="w-3 h-3 bg-orange-500 rounded-full absolute top-1 right-1" />
       </TouchableOpacity>
     </View>
   );

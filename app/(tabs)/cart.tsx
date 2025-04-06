@@ -35,7 +35,7 @@ const CartScreen = () => {
               {/* Remove Button */}
               <TouchableOpacity
                 onPress={() => handleRemoveFromCart(item.id)}
-                className="bg-red-500 p-2 rounded-full"
+                className="bg-orange-500 p-2 rounded-full"
               >
                 <Trash size={20} color="white" />
               </TouchableOpacity>

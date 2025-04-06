@@ -12,7 +12,7 @@ const PopularPizzaCard = () => {
       <View className="flex-row items-center justify-between mb-3">
         <Text className="text-[22px] font-bold">Popular Pizza</Text>
         <TouchableOpacity>
-          <Text className="text-red-500 font-medium">See All</Text>
+          <Text className="text-orange-500 font-medium">See All</Text>
         </TouchableOpacity>
       </View>
 
@@ -22,7 +22,7 @@ const PopularPizzaCard = () => {
           <TouchableOpacity
             key={index}
             className={`px-4 py-2 rounded-full mr-2 ${
-              activeCategory === category ? "bg-red-500" : "bg-gray-100"
+              activeCategory === category ? "bg-orange-500" : "bg-gray-100"
             }`}
             onPress={() => setActiveCategory(category)}
           >

@@ -36,7 +36,7 @@ const EmailLoginScreen = () => {
 
       {/* Email Input */}
       <Text className="text-xs font-semibold text-gray-600 mb-1">
-        Email Address <Text className="text-red-500">*</Text>
+        Email Address <Text className="text-orange-500">*</Text>
       </Text>
       <TextInput
         placeholder="Enter your email"
@@ -70,15 +70,15 @@ const EmailLoginScreen = () => {
       {/* Terms & Privacy Policy */}
       <Text className="text-xs text-center text-gray-500 mt-4">
         You agree to our{' '}
-        <Text className="text-red-500 font-semibold">Terms of Service</Text> &{' '}
-        <Text className="text-red-500 font-semibold">Privacy Policy</Text>.
+        <Text className="text-orange-500 font-semibold">Terms of Service</Text> &{' '}
+        <Text className="text-orange-500 font-semibold">Privacy Policy</Text>.
       </Text>
 
       {/* Create Account Button */}
       <Text className="text-xs text-center text-gray-500 mt-4">
         Don't have an account?{' '}
         <Text
-          className="text-red-500 font-semibold"
+          className="text-orange-500 font-semibold"
           onPress={() => router.replace('/(auth)/SignUp')}
         >
           Create Account
@@ -89,7 +89,7 @@ const EmailLoginScreen = () => {
       <Text className="text-xs text-center text-gray-500 mt-4">
         Dev Mode:{' '}
         <Text
-          className="text-red-500 font-semibold"
+          className="text-orange-500 font-semibold"
           onPress={() => {
             // ✅ Set Dummy User and Token for Dev Mode
             dispatch(

@@ -31,7 +31,7 @@ const Profile = () => {
         }
       />
 
-      <TouchableOpacity onPress={handleLogout} className="p-4 bg-red-500 mt-4">
+      <TouchableOpacity onPress={handleLogout} className="p-4 bg-orange-500 mt-4">
         <Text className="text-white text-center">Logout</Text>
       </TouchableOpacity>
     </ScrollView>

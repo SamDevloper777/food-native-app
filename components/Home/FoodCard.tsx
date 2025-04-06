@@ -23,7 +23,7 @@ const FoodCard = ({ Title, Cost, Time, Rating }: { Title: string, Cost: string, 
                 </View>
                 <View className="flex-row items-center mt-2">
                     <Text className="text-xl font-bold">${Cost}</Text>
-                    <View className="ml-2 bg-red-500 px-2 py-1 rounded-md">
+                    <View className="ml-2 bg-orange-500 px-2 py-1 rounded-md">
                         <Text className="text-white text-xs font-bold">25% Off</Text>
                     </View>
                 </View>

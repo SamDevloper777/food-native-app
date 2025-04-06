@@ -51,7 +51,7 @@ const CustomizeThali = () => {
 
       {/* Quantity Selector */}
       <View className="flex-row justify-center items-center my-4">
-        <View className="flex-row bg-red-500 rounded-full px-4 py-2 items-center gap-2">
+        <View className="flex-row bg-orange-500 rounded-full px-4 py-2 items-center gap-2">
           {/* Minus Button */}
           <TouchableOpacity onPress={handleDecrement}>
             <Minus size={16} color="white" />
@@ -74,7 +74,7 @@ const CustomizeThali = () => {
         <Text className="text-xl font-bold">{title}</Text>
         <Text className="text-gray-500 mt-2">
           A deliciously crafted thali, offering a perfect balance of flavors...
-          <Text className="text-red-500">Read More</Text>
+          <Text className="text-orange-500">Read More</Text>
         </Text>
 
         <View className="flex-row justify-between mt-4">
@@ -100,7 +100,7 @@ const CustomizeThali = () => {
           <Text className="text-lg font-bold text-black">${(price * quantity).toFixed(2)}</Text>
         </View>
         <TouchableOpacity
-          className="bg-red-500 px-6 py-3 rounded-full flex-row items-center"
+          className="bg-orange-500 px-6 py-3 rounded-full flex-row items-center"
           onPress={handleAddToCart} // ✅ Corrected onPress event
         >
           <ShoppingBag size={20} color="white" />

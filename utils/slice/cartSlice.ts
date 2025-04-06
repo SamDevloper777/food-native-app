@@ -22,17 +22,16 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     addThaliItem(state, action: PayloadAction<ThaliItem>) {
-      const existingItem = state.items.find(
-        (item) => item.id === action.payload.id
-      );
+      const { id, name, price, quantity } = action.payload;
+      const existingItem = state.items.find((item) => item.id === id);
 
       if (existingItem) {
-        existingItem.quantity += 1;
+        existingItem.quantity += quantity; // Add the payload quantity to existing item
+        state.totalAmount += price * quantity; // Update total based on added quantity
       } else {
-        state.items.push({ ...action.payload, quantity: 1 });
+        state.items.push({ id, name, price, quantity }); // Use the payload quantity for new item
+        state.totalAmount += price * quantity; // Update total for new item
       }
-
-      state.totalAmount += action.payload.price;
     },
 
     removeThaliItem(state, action: PayloadAction<number>) {
@@ -42,12 +41,13 @@ const cartSlice = createSlice({
 
       if (itemIndex !== -1) {
         const item = state.items[itemIndex];
-        if (item.quantity === 1) {
-          state.items.splice(itemIndex, 1);
+        if (item.quantity > 1) {
+          item.quantity -= 1; // Decrease quantity by 1
+          state.totalAmount -= item.price; // Reduce total by single item price
         } else {
-          item.quantity -= 1;
+          state.items.splice(itemIndex, 1); // Remove item if quantity is 1
+          state.totalAmount -= item.price; // Reduce total by single item price
         }
-        state.totalAmount -= item.price;
       }
     },
 

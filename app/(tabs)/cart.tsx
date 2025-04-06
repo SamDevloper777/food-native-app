@@ -1,89 +1,60 @@
-import { addThaliItem } from "@/utils/slice/cartSlice";
-import { router } from "expo-router";
-import { Heart } from "lucide-react-native";
+import { removeThaliItem } from "@/utils/slice/cartSlice";
+import { useRouter } from "expo-router";
+import { Minus, Plus, Trash } from "lucide-react-native";
 import React from "react";
-import { Text, TouchableOpacity, View } from "react-native";
-import { useDispatch } from "react-redux";
+import { FlatList, Text, TouchableOpacity, View } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
 
-interface FoodCardProps {
-  id: number;
-  Title: string;
-  Cost: number;
-  Time: string;
-  Rating: string;
-}
-
-const FoodCard: React.FC<FoodCardProps> = ({ id, Title, Cost, Time, Rating }) => {
+const CartScreen = () => {
+  const router = useRouter();
   const dispatch = useDispatch();
+  const cartItems = useSelector((state: any) => state.cart.items);
 
-  // ✅ Navigate to CustomizeThali & pass food details
-  const handleCustomizeThali = () => {
-    router.push({
-      pathname: "/(screens)/customizeThali",
-      params: {
-        id,
-        title: Title,
-        cost: Cost.toString(),
-        time: Time,
-        rating: Rating,
-      },
-    });
-  };
-
-  // ✅ Add to Cart Handler
-  const handleAddToCart = () => {
-    dispatch(
-      addThaliItem({
-        id,
-        name: Title,
-        price: Cost,
-        quantity: 1,
-      })
-    );
+  const handleRemoveFromCart = (id: number) => {
+    dispatch(removeThaliItem(id));
   };
 
   return (
-    <TouchableOpacity
-      className="flex-row items-center gap-2 bg-white p-4 rounded-2xl shadow-md w-[95%] h-[148px] py-8 my-2 mx-auto"
-      activeOpacity={0.75}
-      onPress={handleCustomizeThali}
-    >
-      {/* 🔥 Food Image Placeholder */}
-      <View className="w-32 h-32 bg-gray-200 rounded-full" />
-
-      {/* ⚡️ Food Details */}
-      <View className="flex-1 ml-4">
-        <Text className="text-lg font-bold">{Title}</Text>
-        <Text className="text-gray-500">Offer valid today only</Text>
-        <View className="flex-row items-center align-middle gap-3 space-x-2 mt-1">
-          <Text className="text-gray-500">{Time}</Text>
-          <View className="w-2 h-2 bg-[#c7c7c7] rounded-full" />
-          <Text className="text-gray-500">{Rating} ⭐</Text>
-        </View>
-        <View className="flex-row items-center mt-2">
-          <Text className="text-xl font-bold">${Cost}</Text>
-          <View className="ml-2 bg-red-500 px-2 py-1 rounded-md">
-            <Text className="text-white text-xs font-bold">25% Off</Text>
-          </View>
-        </View>
-      </View>
-
-      {/* ❤️ Favorite Button + Add to Cart */}
-      <View className="flex flex-col justify-between items-center h-full">
-        <TouchableOpacity>
-          <Heart size={24} color="gray" />
-        </TouchableOpacity>
-
-        {/* 🛒 Add to Cart Button */}
+    <View className="flex-1 bg-white p-4">
+      <Text className="text-2xl font-bold mb-4">Your Cart</Text>
+      {cartItems.length === 0 ? (
+        <Text className="text-gray-500 text-center">Your cart is empty.</Text>
+      ) : (
+        <FlatList
+          data={cartItems}
+          keyExtractor={(item) => item.id.toString()}
+          renderItem={({ item }) => (
+            <View className="flex-row justify-between items-center bg-gray-100 p-4 rounded-lg mb-3">
+              {/* Food Details */}
+              <View>
+                <Text className="text-lg font-bold">{item.name}</Text>
+                <Text className="text-gray-500">${item.price.toFixed(2)}</Text>
+                <Text className="text-gray-500">Qty: {item.quantity}</Text>
+              </View>
+              
+              {/* Remove Button */}
+              <TouchableOpacity
+                onPress={() => handleRemoveFromCart(item.id)}
+                className="bg-red-500 p-2 rounded-full"
+              >
+                <Trash size={20} color="white" />
+              </TouchableOpacity>
+            </View>
+          )}
+        />
+      )}
+      
+      {/* Checkout Button */}
+      {cartItems.length > 0 && (
         <TouchableOpacity
-          onPress={handleAddToCart}
-          className="bg-green-500 px-3 py-2 rounded-lg mt-2"
+          className="bg-green-500 p-4 rounded-lg mt-4"
+          onPress={() => router.push("/(screens)/checkout")}
         >
-          <Text className="text-white text-xs font-bold">Add to Cart</Text>
+          <Text className="text-white text-center text-lg font-bold">Proceed to Checkout</Text>
         </TouchableOpacity>
-      </View>
-    </TouchableOpacity>
+      )}
+    </View>
   );
 };
 
-export default FoodCard;
+export default CartScreen;

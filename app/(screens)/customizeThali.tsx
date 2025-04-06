@@ -32,14 +32,14 @@ const CustomizeThali = () => {
         quantity: quantity, 
       })
     );
-    router.back(); 
+    router.replace("/(tabs)/cart"); 
   };
 
   return (
     <ScrollView className="flex-1 bg-white p-4">
       {/* Header */}
       <View className="flex-row justify-between items-center mb-4">
-        <TouchableOpacity onPress={() => router.replace("/(tabs)/home")}>
+        <TouchableOpacity onPress={() => router.back()}>
           <ChevronLeft size={24} color="black" />
         </TouchableOpacity>
         <TouchableOpacity>

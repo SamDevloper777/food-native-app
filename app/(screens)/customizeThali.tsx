@@ -32,7 +32,7 @@ const CustomizeThali = () => {
         quantity: quantity, 
       })
     );
-    router.replace("/(tabs)/cart"); 
+    router.back(); 
   };
 
   return (

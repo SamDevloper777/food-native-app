@@ -8,13 +8,13 @@ const ProfileButton = ({ title }: { title: string }) => {
   const dispatch = useDispatch();
 
   // Define functions for each button
-  const handleProfileSetting = () => alert("hi");
-  const handleManageAddress = () => alert("hi");
-  const handleWishlist = () => alert("hi");
-  const handlePayment = () => alert("hi");
-  const handleOrderHistory = () => alert("hi");
-  const handleVouchers = () => alert("hi");
-  const handleNotificationSettings = () => alert("hi");
+  const handleProfileSetting = () => router.push("/(screens)/profile-setting")
+  const handleManageAddress = () => router.push("/(screens)/manage-delivery-adderss")
+  const handleWishlist = () => router.push("/(screens)/my-wishlist")
+  const handlePayment = () => router.push("/(screens)/manage-payment")
+  const handleOrderHistory = () => router.push("/(screens)/my-orders-history")
+  const handleVouchers = () => router.push("/(screens)/my-vouchers")
+  const handleNotificationSettings = () => router.push("/(screens)/notification-settings")
   const handleLogout = () => {
     dispatch(logout());
     router.replace("/(auth)");

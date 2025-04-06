@@ -41,6 +41,7 @@
     "react-native-country-picker-modal": "^2.0.0",
     "react-native-gesture-handler": "~2.20.2",
     "react-native-heroicons": "^4.0.0",
+    "react-native-linear-gradient": "^2.8.3",
     "react-native-otp-inputs": "^7.4.0",
     "react-native-otp-textinput": "^1.1.6",
     "react-native-reanimated": "^3.16.2",
@@ -50,7 +51,8 @@
     "react-native-web": "~0.19.13",
     "react-native-webview": "13.12.5",
     "react-redux": "^9.2.0",
-    "tailwindcss": "^3.4.17"
+    "tailwindcss": "^3.4.17",
+    "expo-linear-gradient": "~14.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",

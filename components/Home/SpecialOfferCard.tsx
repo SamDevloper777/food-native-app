@@ -10,7 +10,7 @@ const SpecialOfferCard = () => {
         <Text className="text-gray-500 text-[16px] leading-6 w-[80%]">
           Discount 20% off{"\n"}applied at checkout
         </Text>
-        <TouchableOpacity className="bg-orange-500 px-3 py-2 rounded-full self-start mt-2">
+        <TouchableOpacity className="bg-[#FC913A] px-3 py-2 rounded-full self-start mt-2">
           <Text className="text-white text-md font-medium px-2">Order Now</Text>
         </TouchableOpacity>
       </View>

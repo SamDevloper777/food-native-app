@@ -72,7 +72,7 @@ const VerifyOtp = () => {
           <ChevronLeft size={24} color="black" />
         </TouchableOpacity>
         <TouchableOpacity>
-          <Text className="text-orange-500 font-medium">Need help?</Text>
+          <Text className="text-[#FC913A] font-medium">Need help?</Text>
         </TouchableOpacity>
       </View>
 

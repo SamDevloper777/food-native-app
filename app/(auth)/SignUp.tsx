@@ -76,7 +76,7 @@ const SignUp = () => {
       </Text>
       {/* Email Input */}
       <Text className="text-xs font-semibold text-gray-600 mb-1">
-        Email Address <Text className="text-orange-500">*</Text>
+        Email Address <Text className="text-[#FC913A]">*</Text>
       </Text>
       <TextInput
         placeholder="Enter your email"
@@ -91,7 +91,7 @@ const SignUp = () => {
       {/* Username Input */}
       <Text className="text-xs font-semibold text-gray-600 mb-1">
         Username (at least 3 characters)
-        <Text className="text-orange-500">*</Text>
+        <Text className="text-[#FC913A]">*</Text>
       </Text>
       <TextInput
         placeholder="Enter your username"
@@ -105,7 +105,7 @@ const SignUp = () => {
       {/* Password */}
       <Text className="text-xs font-semibold text-gray-600 mb-1">
         Password (at least 6 characters)
-        <Text className="text-orange-500">*</Text>
+        <Text className="text-[#FC913A]">*</Text>
       </Text>
       <TextInput
         placeholder="Enter your password"
@@ -118,7 +118,7 @@ const SignUp = () => {
 
       {/* Confirm Password */}
       <Text className="text-xs font-semibold text-gray-600 mb-1">
-        Confirm Password <Text className="text-orange-500">*</Text>
+        Confirm Password <Text className="text-[#FC913A]">*</Text>
       </Text>
       <TextInput
         placeholder="Confirm your password"
@@ -152,7 +152,7 @@ const SignUp = () => {
         Already have an account?{' '}
         <Text
           onPress={() => router.replace('/(auth)')}
-          className="text-orange-500 font-bold"
+          className="text-[#FC913A] font-bold"
         >
           Log in
         </Text>

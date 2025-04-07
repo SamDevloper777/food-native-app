@@ -13,7 +13,6 @@ const ProfileButton = ({ title }: { title: string }) => {
   const handleWishlist = () => router.push("/(screens)/my-wishlist")
   const handlePayment = () => router.push("/(screens)/manage-payment")
   const handleOrderHistory = () => router.push("/(screens)/my-orders-history")
-  const handleVouchers = () => router.push("/(screens)/my-vouchers")
   const handleLogout = () => {
     dispatch(logout());
     router.replace("/(auth)");
@@ -26,7 +25,6 @@ const ProfileButton = ({ title }: { title: string }) => {
     "My Wishlist": handleWishlist,
     "Manage Payment": handlePayment,
     "My Orders History": handleOrderHistory,
-    "My Vouchers": handleVouchers,
     "Log out": handleLogout,
   };
 
@@ -43,7 +41,6 @@ const ProfileButton = ({ title }: { title: string }) => {
     "My Wishlist": "heart-outline",
     "Manage Payment": "wallet-outline",
     "My Orders History": "time-outline",
-    "My Vouchers": "ticket-outline",
     "Log out": "log-out-outline",
   };
 

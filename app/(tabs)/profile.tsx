@@ -13,7 +13,6 @@ const profileButtons = [
   "My Wishlist",
   "Manage Payment",
   "My Orders History",
-  "My Vouchers",
   "Log out",
 ];
 

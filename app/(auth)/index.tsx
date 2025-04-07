@@ -1,6 +1,5 @@
 import { loginSuccess } from '@/utils/slice/authSlice';
 import { router } from 'expo-router';
-import { setParams } from 'expo-router/build/global-state/routing';
 import { ChevronDown } from 'lucide-react-native';
 import React, { useState } from 'react';
 import {
@@ -18,23 +17,18 @@ const EmailLoginScreen = () => {
 
   return (
     <View className="flex-1 bg-white px-6 pt-2">
-      {/* Language Selector */}
       <View className="flex-row justify-end items-end mb-8">
         <TouchableOpacity className="flex-row items-center gap-1">
           <Text className="text-sm text-gray-700">English</Text>
           <ChevronDown size={18} color="#666" />
         </TouchableOpacity>
       </View>
-
-      {/* Welcome Text */}
       <Text className="text-3xl font-bold text-gray-900 mb-2">
         Welcome to Ovenly
       </Text>
       <Text className="text-sm text-gray-500 mb-6">
         Enter your email address to get started
       </Text>
-
-      {/* Email Input */}
       <Text className="text-xs font-semibold text-gray-600 mb-1">
         Email Address <Text className="text-[#FC913A]">*</Text>
       </Text>
@@ -47,8 +41,6 @@ const EmailLoginScreen = () => {
         onChangeText={setEmail}
         className="w-full border-b border-gray-300 text-base text-gray-800 py-2 mb-6"
       />
-
-      {/* Continue Button */}
       <TouchableOpacity
         disabled={!isValidEmail}
         className={`w-full py-4 rounded-lg ${isValidEmail ? 'bg-gray-800' : 'bg-gray-300'
@@ -63,18 +55,14 @@ const EmailLoginScreen = () => {
           className={`text-center font-semibold ${isValidEmail ? 'text-white' : 'text-gray-500'
             }`}
         >
-          Continue
+          Send OTP
         </Text>
       </TouchableOpacity>
-
-      {/* Terms & Privacy Policy */}
       <Text className="text-xs text-center text-gray-500 mt-4">
         You agree to our{' '}
         <Text className="text-[#FC913A] font-semibold">Terms of Service</Text> &{' '}
         <Text className="text-[#FC913A] font-semibold">Privacy Policy</Text>.
       </Text>
-
-      {/* Create Account Button */}
       <Text className="text-xs text-center text-gray-500 mt-4">
         Don't have an account?{' '}
         <Text

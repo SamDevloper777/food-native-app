@@ -14,7 +14,6 @@ const profileButtons = [
   "Manage Payment",
   "My Orders History",
   "My Vouchers",
-  "Notification Settings",
   "Log out",
 ];
 

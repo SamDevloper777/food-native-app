@@ -14,7 +14,6 @@ const ProfileButton = ({ title }: { title: string }) => {
   const handlePayment = () => router.push("/(screens)/manage-payment")
   const handleOrderHistory = () => router.push("/(screens)/my-orders-history")
   const handleVouchers = () => router.push("/(screens)/my-vouchers")
-  const handleNotificationSettings = () => router.push("/(screens)/notification-settings")
   const handleLogout = () => {
     dispatch(logout());
     router.replace("/(auth)");
@@ -28,7 +27,6 @@ const ProfileButton = ({ title }: { title: string }) => {
     "Manage Payment": handlePayment,
     "My Orders History": handleOrderHistory,
     "My Vouchers": handleVouchers,
-    "Notification Settings": handleNotificationSettings,
     "Log out": handleLogout,
   };
 
@@ -46,7 +44,6 @@ const ProfileButton = ({ title }: { title: string }) => {
     "Manage Payment": "wallet-outline",
     "My Orders History": "time-outline",
     "My Vouchers": "ticket-outline",
-    "Notification Settings": "notifications-outline",
     "Log out": "log-out-outline",
   };
 

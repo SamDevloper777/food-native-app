@@ -4,7 +4,6 @@ import { Image, Text, View } from "react-native";
 export const ProfileHeader = ({ name, image }: any) => {
     return (
       <View className="bg-white pb-6">
-        <Text className="text-[28px] font-bold text-center mt-6">Profile</Text>
         <LinearGradient
           colors={['#FCD6A3', '#FC913A']}
           start={{ x: 0, y: 0 }}

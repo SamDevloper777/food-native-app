@@ -1,4 +1,4 @@
-import { Pressable, Text, View } from "react-native";
+import { Pressable, Text, Touchable, TouchableOpacity, View } from "react-native";
 import { logout } from "@/utils/slice/authSlice";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
@@ -51,9 +51,10 @@ const ProfileButton = ({ title }: { title: string }) => {
   };
 
   return (
-    <Pressable
+    <TouchableOpacity
       className="flex-row items-center shadow-slate-400 bg-[#F5F5F5] rounded-l-[100px] rounded-r-[25px] shadow-sm mx-4 mb-4 border-2 border-gray-200 pr-4"
       onPress={handlePress}
+      activeOpacity={0.8}
     >
       <View
         style={{
@@ -72,7 +73,7 @@ const ProfileButton = ({ title }: { title: string }) => {
       </View>
       <Text className="flex-1 text-[18px] font-medium text-gray-900">{title}</Text>
       <Ionicons name="chevron-forward-outline" size={20} color="gray" />
-    </Pressable>
+    </TouchableOpacity>
   );
 };
 

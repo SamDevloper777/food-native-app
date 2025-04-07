@@ -1,13 +1,13 @@
-import Form from '@/components/Profile/Profile-Settings/form'
-import Header from '@/components/Profile/Profile-Settings/header'
-import Navigation from '@/components/Profile/Profile-Settings/navigation'
+import Form from '@/components/Profile/profileSettings/form'
+import Header from '@/components/Profile/profileSettings/header'
+import Navigation from '@/components/common/navigation'
 import React from 'react'
 import { SafeAreaView } from 'react-native'
 
 const ProfileSetting = () => {
   return (
     <SafeAreaView className="flex-1 bg-white">
-      <Navigation />
+      <Navigation title='Profile Settings'/>
       <Header />
       <Form />
     </SafeAreaView>

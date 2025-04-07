@@ -1,5 +1,5 @@
-import ProfileButton from "@/components/Profile/ProfileButton";
-import { ProfileHeader } from "@/components/Profile/ProfileHeader";
+import ProfileButton from "@/components/Profile/profileButton";
+import { ProfileHeader } from "@/components/Profile/profileHeader";
 import { RootState } from "@/utils/store";
 import { memo } from "react";
 import { FlatList } from "react-native";

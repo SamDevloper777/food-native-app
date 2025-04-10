@@ -1,18 +1,24 @@
 import { router } from 'expo-router';
 import { Heart } from 'lucide-react-native';
 import React from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
+import { Image, Text, TouchableOpacity, View } from 'react-native';
 
-const FoodCard = ({ Title, Cost, Time, Rating }: { Title: string, Cost: string, Time: string, Rating: string }) => {
+const FoodCard = ({ Title, Cost, Time, Rating, Url }: { Title: string, Cost: string, Time: string, Rating: string, Url: string }) => {
     return (
         <TouchableOpacity
             className="flex-row items-center gap-2 bg-white p-4 rounded-2xl shadow-md w-[95%] h-[148px] py-8 my-2 mx-auto"
             activeOpacity={0.75}
             onPress={() => {
-                router.push({pathname: '/(screens)/customizeThali', params: {title: Title, cost: Cost, rating: Rating, id: "1", time: Time}})
+                router.push({ pathname: '/(screens)/customizeThali', params: { title: Title, cost: Cost, rating: Rating, id: "1", time: Time } })
             }}
         >
-            <View className="w-32 h-32 bg-gray-200 rounded-full" />
+            <View className="w-32 h-32 bg-gray-200 rounded-full">
+                <Image
+                    source={{ uri: Url }}
+                    style={{ width: '100%', height: '100%', borderRadius: 100 }}
+                    resizeMode="cover"
+                />
+            </View>
             <View className="flex-1 ml-4">
                 <Text className="text-lg font-bold">{Title}</Text>
                 <Text className="text-gray-500">Offer valid today only</Text>

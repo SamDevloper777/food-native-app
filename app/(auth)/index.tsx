@@ -9,7 +9,8 @@ import {
   View,
   ScrollView,
   Dimensions,
-  Platform
+  Platform,
+  Image
 } from 'react-native';
 import { useDispatch } from 'react-redux';
 
@@ -22,15 +23,16 @@ const EmailLoginScreen = () => {
 
   return (
     <View className="flex-1 relative bg-[#FC913A]">
+      <Image 
+        source={require('../../assets/images/login.jpg')}
+        style={{ width: '100%', height: '100%', position: 'absolute', top: 0, left: 0 }}
+        resizeMode="cover"
+      />
       {/* Scrollable white sheet starting from bottom */}
       <ScrollView
-        contentContainerStyle={{
-          paddingBottom: 40,
-          minHeight: height * 1.05, // ensures enough height to scroll
-        }}
         showsVerticalScrollIndicator={false}
       >
-        <View style={{ marginTop: height * 0.30 }} className="bg-white px-6 pt-6 rounded-t-3xl">
+        <View style={{ marginTop: height * 0.30 }} className="bg-white px-6 pt-6 rounded-t-3xl h-[700px]">
           <Text className="text-3xl font-bold text-gray-900 mb-2">
             Welcome to Ovenly
           </Text>

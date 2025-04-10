@@ -2,8 +2,10 @@ import ProfileButton from "@/components/Profile/profileButton";
 import { ProfileHeader } from "@/components/Profile/profileHeader";
 import { RootState } from "@/utils/store";
 import { memo } from "react";
-import { FlatList } from "react-native";
+import { FlatList, View } from "react-native";
 import { useSelector } from "react-redux";
+import ShimmerPlaceholder from "react-native-shimmer-placeholder";
+import LinearGradient from "react-native-linear-gradient";
 
 const MemoizedProfileHeader = memo(ProfileHeader);
 
@@ -18,10 +20,37 @@ const profileButtons = [
 
 const Profile = () => {
   const { user } = useSelector((state: RootState) => state.auth);
+  const loading = !user; // Replace with your actual loading condition if available
 
   const renderButton = ({ item }: { item: string }) => (
     <ProfileButton title={item} />
   );
+
+  if (loading) {
+    return (
+      <FlatList
+        className="bg-white"
+        data={[1, 2, 3, 4, 5]}
+        keyExtractor={(item) => item.toString()}
+        renderItem={() => (
+          <View className="px-4 py-3">
+            <ShimmerPlaceholder
+              LinearGradient={LinearGradient}
+              style={{ height: 50, borderRadius: 10 }}
+            />
+          </View>
+        )}
+        ListHeaderComponent={
+          <View className="px-4 pt-4 pb-6">
+            <ShimmerPlaceholder
+              LinearGradient={LinearGradient}
+              style={{ height: 80, borderRadius: 20 }}
+            />
+          </View>
+        }
+      />
+    );
+  }
 
   return (
     <FlatList

@@ -1,8 +1,8 @@
 import React from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, Image } from "react-native";
 
-const SpecialOfferCard = () => {
-  return ( 
+const SpecialOfferCard = ({ Url }: { Url: string }) => {
+  return (
     <View className="bg-[#fdfdfd] rounded-xl p-4 flex-row items-center shadow-md w-[95%] h-[185px] px-8 mx-auto">
       {/* Left Side: Offer Text */}
       <View className="flex-1 gap-2">
@@ -16,7 +16,13 @@ const SpecialOfferCard = () => {
       </View>
 
       {/* Right Side: Bigger Rounded Placeholder */}
-      <View className="w-40 h-40 bg-gray-200 rounded-full" />
+      <View className="w-40 h-40 bg-gray-200 rounded-full">
+        <Image
+          source={{ uri: Url }}
+          style={{ width: '100%', height: '100%', borderRadius: 100 }}
+          resizeMode="cover"
+        />
+      </View>
     </View>
   );
 };

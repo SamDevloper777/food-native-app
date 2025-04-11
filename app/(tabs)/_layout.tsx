@@ -1,4 +1,5 @@
 import ProtectedRoute from "@/utils/protectedRoute";
+import { Ionicons } from "@expo/vector-icons";
 import { Tabs } from "expo-router";
 import { House, PersonStanding, ShoppingBag, User } from "lucide-react-native";
 import { TouchableOpacity } from "react-native";
@@ -47,16 +48,17 @@ export default function TabLayout() {
           }}
         />
         <Tabs.Screen
-          name="cart"
+          name="customizeOwnThali"
           options={{
             tabBarIcon: ({ color, focused }) => (
-              <ShoppingBag
+              <Ionicons
+                name="restaurant-outline"
                 size={28}
                 color={color}
                 strokeWidth={focused ? 2 : 1.8}
               />
             ),
-            title: "Cart",
+            title: "Customize Thali",
             tabBarButton: (props) => (
               <TouchableOpacity
                 activeOpacity={0.5}

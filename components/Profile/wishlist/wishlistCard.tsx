@@ -30,7 +30,7 @@ const WishlistCard = ({
             <View className='h-48 w-full rounded-[25px] relative shadow-lg shadow-gray-700'>
 
                 <ShimmerPlaceholder
-                    LinearGradient={LinearGradient}
+                    // LinearGradient={LinearGradient}
                     visible={imageLoaded}
                     style={{ width: '100%', height: '100%', borderRadius: 25 }}
                 >

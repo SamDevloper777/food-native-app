@@ -68,7 +68,7 @@ const kitchenProfile = () => {
               <Ionicons name="location" size={18} color="#fc913a" />
               <Text className="ml-1 text-[16px] font-medium">1 km</Text>
             </View>
-            <View style={{ borderLeftWidth: 1, borderLeftColor: '#FC913A', borderStyle: 'dashed' }} className="h-6" />
+            <View style={{ borderLeftWidth: 1, borderLeftColor: '#FC913A', borderStyle: 'dashed' }} className="h-6 w-1" />
             <View className="flex-row items-center justify-center">
               <Ionicons name="time" size={18} color="#fc913a" />
               <Text className="ml-1 text-[16px] font-medium">15 min</Text>

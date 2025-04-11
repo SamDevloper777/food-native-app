@@ -1,3 +1,4 @@
+import Navigation from "@/components/common/navigation";
 import { removeThaliItem } from "@/utils/slice/cartSlice";
 import { useRouter } from "expo-router";
 import { Minus, Plus, Trash } from "lucide-react-native";
@@ -15,10 +16,10 @@ const CartScreen = () => {
   };
 
   return (
-    <View className="flex-1 bg-white p-4">
-      <Text className="text-2xl font-bold mb-4">Your Cart</Text>
+    <View className="flex-1 bg-white">
+      <Navigation title="Your Cart"/>
       {cartItems.length === 0 ? (
-        <Text className="text-gray-500 text-center">Your cart is empty.</Text>
+        <Text className="text-gray-500 text-center my-auto">Your cart is empty.</Text>
       ) : (
         <FlatList
           data={cartItems}

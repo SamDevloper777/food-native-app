@@ -8,7 +8,7 @@ const SearchBar = () => {
       <View className="flex-row items-center flex-1 gap-2">
         <MagnifyingGlassIcon size={26} color="gray" />
         <TextInput
-          placeholder="Search your favourite pizza"
+          placeholder="Search your favourite kitchen"
           placeholderTextColor="#9CA3AF"
           className="text-gray-500 flex-1 text-[16px]"
         />

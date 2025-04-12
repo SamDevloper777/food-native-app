@@ -23,7 +23,7 @@ const ThaliItemCard = ({
 }) => {
   return (
     <TouchableOpacity
-      className={`flex-row items-center gap-2 bg-white p-4 rounded-2xl shadow-md w-[95%] h-[148px] py-8 my-2 mx-auto ${
+      className={`flex-row items-center justify-between gap-5 bg-white rounded-2xl shadow-md w-full h-[148px] py-4 px-4 my-2 mx-auto ${
         isSelected ? 'border border-[#FC913A]' : ''
       }`}
       activeOpacity={0.8}
@@ -36,13 +36,18 @@ const ThaliItemCard = ({
           resizeMode="cover"
         />
       </View>
-      <View className="flex-1 ml-4">
-        <Text className="text-lg font-bold">{Title}</Text>
-        <View className="flex-row items-center mt-2">
-          <Text className="text-xl font-bold">${Cost}</Text>
-        </View>
+      <View className="flex-1 flex-col justify-center items-start h-full">
+        <Text
+          className="text-[16px] font-bold"
+          numberOfLines={2}
+          ellipsizeMode="tail"
+        >
+          {Title}
+        </Text>
+        <Text className="text-lg font-semibold text-gray-500 mt-1">${Cost}</Text>
       </View>
-      <View className="flex flex-col justify-between items-center h-full">
+      <View className="w-[1px] h-[70%] bg-gray-200" />
+      <View className="flex flex-col justify-between items-center h-full gap-8">
         <Switch
           trackColor={{ false: '#e0e0e0', true: '#FFCDA4' }}
           thumbColor={isSelected ? '#FC913A' : '#e0e0e0'}
@@ -51,7 +56,7 @@ const ThaliItemCard = ({
           value={isSelected}
         />
         <View
-          className={`flex-row ${isSelected ? 'bg-[#FC913A]' : 'bg-[#e0e0e0]'} rounded-full px-4 py-2 items-center gap-2`}
+          className={`flex-row ${isSelected ? 'bg-[#FC913A]' : 'bg-[#e0e0e0]'} rounded-full px-6 py-3 items-center gap-3`}
         >
           <TouchableOpacity onPress={onDecrement} disabled={!isSelected}>
             <Minus size={16} color="white" />

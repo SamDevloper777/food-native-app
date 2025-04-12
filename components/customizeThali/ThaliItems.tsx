@@ -28,7 +28,7 @@ const thalis = [
     url: 'https://images.unsplash.com/photo-1668665771757-4d42737d295a?q=80&w=2080&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
   {
-    title: 'Shahi Paneer',
+    title: 'Panner Butter Masala Thali with Roti', 
     cost: '13.00',
     url: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=75&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
@@ -161,7 +161,7 @@ const ThaliItems: React.FC = () => {
   };
 
   return (
-    <View className="my-6">
+    <View className="pb-[76px]">
       {/* Header */}
       <View className="px-4 mb-6">
         <View className="flex-row items-center justify-between mb-3">

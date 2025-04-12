@@ -1,10 +1,11 @@
+import Thali from "@/components/customizeThali/Thali";
 import ThaliItems from "@/components/customizeThali/ThaliItems";
 import { addThaliItem } from "@/utils/slice/cartSlice";
 import { Ionicons } from "@expo/vector-icons";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { ChevronLeft, Heart } from "lucide-react-native";
 import React, { useState } from "react";
-import { ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { useDispatch } from "react-redux";
 
 const CustomizeThali = () => {
@@ -19,11 +20,6 @@ const CustomizeThali = () => {
   const price = parseFloat(cost);
   const dispatch = useDispatch();
   const router = useRouter();
-
-  const handleIncrement = () => setQuantity((prev) => prev + 1);
-  const handleDecrement = () => {
-    if (quantity > 1) setQuantity((prev) => prev - 1);
-  };
 
   const handleAddToCart = () => {
     dispatch(
@@ -48,7 +44,7 @@ const CustomizeThali = () => {
             <Heart size={24} color="gray" />
           </TouchableOpacity>
         </View>
-        <View className="flex items-center w-[280px] h-[280px] rounded-full bg-gray-200 mx-auto" />
+        <Thali />
         <TouchableOpacity
           className="border border-[#FC913A] px-6 py-3 my-6 rounded-full flex-row items-center gap-3 justify-between mx-auto"
           onPress={handleAddToCart}

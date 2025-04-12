@@ -9,7 +9,7 @@ const CustomizeOwn = () => {
         Customize your own Thali
       </Text>
       <View className="w-[65px] h-[1px] bg-gray-200"/>
-      <TouchableOpacity activeOpacity={0.9} onPress={() => router.push('/(screens)/customizeOwnThali')}>
+      <TouchableOpacity activeOpacity={0.9} onPress={() => router.push('/(tabs)/customizeOwnThali')}>
         <Text className="bg-[#FC913A] text-white text-[16px] px-5 py-3 rounded-full">
           Try now
         </Text>

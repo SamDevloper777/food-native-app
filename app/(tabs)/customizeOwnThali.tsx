@@ -41,6 +41,9 @@ const CustomizeThali = () => {
   return (
     <ScrollView className="flex-1 bg-white p-4 pb-24">
       <View className="flex-row justify-end items-center px-4">
+        <TouchableOpacity activeOpacity={0.8} onPress={() => router.back()}>
+          <ChevronLeft size={24} color="gray" />
+        </TouchableOpacity>
         <TouchableOpacity activeOpacity={0.8}>
           <Heart size={24} color="gray" />
         </TouchableOpacity>

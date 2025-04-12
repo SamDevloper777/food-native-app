@@ -1,73 +1,163 @@
-import React, { useState } from "react";
-import { ScrollView, Text, TouchableOpacity, View } from "react-native";
-import ThaliItemCard from "./ThaliItemCard";
+import React, { useState } from 'react';
+import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import ThaliItemCard from './ThaliItemCard';
 
-type Category = "Main Course" | "Starters" | "Desserts";
+type Category = 'Main Course' | 'Starters' | 'Desserts';
 
-const categories: Category[] = ["Main Course", "Starters", "Desserts"];
+const categories: Category[] = ['Main Course', 'Starters', 'Desserts'];
 
 const thalis = [
   {
-    title: "Rice",
-    cost: "10.00",
-    url: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=75&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    title: 'Rice',
+    cost: '10.00',
+    url: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=75&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
   {
-    title: "Margherita Pizza",
-    cost: "8.00",
-    rating: "4.6",
-    time: "30min",
-    url: "https://images.unsplash.com/photo-1511690656952-34342bb7c2f2?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    title: 'Dal',
+    cost: '8.00',
+    url: 'https://images.unsplash.com/photo-1511690656952-34342bb7c2f2?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
   {
-    title: "Shahi Paneer",
-    cost: "12.00",
-    rating: "4.1",
-    time: "25min",
-    url: "https://images.unsplash.com/photo-1600891964599-f61ba0e24092?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    title: 'Roti',
+    cost: '12.00',
+    url: 'https://images.unsplash.com/photo-1600891964599-f61ba0e24092?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
   {
-    title: "Veg Farmhouse",
-    cost: "13.00",
-    rating: "4.2",
-    time: "20min",
-    url: "https://images.unsplash.com/photo-1668665771757-4d42737d295a?q=80&w=2080&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    title: 'Mix Veg',
+    cost: '13.00',
+    url: 'https://images.unsplash.com/photo-1668665771757-4d42737d295a?q=80&w=2080&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+  },
+  {
+    title: 'Shahi Paneer',
+    cost: '13.00',
+    url: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=75&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
 ];
 
 const Starters = [
-  { title: "Biryani Blues", cost: "13.00", rating: "4.2", time: "20min", url: thalis[3].url },
-  { title: "Pizza Palace", cost: "10.00", rating: "4.5", time: "20min", url: thalis[0].url },
-  { title: "Indian Spice", cost: "8.00", rating: "4.6", time: "30min", url: thalis[1].url },
-  { title: "Chettinad", cost: "12.00", rating: "4.1", time: "25min", url: thalis[2].url },
-  { title: "Kebab Corner", cost: "13.00", rating: "4.2", time: "20min", url: thalis[3].url },
+  {
+    title: 'Samosa',
+    cost: '10.00',
+    url: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=75&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+  },
+  {
+    title: 'Pakora',
+    cost: '8.00',
+    url: 'https://images.unsplash.com/photo-1511690656952-34342bb7c2f2?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+  },
+  {
+    title: 'Aloo Tikki',
+    cost: '12.00',
+    url: 'https://images.unsplash.com/photo-1600891964599-f61ba0e24092?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+  },
+  {
+    title: 'Paneer Tikka',
+    cost: '13.00',
+    url: 'https://images.unsplash.com/photo-1668665771757-4d42737d295a?q=80&w=2080&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+  },
 ];
 
-// const Desserts = Starters.map((kitchen, index) => ({
-//   title: `${kitchen.title} Special`,
-//   ...kitchen,
-// }));
+const Desserts = [
+  {
+    title: 'Gulab Jamun',
+    cost: '10.00',
+    url: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=75&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+  },
+  {
+    title: 'Kheer',
+    cost: '8.00',
+    url: 'https://images.unsplash.com/photo-1511690656952-34342bb7c2f2?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+  },
+  {
+    title: 'Ice Cream',
+    cost: '12.00',
+    url: 'https://images.unsplash.com/photo-1600891964599-f61ba0e24092?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+  },
+  {
+    title: 'Rasgulla',
+    cost: '13.00',
+    url: 'https://images.unsplash.com/photo-1668665771757-4d42737d295a?q=80&w=2080&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+  },
+];
 
 const ThaliItems: React.FC = () => {
-  const [activeCategory, setActiveCategory] = useState<Category>("Main Course");
+  const [activeCategory, setActiveCategory] = useState<Category>('Main Course');
+  const [selectedItems, setSelectedItems] = useState<{
+    [key in Category]: { [title: string]: { isSelected: boolean; quantity: number } };
+  }>({
+    'Main Course': {},
+    Starters: {},
+    Desserts: {},
+  });
+
+  const handleToggle = (category: Category, title: string) => {
+    setSelectedItems((prev) => ({
+      ...prev,
+      [category]: {
+        ...prev[category],
+        [title]: {
+          isSelected: !prev[category][title]?.isSelected,
+          quantity: prev[category][title]?.quantity ?? 1,
+        },
+      },
+    }));
+  };
+
+  const handleIncrement = (category: Category, title: string) => {
+    setSelectedItems((prev) => ({
+      ...prev,
+      [category]: {
+        ...prev[category],
+        [title]: {
+          ...prev[category][title],
+          quantity: (prev[category][title]?.quantity ?? 1) + 1,
+        },
+      },
+    }));
+  };
+
+  const handleDecrement = (category: Category, title: string) => {
+    setSelectedItems((prev) => ({
+      ...prev,
+      [category]: {
+        ...prev[category],
+        [title]: {
+          ...prev[category][title],
+          quantity: Math.max(1, (prev[category][title]?.quantity ?? 1) - 1),
+        },
+      },
+    }));
+  };
 
   const renderCards = () => {
+    let items;
     switch (activeCategory) {
-      case "Main Course":
-        return thalis.map((item, idx) => (
-          <ThaliItemCard key={idx} Title={item.title} Cost={item.cost} Url={item.url} />
-        ));
-      case "Starters":
-        return Starters.map((item, idx) => (
-          <ThaliItemCard key={idx} Title={item.title} Cost={item.cost} Url={item.url} />
-        ));
-      // case "Desserts":
-      //   return Desserts.map((item, idx) => (
-      //     <DessertsCard key={idx} Title={item.title} Cost={item.cost} Rating={item.rating} Time={item.time} Url={item.url} />
-      //   ));
+      case 'Main Course':
+        items = thalis;
+        break;
+      case 'Starters':
+        items = Starters;
+        break;
+      case 'Desserts':
+        items = Desserts;
+        break;
       default:
         return null;
     }
+
+    return items.map((item) => (
+      <ThaliItemCard
+        key={`${activeCategory}-${item.title}`}
+        Title={item.title}
+        Cost={item.cost}
+        Url={item.url}
+        isSelected={selectedItems[activeCategory][item.title]?.isSelected ?? false}
+        onToggle={() => handleToggle(activeCategory, item.title)}
+        quantity={selectedItems[activeCategory][item.title]?.quantity ?? 1}
+        onIncrement={() => handleIncrement(activeCategory, item.title)}
+        onDecrement={() => handleDecrement(activeCategory, item.title)}
+      />
+    ));
   };
 
   return (
@@ -88,9 +178,15 @@ const ThaliItems: React.FC = () => {
               key={category}
               onPress={() => setActiveCategory(category)}
               activeOpacity={0.8}
-              className={`px-4 py-2 rounded-full mr-2 ${activeCategory === category ? "bg-[#FC913A]" : "bg-gray-100"}`}
+              className={`px-4 py-2 rounded-full mr-2 ${
+                activeCategory === category ? 'bg-[#FC913A]' : 'bg-gray-100'
+              }`}
             >
-              <Text className={`text-[16px] font-medium ${activeCategory === category ? "text-white" : "text-gray-700"}`}>
+              <Text
+                className={`text-[16px] font-medium ${
+                  activeCategory === category ? 'text-white' : 'text-gray-700'
+                }`}
+              >
                 {category}
               </Text>
             </TouchableOpacity>

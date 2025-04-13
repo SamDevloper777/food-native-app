@@ -1,3 +1,4 @@
+import { handlePress } from '@/utils/scripts/auth';
 import { router } from 'expo-router';
 import React from 'react';
 import { Text, TouchableOpacity } from 'react-native';
@@ -10,9 +11,10 @@ interface SubmitButtonProps {
     password?: string;
     confirmPassword?: string;
     isLogin?: boolean;
+    onGetOtp?: (email: string) => void;
 }
 
-const SubmitButton = ({ email, title, onSubmit, username, password, confirmPassword, isLogin = false }: SubmitButtonProps) => {
+const SubmitButton = ({ email, title, onSubmit, username, password, confirmPassword, isLogin = false, onGetOtp }: SubmitButtonProps) => {
     const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
     const isValidUsername = username ? username.length >= 3 : false;
     const isValidPassword = password ? password.length >= 6 : false;
@@ -24,21 +26,11 @@ const SubmitButton = ({ email, title, onSubmit, username, password, confirmPassw
     const buttonStyle = `w-full py-4 rounded-lg ${isFormValid ? 'bg-[#FC913A]' : 'bg-gray-300'}`;
     const textStyle = `text-center text-[16px] font-bold ${isFormValid ? 'text-white' : 'text-gray-500'}`;
 
-    const handlePress = () => {
-        if (isFormValid) {
-            if (onSubmit) {
-                onSubmit();
-            } else {
-                router.replace({ pathname: '/(auth)/VerifyOtp', params: { email } });
-            }
-        }
-    };
-
     return (
         <TouchableOpacity
             disabled={!isFormValid}
             className={buttonStyle}
-            onPress={handlePress}
+            onPress={() => handlePress(isFormValid, onSubmit, onGetOtp, email)  }
         >
             <Text className={textStyle}>
                 {title}

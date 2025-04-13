@@ -49,7 +49,7 @@ export const handleSignUp = async (email: string, username: string, password: st
     // } finally {
     //     setLoading(false);
     // }
-};  
+};
 
 export const handleGetOtp = (email: string, setEmail: (email: string) => void, setShowOtp: (showOtp: boolean) => void, otpSlideAnim: Animated.Value, width: number) => {
     setEmail(email);
@@ -79,4 +79,78 @@ export const slideTo = (tab: 'login' | 'signup', slideAnim: Animated.Value, widt
         useNativeDriver: true,
     }).start();
     setActiveTab(tab);
+};
+
+export const handleVerifyOtp = async (email: string, otp: string, setIsLoading: (isLoading: boolean) => void, dispatch: any) => {
+    if (otp.length !== 4) {
+        Alert.alert("Invalid OTP", "Please enter a 4-digit OTP.");
+        return;
+    }
+
+    setIsLoading(true);
+    console.log("Sending OTP:", otp);
+
+    try {
+        const response = await axios.post(
+            "http://192.168.1.5:8000/api/user/verifyemail/",
+            {
+                email: email,
+                otp: otp,
+            },
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            }
+        );
+
+        console.log("Verification Success:", response.data);
+
+        dispatch(
+            loginSuccess({
+                user: response.data.user,
+                token: response.data.token,
+            })
+        );
+
+        Alert.alert("Success", "OTP Verified Successfully!");
+        router.replace("/(tabs)/home");
+    } catch (error: any) {
+        console.error("API Error:", error.response?.data || error.message);
+        Alert.alert(
+            "Error",
+            error.response?.data?.message || "Verification failed!"
+        );
+    } finally {
+        setIsLoading(false);
+    }
+};
+
+export const handleSkip = (dispatch: any) => {
+    dispatch(
+        loginSuccess({
+            user: {
+                id: 1,
+                name: "Dev User", 
+                email: "dev@ovenly.com",
+            },
+            token: "dummy_dev_token",
+        })
+    );
+    router.replace("/(tabs)/home");
+};
+
+export const handlePress = (
+    isFormValid: boolean,
+    onSubmit?: () => void,
+    onGetOtp?: (email: string) => void,
+    email?: string
+) => {
+    if (isFormValid) {
+        if (onSubmit) {
+            onSubmit();
+        } else if (onGetOtp && email) {
+            onGetOtp(email);
+        }
+    }
 };

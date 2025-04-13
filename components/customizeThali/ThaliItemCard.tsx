@@ -35,6 +35,7 @@ const ThaliItemCard = ({
   const quantity = useSelector(getItemQuantity(id));
   
   const handleToggle = () => {
+    console.log('Toggling item:', { id, title, isSelected });
     if (isSelected) {
       dispatch(removeItem(id));
     } else {

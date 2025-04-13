@@ -1,12 +1,13 @@
 import Thali from "@/components/customizeThali/Thali";
 import ThaliItems from "@/components/customizeThali/ThaliItems";
 import { addThaliItem } from "@/utils/slice/cartSlice";
+import { selectThaliItems } from "@/utils/slice/customizeOwnThaliSlice";
 import { Ionicons } from "@expo/vector-icons";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { ChevronLeft, Heart } from "lucide-react-native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const CustomizeThali = () => {
   const { id, title, cost, time } = useLocalSearchParams<{
@@ -20,6 +21,11 @@ const CustomizeThali = () => {
   const price = parseFloat(cost);
   const dispatch = useDispatch();
   const router = useRouter();
+  const thaliItems = useSelector(selectThaliItems);
+
+  useEffect(() => {
+    console.log('Thali items updated:', thaliItems);
+  }, [thaliItems]);
 
   const handleAddToCart = () => {
     dispatch(
@@ -52,11 +58,11 @@ const CustomizeThali = () => {
         >
           <View className="flex flex-row">
             <Text className="text-[#fc913a] font-bold ml-2 text-lg">
-              0 Items Selected
+              {thaliItems.length} Items Selected
             </Text>
           </View>
           <View className="w-1 h-1 bg-[#fc913a] rounded-full" />
-          <Text className="text-[#fc913a] font-bold text-lg">$ 0</Text>
+          <Text className="text-[#fc913a] font-bold text-lg">$ {thaliItems.reduce((total, item) => total + (parseFloat(item.cost) * item.quantity), 0).toFixed(2)}</Text>
         </TouchableOpacity>
         <View className="flex-row justify-center items-center mt-4">
         </View>
@@ -74,7 +80,7 @@ const CustomizeThali = () => {
           </Text>
         </View>
         <View className="w-1 h-1 bg-white rounded-full" />
-        <Text className="text-white text-lg">$ 150</Text>
+        <Text className="text-white text-lg">$ {thaliItems.reduce((total, item) => total + (parseFloat(item.cost) * item.quantity), 0).toFixed(2)}</Text>
       </TouchableOpacity>
     </>
   );

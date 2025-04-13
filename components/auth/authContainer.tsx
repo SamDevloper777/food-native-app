@@ -47,10 +47,12 @@ const AuthContainer = () => {
                             width: '50%',
                             height: '100%',
                             backgroundColor: '#FC913A',
+                            position: 'absolute',
+                            left: 0,
                             transform: [{
                                 translateX: slideAnim.interpolate({
                                     inputRange: [-width, 0],
-                                    outputRange: ['100%', '0%'],
+                                    outputRange: [width * 0.3, 0],
                                 })
                             }]
                         }}

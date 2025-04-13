@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import CustomTextInput from '../common/customTextInput';
 import Heading from '../common/heading';
 import HoriontalDividerWithText from '../common/horiontalDividerWithText';
@@ -7,11 +7,15 @@ import SubmitButton from '../common/submitButton';
 import Subtitle from '../common/subtitle';
 import DevSkip from './devSkip';
 import GoogleLogin from './googleLogin';
-import NavigateToLoginSignIn from './navigateToLoginSignIn';
 import TermsAndService from './termsAndService';
 import { router } from 'expo-router';
+import NavigateToLoginSignUp from './navigateToLoginSignUP';
 
-const LoginSection: React.FC = () => {
+interface LoginSectionProps {
+    onNavigateToSignUp: () => void;
+}
+
+const LoginSection: React.FC<LoginSectionProps> = ({ onNavigateToSignUp }) => {
     const [email, setEmail] = useState<string>('');
 
     const loginComponents = [
@@ -24,16 +28,17 @@ const LoginSection: React.FC = () => {
             placeholder="Enter your email address"
             title="Email Address"
         />,
-        <SubmitButton key="submit" email={email} title="Get OTP" onSubmit={() => router.replace({ pathname: '/(auth)/VerifyOtp', params: { email } })} />,
+        <SubmitButton 
+            key="submit" 
+            email={email} 
+            title="Get OTP" 
+            isLogin={true}
+            onSubmit={() => router.replace({ pathname: '/(auth)/VerifyOtp', params: { email } })} 
+        />,
         <HoriontalDividerWithText key="divider" text="OR" />,
         <GoogleLogin key="google" />,
         <TermsAndService key="terms" />,
-        <NavigateToLoginSignIn
-            key="navigate"
-            question="Don't have an account?"
-            text="  Create Account"
-            tag="signup"
-        />
+        <NavigateToLoginSignUp key="navigate" text="  Create Account" question="Don't have an account?" tag="signup" onNavigateToSignUp={onNavigateToSignUp} />
     ];
 
     if (process.env.EXPO_PUBLIC_DEV_MODE === 'true') {
@@ -41,7 +46,7 @@ const LoginSection: React.FC = () => {
     }
 
     return (
-        <View className="bg-white px-6 pt-6 rounded-t-3xl h-[650px] absolute bottom-0 left-0 right-0">
+        <View className="bg-white px-6 pt-6 h-[650px] bottom-0 absolute left-0 right-0">
             {loginComponents}
         </View>
     );

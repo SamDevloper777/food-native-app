@@ -1,19 +1,15 @@
 import BgImage from '@/components/auth/bgImage';
-import LoginSection from '@/components/auth/loginSection';
-import SignUpSection from '@/components/auth/signUpSection';
+import AuthContainer from '@/components/auth/authContainer';
 import React from 'react';
-import {
-  View
-} from 'react-native';
+import { View } from 'react-native';
 
-const EmailLoginScreen = () => {
+const AuthScreen = () => {
   return (
     <View className="flex-1 relative">
       <BgImage />
-      <LoginSection />
-      {/* <SignUpSection /> */}
+      <AuthContainer />
     </View>
   );
 };
 
-export default EmailLoginScreen;
+export default AuthScreen;

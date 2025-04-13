@@ -1,4 +1,4 @@
-import { handleSignUp } from '@/utils/scripts/signUp';
+import { handleSignUp } from '@/utils/scripts/auth';
 import React, { useState } from 'react';
 import { ScrollView } from 'react-native';
 import { useDispatch } from 'react-redux';

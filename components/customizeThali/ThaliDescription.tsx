@@ -7,8 +7,8 @@ const ThaliDescription = ({ title, time }: { title: string, time: string }) => {
     const fullDescription = "A deliciously crafted thali, offering a perfect balance of flavors and textures. Each thali comes with a thoughtfully curated selection of dishes including dal, rice, roti, and various vegetable preparations. Our chefs ensure authentic taste and premium quality ingredients in every serving.";
     
     return (
-        <View className="bg-gray-100 p-4 rounded-lg">
-            <Text className="text-xl font-bold">{title}</Text>
+        <View className="bg-gray-100 p-4 rounded-lg mx-2">
+            <Text className="text-xl font-bold">ABC Kitchen | {title}</Text>
             <View>
                 <Text className="text-gray-500 mt-2">
                     {isExpanded ? fullDescription : fullDescription.slice(0, 60) + "..."}

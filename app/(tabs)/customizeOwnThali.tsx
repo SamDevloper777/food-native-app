@@ -62,7 +62,7 @@ const CustomizeThali = () => {
             </Text>
           </View>
           <View className="w-1 h-1 bg-[#fc913a] rounded-full" />
-          <Text className="text-[#fc913a] font-bold text-lg">$ {thaliItems.reduce((total, item) => total + (parseFloat(item.cost) * item.quantity), 0).toFixed(2)}</Text>
+          <Text className="text-[#fc913a] font-bold text-lg">₹ {thaliItems.reduce((total, item) => total + (parseFloat(item.cost) * item.quantity), 0).toFixed(2)}</Text>
         </TouchableOpacity>
         <View className="flex-row justify-center items-center mt-4">
         </View>
@@ -80,7 +80,7 @@ const CustomizeThali = () => {
           </Text>
         </View>
         <View className="w-1 h-1 bg-white rounded-full" />
-        <Text className="text-white text-lg">$ {thaliItems.reduce((total, item) => total + (parseFloat(item.cost) * item.quantity), 0).toFixed(2)}</Text>
+        <Text className="text-white text-lg">₹ {thaliItems.reduce((total, item) => total + (parseFloat(item.cost) * item.quantity), 0).toFixed(2)}</Text>
       </TouchableOpacity>
     </>
   );

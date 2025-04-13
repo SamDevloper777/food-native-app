@@ -28,7 +28,7 @@ const KitchenCard = ({ Title, Cost, Time, Rating, Url }: { Title: string, Cost: 
                     <Text className="text-gray-500">{Rating} ⭐</Text>
                 </View>
                 <View className="flex-row items-center mt-2">
-                    <Text className="text-xl font-bold">${Cost}</Text>
+                    <Text className="text-xl font-bold">₹{Cost}</Text>
                     <View className="ml-2 bg-[#FC913A] px-2 py-1 rounded-md">
                         <Text className="text-white text-xs font-bold">25% Off</Text>
                     </View>

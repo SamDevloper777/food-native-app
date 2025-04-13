@@ -43,7 +43,7 @@ const OrderCard = ({
             <View className="flex flex-row justify-between items-center">
               <View className="flex flex-col justify-between h-12">
                 <Text className="text-[#FC913A] font-bold text-base">
-                  ${cost} for one
+                  ₹{cost} for one
                 </Text>
                 <View className="flex flex-row items-center gap-1">
                   <Ionicons name="time-outline" size={16} color="#6B7280" />

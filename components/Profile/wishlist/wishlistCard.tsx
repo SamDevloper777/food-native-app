@@ -58,7 +58,7 @@ const WishlistCard = ({
                                 <View className='flex flex-row justify-between items-center'>
                                     <View className='flex flex-col justify-between h-12'>
                                         <Text className='text-sm text-black'>{city}</Text>
-                                        <Text className='text-[#FC913A] font-bold text-base'>${cost} for one</Text>
+                                        <Text className='text-[#FC913A] font-bold text-base'>₹{cost} for one</Text>
                                     </View>
                                     <View className='w-[1px] h-12 bg-gray-200' />
                                     <View className='flex flex-col justify-between h-12'>

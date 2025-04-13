@@ -73,7 +73,7 @@ const ThaliItemCard = ({
           {title}
         </Text>
         <Text className="text-lg font-semibold text-gray-500 mt-1">
-          ${cost}
+          ₹{cost}
         </Text>
       </View>
       

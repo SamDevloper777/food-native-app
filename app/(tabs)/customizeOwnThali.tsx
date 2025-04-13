@@ -56,11 +56,12 @@ const CustomizeThali = () => {
           onPress={handleAddToCart}
           activeOpacity={0.8}
         >
-          <View className="flex flex-row">
+          <TouchableOpacity className="flex flex-row" activeOpacity={0.8} onPress={() => router.push("/(screens)/cart")}>
+            <Ionicons name="bag-handle-outline" size={20} color="#fc913a" className="font-thick align-middle text-center my-auto" />
             <Text className="text-[#fc913a] font-bold ml-2 text-lg">
               {thaliItems.length} Items Selected
             </Text>
-          </View>
+          </TouchableOpacity>
           <View className="w-1 h-1 bg-[#fc913a] rounded-full" />
           <Text className="text-[#fc913a] font-bold text-lg">₹ {thaliItems.reduce((total, item) => total + (parseFloat(item.cost) * item.quantity), 0).toFixed(2)}</Text>
         </TouchableOpacity>

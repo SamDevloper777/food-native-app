@@ -13,8 +13,12 @@ import OTPTextInput from "react-native-otp-textinput";
 import { useDispatch } from "react-redux";
 import { loginSuccess } from "@/utils/slice/authSlice";
 
-const VerifyOtp = () => {
-  const { email } = useLocalSearchParams<{ email: string }>();
+interface VerifyOtpProps {
+    email: string;
+    onBack: () => void;
+}
+
+const VerifyOtp: React.FC<VerifyOtpProps> = ({ email, onBack }) => {
   const [otp, setOtp] = useState<string>("");
   const [isLoading, setIsLoading] = useState(false);
   const otpInputRef = useRef<OTPTextInput>(null);
@@ -66,9 +70,9 @@ const VerifyOtp = () => {
   };
 
   return (
-    <View className="flex-1 bg-white px-5 pt-2">
-      <View className="flex-row items-center justify-between">
-        <TouchableOpacity onPress={() => router.replace("/(auth)")}>
+    <View className="flex-1 bg-white px-5 pt-2 h-[650px] bottom-0 absolute left-0 right-0">
+      <View className="flex-row items-center justify-between mt-5">
+        <TouchableOpacity onPress={onBack}>
           <ChevronLeft size={24} color="black" />
         </TouchableOpacity>
         <TouchableOpacity>

@@ -8,14 +8,14 @@ import Subtitle from '../common/subtitle';
 import DevSkip from './devSkip';
 import GoogleLogin from './googleLogin';
 import TermsAndService from './termsAndService';
-import { router } from 'expo-router';
 import NavigateToLoginSignUp from './navigateToLoginSignUP';
 
 interface LoginSectionProps {
     onNavigateToSignUp: () => void;
+    onGetOtp: (email: string) => void;
 }
 
-const LoginSection: React.FC<LoginSectionProps> = ({ onNavigateToSignUp }) => {
+const LoginSection: React.FC<LoginSectionProps> = ({ onNavigateToSignUp, onGetOtp }) => {
     const [email, setEmail] = useState<string>('');
 
     const loginComponents = [
@@ -28,17 +28,17 @@ const LoginSection: React.FC<LoginSectionProps> = ({ onNavigateToSignUp }) => {
             placeholder="Enter your email address"
             title="Email Address"
         />,
-        <SubmitButton 
-            key="submit" 
-            email={email} 
-            title="Get OTP" 
+        <SubmitButton
+            key="submit"
+            email={email}
+            title="Get OTP"
             isLogin={true}
-            onSubmit={() => router.replace({ pathname: '/(auth)/VerifyOtp', params: { email } })} 
+            onSubmit={() => onGetOtp(email)}
         />,
         <HoriontalDividerWithText key="divider" text="OR" />,
         <GoogleLogin key="google" />,
         <TermsAndService key="terms" />,
-        <NavigateToLoginSignUp key="navigate" text="  Create Account" question="Don't have an account?" tag="signup" onNavigateToSignUp={onNavigateToSignUp} />
+        <NavigateToLoginSignUp key="navigate" text="  Create Account" question="Don't have an account?" onNavigateToSignUp={onNavigateToSignUp} />
     ];
 
     if (process.env.EXPO_PUBLIC_DEV_MODE === 'true') {

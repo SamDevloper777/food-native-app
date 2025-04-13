@@ -1,54 +1,8 @@
+import { categories, specials, thalis, vegetarian } from "@/utils/constants/kitchenProfile";
+import { Category } from "@/utils/types/recommendedSectionKitchenProfile";
 import React, { useState } from "react";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import ThaliCard from "../common/ThaliCard";
-
-type Category = "All Thalis" | "Vegetarian" | "Specials";
-
-const categories: Category[] = ["All Thalis", "Vegetarian", "Specials"];
-
-const thalis = [
-  {
-    title: "Pepperoni Pizza",
-    cost: "10.00",
-    rating: "4.5",
-    time: "20min",
-    url: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=75&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  },
-  {
-    title: "Margherita Pizza",
-    cost: "8.00",
-    rating: "4.6",
-    time: "30min",
-    url: "https://images.unsplash.com/photo-1511690656952-34342bb7c2f2?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  },
-  {
-    title: "Shahi Paneer",
-    cost: "12.00",
-    rating: "4.1",
-    time: "25min",
-    url: "https://images.unsplash.com/photo-1600891964599-f61ba0e24092?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  },
-  {
-    title: "Veg Farmhouse",
-    cost: "13.00",
-    rating: "4.2",
-    time: "20min",
-    url: "https://images.unsplash.com/photo-1668665771757-4d42737d295a?q=80&w=2080&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  },
-];
-
-const kitchens = [
-  { title: "Biryani Blues", cost: "13.00", rating: "4.2", time: "20min", url: thalis[3].url },
-  { title: "Pizza Palace", cost: "10.00", rating: "4.5", time: "20min", url: thalis[0].url },
-  { title: "Indian Spice", cost: "8.00", rating: "4.6", time: "30min", url: thalis[1].url },
-  { title: "Chettinad", cost: "12.00", rating: "4.1", time: "25min", url: thalis[2].url },
-  { title: "Kebab Corner", cost: "13.00", rating: "4.2", time: "20min", url: thalis[3].url },
-];
-
-// const specials = kitchens.map((kitchen, index) => ({
-//   title: `${kitchen.title} Special`,
-//   ...kitchen,
-// }));
 
 const RecommendedSection: React.FC = () => {
   const [activeCategory, setActiveCategory] = useState<Category>("All Thalis");
@@ -57,16 +11,16 @@ const RecommendedSection: React.FC = () => {
     switch (activeCategory) {
       case "All Thalis":
         return thalis.map((item, idx) => (
-          <ThaliCard key={idx} Title={item.title} Cost={item.cost} Rating={item.rating} Time={item.time} Url={item.url} />
+          <ThaliCard key={idx} Title={item.title} Cost={item.cost} Rating={item.rating} Time={item.time} Url={item.url} description={item.description} thaliOffer={item.thaliOffer} />
         ));
       case "Vegetarian":
-        return kitchens.map((item, idx) => (
-          <ThaliCard key={idx} Title={item.title} Cost={item.cost} Rating={item.rating} Time={item.time} Url={item.url} />
+        return vegetarian.map((item, idx) => (
+          <ThaliCard key={idx} Title={item.title} Cost={item.cost} Rating={item.rating} Time={item.time} Url={item.url} description={item.description} thaliOffer={item.thaliOffer} />
         ));
-      // case "Specials":
-      //   return specials.map((item, idx) => (
-      //     <SpecialsCard key={idx} Title={item.title} Cost={item.cost} Rating={item.rating} Time={item.time} Url={item.url} />
-      //   ));
+      case "Specials":
+        return specials.map((item, idx) => (
+          <ThaliCard key={idx} Title={item.title} Cost={item.cost} Rating={item.rating} Time={item.time} Url={item.url} description={item.description} thaliOffer={item.thaliOffer} />
+        ));
       default:
         return null;
     }
@@ -85,7 +39,7 @@ const RecommendedSection: React.FC = () => {
 
         {/* Category Tabs */}
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-          {categories.map((category) => (
+          {categories.map((category: Category) => (
             <TouchableOpacity
               key={category}
               onPress={() => setActiveCategory(category)}

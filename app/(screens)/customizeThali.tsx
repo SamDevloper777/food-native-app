@@ -1,12 +1,12 @@
 import Thali from "@/components/customizeThali/Thali";
 import ThaliDescription from "@/components/customizeThali/ThaliDescription";
 import ThaliItems from "@/components/customizeThali/ThaliItems";
-import { addThaliItem } from "@/utils/slice/cartSlice";
+import { handleAddToCart } from "@/utils/scripts/customizeThali";
 import { selectThaliItems } from "@/utils/slice/customizeOwnThaliSlice";
 import { Ionicons } from "@expo/vector-icons";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { ChevronLeft, Heart } from "lucide-react-native";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -24,22 +24,6 @@ const CustomizeThali = () => {
   const router = useRouter();
   const thaliItems = useSelector(selectThaliItems);
 
-  useEffect(() => {
-    console.log('Thali items updated:', thaliItems);
-  }, [thaliItems]);
-
-  const handleAddToCart = () => {
-    dispatch(
-      addThaliItem({
-        id: parseInt(id),
-        name: title,
-        price: price,
-        quantity: quantity,
-      })
-    );
-    router.push("/(screens)/cart");
-  };
-
   return (
     <>
       <ScrollView className="flex-1 bg-white p-4 pb-24 relative">
@@ -54,7 +38,7 @@ const CustomizeThali = () => {
         <Thali />
         <TouchableOpacity
           className="border border-[#FC913A] px-6 py-3 my-6 rounded-full flex-row items-center gap-3 justify-between mx-auto"
-          onPress={handleAddToCart}
+          onPress={() => handleAddToCart(id, title, cost, quantity.toString(), dispatch)}
           activeOpacity={0.8}
         >
           <TouchableOpacity className="flex flex-row" activeOpacity={0.8} onPress={() => router.push("/(screens)/cart")}>
@@ -73,7 +57,7 @@ const CustomizeThali = () => {
       </ScrollView>
       <TouchableOpacity
         className="bg-[#FC913A] px-6 py-3 rounded-full flex-row items-center justify-between absolute bottom-0 z-10 left-1/2 -translate-x-1/2 mb-3 gap-3"
-        onPress={handleAddToCart}
+        onPress={() => handleAddToCart(id, title, cost, quantity.toString(), dispatch)}
         activeOpacity={0.8}
       >
         <View className="flex flex-row">

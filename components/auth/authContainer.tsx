@@ -1,5 +1,5 @@
-import React, { useRef, useState } from 'react';
-import { View, Animated, Dimensions } from 'react-native';
+import React, { useRef, useState, useEffect } from 'react';
+import { View, Animated, Dimensions, BackHandler } from 'react-native';
 import LoginSection from './loginSection';
 import SignUpSection from './signUpSection';
 import VerifyOtp from './VerifyOtp';
@@ -7,23 +7,26 @@ import VerifyOtp from './VerifyOtp';
 const { width } = Dimensions.get('window');
 
 const AuthContainer = () => {
-    const [activeTab, setActiveTab] = useState<'login' | 'signup' | 'otp'>('login');
+    const [activeTab, setActiveTab] = useState<'login' | 'signup'>('login');
     const [email, setEmail] = useState('');
+    const [showOtp, setShowOtp] = useState(false);
     const slideAnim = useRef(new Animated.Value(0)).current;
+    const otpSlideAnim = useRef(new Animated.Value(width)).current;
 
-    const slideTo = (tab: 'login' | 'signup' | 'otp') => {
-        let toValue = 0;
-        switch (tab) {
-            case 'login':
-                toValue = 0;
-                break;
-            case 'signup':
-                toValue = -width;
-                break;
-            case 'otp':
-                toValue = -width * 2;
-                break;
-        }
+    useEffect(() => {
+        const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
+            if (showOtp) {
+                handleBackFromOtp();
+                return true;
+            }
+            return false;
+        });
+
+        return () => backHandler.remove();
+    }, [showOtp]);
+
+    const slideTo = (tab: 'login' | 'signup') => {
+        const toValue = tab === 'login' ? 0 : -width;
         Animated.timing(slideAnim, {
             toValue,
             duration: 300,
@@ -34,7 +37,22 @@ const AuthContainer = () => {
 
     const handleGetOtp = (email: string) => {
         setEmail(email);
-        slideTo('otp');
+        setShowOtp(true);
+        Animated.timing(otpSlideAnim, {
+            toValue: 0,
+            duration: 300,
+            useNativeDriver: true,
+        }).start();
+    };
+
+    const handleBackFromOtp = () => {
+        Animated.timing(otpSlideAnim, {
+            toValue: width,
+            duration: 300,
+            useNativeDriver: true,
+        }).start(() => {
+            setShowOtp(false);
+        });
     };
 
     return (
@@ -44,7 +62,7 @@ const AuthContainer = () => {
                     style={{
                         flexDirection: 'row',
                         transform: [{ translateX: slideAnim }],
-                        width: width * 3,
+                        width: width * 2,
                     }}
                     className="flex-1"
                 >
@@ -57,13 +75,25 @@ const AuthContainer = () => {
                     <View style={{ width }} className="flex-1">
                         <SignUpSection onNavigateToLogin={() => slideTo('login')} />
                     </View>
-                    <View style={{ width }} className="flex-1">
+                </Animated.View>
+
+                {showOtp && (
+                    <Animated.View
+                        style={{
+                            position: 'absolute',
+                            top: 0,
+                            left: 0,
+                            right: 0,
+                            bottom: 0,
+                            transform: [{ translateX: otpSlideAnim }],
+                        }}
+                    >
                         <VerifyOtp 
                             email={email} 
-                            onBack={() => slideTo('login')} 
+                            onBack={handleBackFromOtp} 
                         />
-                    </View>
-                </Animated.View>
+                    </Animated.View>
+                )}
             </View>
 
             {/* Bottom Slider Indicator */}
@@ -71,15 +101,15 @@ const AuthContainer = () => {
                 <View className="w-[60%] h-1 bg-gray-200 rounded-full overflow-hidden">
                     <Animated.View
                         style={{
-                            width: '33.33%',
+                            width: '50%',
                             height: '100%',
                             backgroundColor: '#FC913A',
                             position: 'absolute',
                             left: 0,
                             transform: [{
                                 translateX: slideAnim.interpolate({
-                                    inputRange: [-width * 2, -width, 0],
-                                    outputRange: [width * 0.4, width * 0.2, 0],
+                                    inputRange: [-width, 0],
+                                    outputRange: [width * 0.3, 0],
                                 })
                             }]
                         }}

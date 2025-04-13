@@ -8,7 +8,7 @@ import Subtitle from '../common/subtitle';
 import DevSkip from './devSkip';
 import GoogleLogin from './googleLogin';
 import TermsAndService from './termsAndService';
-import NavigateToLoginSignUp from './navigateToLoginSignUP';
+import NavigateToLoginSignUp from './navigateToLoginSignUp';
 
 interface LoginSectionProps {
     onNavigateToSignUp: () => void;

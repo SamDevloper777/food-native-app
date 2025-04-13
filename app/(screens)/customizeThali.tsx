@@ -1,9 +1,14 @@
+import Thali from "@/components/customizeThali/Thali";
+import ThaliDescription from "@/components/customizeThali/ThaliDescription";
+import ThaliItems from "@/components/customizeThali/ThaliItems";
 import { addThaliItem } from "@/utils/slice/cartSlice";
-import { useLocalSearchParams, useRouter } from "expo-router"; // ✅ Fixed router import
-import { ChevronLeft, Heart, Minus, Plus, ShoppingBag } from "lucide-react-native";
-import React, { useState } from "react";
+import { selectThaliItems } from "@/utils/slice/customizeOwnThaliSlice";
+import { Ionicons } from "@expo/vector-icons";
+import { useLocalSearchParams, useRouter } from "expo-router";
+import { ChevronLeft, Heart } from "lucide-react-native";
+import React, { useState, useEffect } from "react";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const CustomizeThali = () => {
   const { id, title, cost, time } = useLocalSearchParams<{
@@ -17,11 +22,11 @@ const CustomizeThali = () => {
   const price = parseFloat(cost);
   const dispatch = useDispatch();
   const router = useRouter();
+  const thaliItems = useSelector(selectThaliItems);
 
-  const handleIncrement = () => setQuantity((prev) => prev + 1);
-  const handleDecrement = () => {
-    if (quantity > 1) setQuantity((prev) => prev - 1);
-  };
+  useEffect(() => {
+    console.log('Thali items updated:', thaliItems);
+  }, [thaliItems]);
 
   const handleAddToCart = () => {
     dispatch(
@@ -32,67 +37,57 @@ const CustomizeThali = () => {
         quantity: quantity,
       })
     );
-    router.replace("/(screens)/cart");
+    router.push("/(screens)/cart");
   };
 
   return (
-    <ScrollView className="flex-1 bg-white p-4">
-      <View className="flex-row justify-between items-center mb-4">
-        <TouchableOpacity onPress={() => router.back()}>
-          <ChevronLeft size={24} color="black" />
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <Heart size={24} color="gray" />
-        </TouchableOpacity>
-      </View>
-      <View className="flex items-center w-[280px] h-[280px] rounded-full bg-gray-200 mx-auto" />
-      <View className="flex-row justify-center items-center my-4">
-        <View className="flex-row bg-[#FC913A] rounded-full px-4 py-2 items-center gap-2">
-          <TouchableOpacity onPress={handleDecrement}>
-            <Minus size={16} color="white" />
+    <>
+      <ScrollView className="flex-1 bg-white p-4 pb-24 relative">
+        <View className="flex-row justify-between items-center px-4">
+          <TouchableOpacity activeOpacity={0.8} onPress={() => router.back()}>
+            <ChevronLeft size={24} color="gray" />
           </TouchableOpacity>
-          <Text className="text-white text-md font-bold">
-            {quantity < 10 ? `0${quantity}` : quantity}
-          </Text>
-          <TouchableOpacity onPress={handleIncrement}>
-            <Plus size={16} color="white" />
+          <TouchableOpacity activeOpacity={0.8}>
+            <Heart size={24} color="gray" />
           </TouchableOpacity>
         </View>
-      </View>
-      <View className="bg-gray-100 p-4 rounded-lg">
-        <Text className="text-xl font-bold">{title}</Text>
-        <Text className="text-gray-500 mt-2">
-          A deliciously crafted thali, offering a perfect balance of flavors...
-          <Text className="text-[#FC913A]">Read More</Text>
-        </Text>
-        <View className="flex-row justify-between mt-4">
-          <Text className="text-xs text-gray-500">⏱️ {time}</Text>
-          <Text className="text-xs text-gray-500">🔥 250 Kcal</Text>
-        </View>
-      </View>
-      <Text className="text-lg font-bold mt-6">Toppings</Text>
-      <ScrollView horizontal showsHorizontalScrollIndicator={false} className="mt-2">
-        {["🍄", "🧅", "🍕", "🥬", "🍳"].map((item, index) => (
-          <TouchableOpacity key={index} className="bg-gray-200 p-3 mx-1 rounded-full">
-            <Text className="text-xl">{item}</Text>
-          </TouchableOpacity>
-        ))}
-      </ScrollView>
-      <View className="flex-row justify-between items-center mt-6">
-        <View>
-          {quantity > 1 && <Text className="text-gray-500 line-through">${price.toFixed(2)}</Text>}
-          <Text className="text-lg font-bold text-black">${(price * quantity).toFixed(2)}</Text>
-        </View>
+        <Thali />
         <TouchableOpacity
-          className="bg-[#FC913A] px-6 py-3 rounded-full flex-row items-center"
+          className="border border-[#FC913A] px-6 py-3 my-6 rounded-full flex-row items-center gap-3 justify-between mx-auto"
           onPress={handleAddToCart}
+          activeOpacity={0.8}
         >
-          <ShoppingBag size={20} color="white" />
-          <Text className="text-white ml-2">Add to Cart</Text>
+          <TouchableOpacity className="flex flex-row" activeOpacity={0.8} onPress={() => router.push("/(screens)/cart")}>
+            <Ionicons name="bag-handle-outline" size={20} color="#fc913a" className="font-thick align-middle text-center my-auto" />
+            <Text className="text-[#fc913a] font-bold ml-2 text-lg">
+              {thaliItems.length} Items Selected
+            </Text>
+          </TouchableOpacity>
+          <View className="w-1 h-1 bg-[#fc913a] rounded-full" />
+          <Text className="text-[#fc913a] font-bold text-lg">₹ {thaliItems.reduce((total, item) => total + (parseFloat(item.cost) * item.quantity), 0).toFixed(2)}</Text>
         </TouchableOpacity>
-      </View>
-    </ScrollView>
+        <ThaliDescription title={title} time={time} />
+        <View className="flex-row justify-center items-center mt-4">
+        </View>
+        <ThaliItems />
+      </ScrollView>
+      <TouchableOpacity
+        className="bg-[#FC913A] px-6 py-3 rounded-full flex-row items-center justify-between absolute bottom-0 z-10 left-1/2 -translate-x-1/2 mb-3 gap-3"
+        onPress={handleAddToCart}
+        activeOpacity={0.8}
+      >
+        <View className="flex flex-row">
+          <Ionicons name="cart-outline" size={20} color="white" />
+          <Text className="text-white ml-2 text-lg">
+            Confirm Thali
+          </Text>
+        </View>
+        <View className="w-1 h-1 bg-white rounded-full" />
+        <Text className="text-white text-lg">₹ {thaliItems.reduce((total, item) => total + (parseFloat(item.cost) * item.quantity), 0).toFixed(2)}</Text>
+      </TouchableOpacity>
+    </>
   );
 };
 
 export default CustomizeThali;
+

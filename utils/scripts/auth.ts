@@ -1,6 +1,6 @@
 import axios from "axios";
 import { router } from "expo-router";
-import { Alert } from "react-native";
+import { Alert, Animated } from "react-native";
 import { loginSuccess } from "../slice/authSlice";
 
 export const handleSignUp = async (email: string, username: string, password: string, confirmPassword: string, setLoading: (loading: boolean) => void, dispatch: any) => {
@@ -50,3 +50,33 @@ export const handleSignUp = async (email: string, username: string, password: st
     //     setLoading(false);
     // }
 };  
+
+export const handleGetOtp = (email: string, setEmail: (email: string) => void, setShowOtp: (showOtp: boolean) => void, otpSlideAnim: Animated.Value, width: number) => {
+    setEmail(email);
+    setShowOtp(true);
+    Animated.timing(otpSlideAnim, {
+        toValue: 0,
+        duration: 300,
+        useNativeDriver: true,
+    }).start();
+};
+
+export const handleBackFromOtp = (otpSlideAnim: Animated.Value, width: number, setShowOtp: (showOtp: boolean) => void) => {
+    Animated.timing(otpSlideAnim, {
+        toValue: width,
+        duration: 300,
+        useNativeDriver: true,
+    }).start(() => {
+        setShowOtp(false);
+    });
+};
+
+export const slideTo = (tab: 'login' | 'signup', slideAnim: Animated.Value, width: number, setActiveTab: (activeTab: 'login' | 'signup') => void) => {
+    const toValue = tab === 'login' ? 0 : -width;
+    Animated.timing(slideAnim, {
+        toValue,
+        duration: 300,
+        useNativeDriver: true,
+    }).start();
+    setActiveTab(tab);
+};

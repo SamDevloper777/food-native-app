@@ -3,6 +3,7 @@ import { View, Animated, Dimensions, BackHandler } from 'react-native';
 import LoginSection from './loginSection';
 import SignUpSection from './signUpSection';
 import VerifyOtp from './VerifyOtp';
+import { handleGetOtp, slideTo, handleBackFromOtp } from '@/utils/scripts/auth';
 
 const { width } = Dimensions.get('window');
 
@@ -16,44 +17,24 @@ const AuthContainer = () => {
     useEffect(() => {
         const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
             if (showOtp) {
-                handleBackFromOtp();
+                handleBackFromOtp(otpSlideAnim, width, setShowOtp);
                 return true;
             }
             return false;
         });
 
         return () => backHandler.remove();
-    }, [showOtp]);
+    }, [showOtp, otpSlideAnim]);
 
-    const slideTo = (tab: 'login' | 'signup') => {
-        const toValue = tab === 'login' ? 0 : -width;
-        Animated.timing(slideAnim, {
-            toValue,
-            duration: 300,
-            useNativeDriver: true,
-        }).start();
-        setActiveTab(tab);
-    };
+    const handleOtpRequest = () => handleGetOtp(email, setEmail, setShowOtp, otpSlideAnim, width);
+    const handleBack = () => handleBackFromOtp(otpSlideAnim, width, setShowOtp);
+    const navigateToSignup = () => slideTo('signup', slideAnim, width, setActiveTab);
+    const navigateToLogin = () => slideTo('login', slideAnim, width, setActiveTab);
 
-    const handleGetOtp = (email: string) => {
-        setEmail(email);
-        setShowOtp(true);
-        Animated.timing(otpSlideAnim, {
-            toValue: 0,
-            duration: 300,
-            useNativeDriver: true,
-        }).start();
-    };
-
-    const handleBackFromOtp = () => {
-        Animated.timing(otpSlideAnim, {
-            toValue: width,
-            duration: 300,
-            useNativeDriver: true,
-        }).start(() => {
-            setShowOtp(false);
-        });
-    };
+    const sliderTransform = slideAnim.interpolate({
+        inputRange: [-width, 0],
+        outputRange: [width * 0.3, 0],
+    });
 
     return (
         <View className="flex-1">
@@ -68,12 +49,12 @@ const AuthContainer = () => {
                 >
                     <View style={{ width }} className="flex-1">
                         <LoginSection 
-                            onNavigateToSignUp={() => slideTo('signup')} 
-                            onGetOtp={handleGetOtp}
+                            onNavigateToSignUp={navigateToSignup}
+                            onGetOtp={handleOtpRequest}
                         />
                     </View>
                     <View style={{ width }} className="flex-1">
-                        <SignUpSection onNavigateToLogin={() => slideTo('login')} />
+                        <SignUpSection onNavigateToLogin={navigateToLogin} />
                     </View>
                 </Animated.View>
 
@@ -89,14 +70,13 @@ const AuthContainer = () => {
                         }}
                     >
                         <VerifyOtp 
-                            email={email} 
-                            onBack={handleBackFromOtp} 
+                            email={email}
+                            onBack={handleBack}
                         />
                     </Animated.View>
                 )}
             </View>
 
-            {/* Bottom Slider Indicator */}
             <View className="absolute bottom-4 left-0 right-0 items-center">
                 <View className="w-[60%] h-1 bg-gray-200 rounded-full overflow-hidden">
                     <Animated.View
@@ -107,10 +87,7 @@ const AuthContainer = () => {
                             position: 'absolute',
                             left: 0,
                             transform: [{
-                                translateX: slideAnim.interpolate({
-                                    inputRange: [-width, 0],
-                                    outputRange: [width * 0.3, 0],
-                                })
+                                translateX: sliderTransform
                             }]
                         }}
                     />
@@ -120,4 +97,4 @@ const AuthContainer = () => {
     );
 };
 
-export default AuthContainer; 
+export default AuthContainer;

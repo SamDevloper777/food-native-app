@@ -1,5 +1,6 @@
 import BgImage from '@/components/auth/bgImage';
 import LoginSection from '@/components/auth/loginSection';
+import SignUpSection from '@/components/auth/signUpSection';
 import React from 'react';
 import {
   View
@@ -7,9 +8,10 @@ import {
 
 const EmailLoginScreen = () => {
   return (
-    <View className="flex-1 relative bg-[#FC913A]">
+    <View className="flex-1 relative">
       <BgImage />
       <LoginSection />
+      {/* <SignUpSection /> */}
     </View>
   );
 };

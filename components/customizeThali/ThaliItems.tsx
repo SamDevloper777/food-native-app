@@ -28,7 +28,7 @@ const thalis = [
     url: 'https://i0.wp.com/www.blissofcooking.com/wp-content/uploads/2020/08/Easy-Mix-Vegetables-EOP.jpg?resize=1024%2C683&ssl=1',
   },
   {
-    title: 'Panner Butter Masala Thali with Roti', 
+    title: 'Paneer Butter Masala',
     cost: '13.00',
     url: 'https://imgs.search.brave.com/zokFzOhSiCrW4U9-fYm4dNn-q3dopKq9rigZf63SGOg/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly90My5m/dGNkbi5uZXQvanBn/LzA3LzY0Lzc3Lzgw/LzM2MF9GXzc2NDc3/ODA3M19TVzNtM1Q3/OTQ0WUtySmtTOVFW/TkxPTmYxUWxzc2Jp/Mi5qcGc',
   },
@@ -148,14 +148,10 @@ const ThaliItems: React.FC = () => {
     return items.map((item) => (
       <ThaliItemCard
         key={`${activeCategory}-${item.title}`}
-        Title={item.title}
-        Cost={item.cost}
-        Url={item.url}
-        isSelected={selectedItems[activeCategory][item.title]?.isSelected ?? false}
-        onToggle={() => handleToggle(activeCategory, item.title)}
-        quantity={selectedItems[activeCategory][item.title]?.quantity ?? 1}
-        onIncrement={() => handleIncrement(activeCategory, item.title)}
-        onDecrement={() => handleDecrement(activeCategory, item.title)}
+        id={`${activeCategory}-${item.title}`}
+        title={item.title}
+        cost={item.cost}
+        url={item.url}
       />
     ));
   };
@@ -178,14 +174,12 @@ const ThaliItems: React.FC = () => {
               key={category}
               onPress={() => setActiveCategory(category)}
               activeOpacity={0.8}
-              className={`px-4 py-2 rounded-full mr-2 ${
-                activeCategory === category ? 'bg-[#FC913A]' : 'bg-gray-100'
-              }`}
+              className={`px-4 py-2 rounded-full mr-2 ${activeCategory === category ? 'bg-[#FC913A]' : 'bg-gray-100'
+                }`}
             >
               <Text
-                className={`text-[16px] font-medium ${
-                  activeCategory === category ? 'text-white' : 'text-gray-700'
-                }`}
+                className={`text-[16px] font-medium ${activeCategory === category ? 'text-white' : 'text-gray-700'
+                  }`}
               >
                 {category}
               </Text>

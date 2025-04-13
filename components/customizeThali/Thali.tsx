@@ -4,12 +4,10 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../utils/store';
 
 const Thali = () => {
-  // Get all selected items from Redux
   const selectedItems = useSelector((state: RootState) => 
     Object.values(state.customizeOwnThali.items)
   );
 
-  // Map of item IDs to their image positions and styles
   const itemPositions: Record<string, { 
     image: any, 
     style: string,
@@ -38,13 +36,11 @@ const Thali = () => {
 
   return (
     <View className="w-[350px] h-[300px] mx-auto relative">
-      {/* Thali Plate Background */}
       <Image
         source={require('../../assets/images/thali.png')}
         style={{ width: '100%', height: '100%' }}
       />
 
-      {/* Render selected items */}
       {selectedItems.map((item) => {
         const position = itemPositions[item.id];
         if (!position) {

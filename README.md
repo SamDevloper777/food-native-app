@@ -1,3 +1,12 @@
+# TODO
+- Cart Screen
+- Checkout Screen
+- Optimize Loading
+- See All
+- Search 
+- Filters
+
+``` json
 {
   "Customer": {
     "address": "Text",
@@ -32,3 +41,4 @@
     "updated_at": "DateTime"
   }
 }
+```

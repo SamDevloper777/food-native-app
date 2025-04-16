@@ -1,5 +1,5 @@
 import { Minus, Plus } from 'lucide-react-native';
-import React from 'react';
+import React, { useCallback, memo } from 'react';
 import {
   Image,
   Pressable,
@@ -18,33 +18,46 @@ import {
   getItemQuantity,
 } from '../../utils/slice/customizeOwnThaliSlice';
 
-const ThaliItemCard = ({
-  id,
-  title,
-  cost,
-  url,
-}: {
+interface ThaliItemCardProps {
   id: string;
   title: string;
   cost: string;
   url: string;
-}) => {
+}
+
+const ThaliItemCard = memo(({
+  id,
+  title,
+  cost,
+  url,
+}: ThaliItemCardProps) => {
   const dispatch = useDispatch();
   
   const isSelected = useSelector(isItemSelected(id));
   const quantity = useSelector(getItemQuantity(id));
   
-  const handleToggle = () => {
-    console.log('Toggling item:', { id, title, isSelected });
+  const handleToggle = useCallback(() => {
     if (isSelected) {
       dispatch(removeItem(id));
     } else {
       dispatch(addItem({ id, title, cost, url }));
     }
-  };
+  }, [isSelected, id, title, cost, url, dispatch]);
   
-  const handleIncrement = () => dispatch(incrementQuantity(id));
-  const handleDecrement = () => dispatch(decrementQuantity(id));
+  const handleIncrement = useCallback(() => 
+    dispatch(incrementQuantity(id)),
+    [id, dispatch]
+  );
+
+  const handleDecrement = useCallback(() => 
+    dispatch(decrementQuantity(id)),
+    [id, dispatch]
+  );
+
+  const buttonStyle = useCallback(({ pressed }: { pressed: boolean }) => ({
+    opacity: pressed || !isSelected ? 0.6 : 1,
+    padding: 4,
+  }), [isSelected]);
   
   return (
     <TouchableOpacity
@@ -100,10 +113,7 @@ const ThaliItemCard = ({
             onPress={handleDecrement}
             disabled={!isSelected || quantity <= 0}
             hitSlop={10}
-            style={({ pressed }) => ({
-              opacity: pressed || !isSelected ? 0.6 : 1,
-              padding: 4,
-            })}
+            style={buttonStyle}
           >
             <Minus size={18} color="white" />
           </Pressable>
@@ -118,10 +128,7 @@ const ThaliItemCard = ({
             onPress={handleIncrement}
             disabled={!isSelected}
             hitSlop={10}
-            style={({ pressed }) => ({
-              opacity: pressed || !isSelected ? 0.6 : 1,
-              padding: 4,
-            })}
+            style={buttonStyle}
           >
             <Plus size={18} color="white" />
           </Pressable>
@@ -129,6 +136,8 @@ const ThaliItemCard = ({
       </View>
     </TouchableOpacity>
   );
-};
+});
+
+ThaliItemCard.displayName = 'ThaliItemCard';
 
 export default ThaliItemCard;

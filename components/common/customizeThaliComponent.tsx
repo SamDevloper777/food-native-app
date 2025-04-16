@@ -5,7 +5,7 @@ import ThaliItems from "@/components/customizeThali/ThaliItems";
 import SelectedItemsList from "@/components/kitchenProfile/selectedItemsList";
 import { selectThaliItems } from "@/utils/slice/customizeOwnThaliSlice";
 import { useLocalSearchParams } from "expo-router";
-import React, { useEffect, useState } from "react";
+import React, { useMemo } from "react";
 import { ScrollView } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import ThaliDescription from "@/components/customizeThali/ThaliDescription";
@@ -17,36 +17,64 @@ interface CustomizeThaliComponentProps {
   confirmButtonText: string;
 }
 
-const CustomizeThaliComponent = ({ thaliTitle, deliveryTime, kitchenName, confirmButtonText }: CustomizeThaliComponentProps) => {
+const CustomizeThaliComponent = ({ 
+  thaliTitle, 
+  deliveryTime, 
+  kitchenName, 
+  confirmButtonText 
+}: CustomizeThaliComponentProps) => {
   const { id, title, cost } = useLocalSearchParams<{
     id: string;
     title: string;
     cost: string;
   }>();
 
-  const [quantity, setQuantity] = useState(1);
   const price = parseFloat(cost);
   const dispatch = useDispatch();
   const thaliItems = useSelector(selectThaliItems);
 
-  useEffect(() => {
-    console.log('Thali items updated:', thaliItems);
-  }, [thaliItems]);
+  const showThaliDescription = useMemo(() => 
+    thaliTitle && deliveryTime && kitchenName,
+    [thaliTitle, deliveryTime, kitchenName]
+  );
 
   return (
     <>
-      <ScrollView className="flex-1 bg-white p-4 pb-24 relative">
+      <ScrollView 
+        className="flex-1 bg-white p-4 pb-24 relative"
+        keyboardShouldPersistTaps="handled"
+        showsVerticalScrollIndicator={false}
+      >
         <Navigation hasHeart={true} />
         <Thali />
-        <SelectedItemsList id={id} title={title} cost={price} quantity={quantity} dispatch={dispatch} thaliItems={thaliItems} />
-        {thaliTitle && deliveryTime && kitchenName && (
-          <ThaliDescription thaliTitle={thaliTitle} deliveryTime={deliveryTime} kitchenName={kitchenName} />
+        <SelectedItemsList 
+          id={id} 
+          title={title} 
+          cost={price} 
+          quantity={1} 
+          dispatch={dispatch} 
+          thaliItems={thaliItems} 
+        />
+        {showThaliDescription && (
+          <ThaliDescription 
+            thaliTitle={thaliTitle as string} 
+            deliveryTime={deliveryTime as string} 
+            kitchenName={kitchenName as string} 
+          />
         )}
         <ThaliItems />
       </ScrollView>
-      <ConfirmButton id={id} title={title} cost={price} quantity={quantity} dispatch={dispatch} thaliItems={thaliItems} buttonText={confirmButtonText} />
+      <ConfirmButton 
+        id={id} 
+        title={title} 
+        cost={price} 
+        quantity={1} 
+        dispatch={dispatch} 
+        thaliItems={thaliItems} 
+        buttonText={confirmButtonText} 
+      />
     </>
   );
 };
 
-export default CustomizeThaliComponent;
+export default React.memo(CustomizeThaliComponent);

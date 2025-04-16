@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import React, { useState, useCallback, useMemo } from 'react';
+import { FlatList, Text, TouchableOpacity, View } from 'react-native';
 import ThaliItemCard from './ThaliItemCard';
 
 type Category = 'Main Course' | 'Starters' | 'Desserts';
@@ -82,79 +82,57 @@ const Desserts = [
 
 const ThaliItems: React.FC = () => {
   const [activeCategory, setActiveCategory] = useState<Category>('Main Course');
-  const [selectedItems, setSelectedItems] = useState<{
-    [key in Category]: { [title: string]: { isSelected: boolean; quantity: number } };
-  }>({
-    'Main Course': {},
-    Starters: {},
-    Desserts: {},
-  });
 
-  const handleToggle = (category: Category, title: string) => {
-    setSelectedItems((prev) => ({
-      ...prev,
-      [category]: {
-        ...prev[category],
-        [title]: {
-          isSelected: !prev[category][title]?.isSelected,
-          quantity: prev[category][title]?.quantity ?? 1,
-        },
-      },
-    }));
-  };
+  const handleCategoryChange = useCallback((category: Category) => {
+    setActiveCategory(category);
+  }, []);
 
-  const handleIncrement = (category: Category, title: string) => {
-    setSelectedItems((prev) => ({
-      ...prev,
-      [category]: {
-        ...prev[category],
-        [title]: {
-          ...prev[category][title],
-          quantity: (prev[category][title]?.quantity ?? 1) + 1,
-        },
-      },
-    }));
-  };
-
-  const handleDecrement = (category: Category, title: string) => {
-    setSelectedItems((prev) => ({
-      ...prev,
-      [category]: {
-        ...prev[category],
-        [title]: {
-          ...prev[category][title],
-          quantity: Math.max(1, (prev[category][title]?.quantity ?? 1) - 1),
-        },
-      },
-    }));
-  };
-
-  const renderCards = () => {
-    let items;
+  const data = useMemo(() => {
     switch (activeCategory) {
       case 'Main Course':
-        items = thalis;
-        break;
+        return thalis;
       case 'Starters':
-        items = Starters;
-        break;
+        return Starters;
       case 'Desserts':
-        items = Desserts;
-        break;
+        return Desserts;
       default:
-        return null;
+        return [];
     }
+  }, [activeCategory]);
 
-    return items.map((item) => (
-      <ThaliItemCard
-        key={`${activeCategory}-${item.title}`}
-        id={`${activeCategory}-${item.title}`}
-        title={item.title}
-        cost={item.cost}
-        url={item.url}
-      />
-    ));
-  };
+  const renderItem = useCallback(({ item }: { item: typeof thalis[0] }) => (
+    <ThaliItemCard
+      key={`${activeCategory}-${item.title}`}
+      id={`${activeCategory}-${item.title}`}
+      title={item.title}
+      cost={item.cost}
+      url={item.url}
+    />
+  ), [activeCategory]);
+
+  const keyExtractor = useCallback((item: typeof thalis[0]) => 
+    `${activeCategory}-${item.title}`, 
+    [activeCategory]
+  );
+
+  const renderCategoryTab = useCallback((category: Category) => (
+    <TouchableOpacity
+      key={category}
+      onPress={() => handleCategoryChange(category)}
+      activeOpacity={0.8}
+      className={`px-4 py-2 rounded-full mr-2 ${
+        activeCategory === category ? 'bg-[#FC913A]' : 'bg-gray-100'
+      }`}
+    >
+      <Text
+        className={`text-[16px] font-medium ${
+          activeCategory === category ? 'text-white' : 'text-gray-700'
+        }`}
+      >
+        {category}
+      </Text>
+    </TouchableOpacity>
+  ), [activeCategory, handleCategoryChange]);
 
   return (
     <View className="pb-[76px]">
@@ -168,30 +146,28 @@ const ThaliItems: React.FC = () => {
         </View>
 
         {/* Category Tabs */}
-        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-          {categories.map((category) => (
-            <TouchableOpacity
-              key={category}
-              onPress={() => setActiveCategory(category)}
-              activeOpacity={0.8}
-              className={`px-4 py-2 rounded-full mr-2 ${activeCategory === category ? 'bg-[#FC913A]' : 'bg-gray-100'
-                }`}
-            >
-              <Text
-                className={`text-[16px] font-medium ${activeCategory === category ? 'text-white' : 'text-gray-700'
-                  }`}
-              >
-                {category}
-              </Text>
-            </TouchableOpacity>
-          ))}
-        </ScrollView>
+        <FlatList
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          data={categories}
+          renderItem={({ item }) => renderCategoryTab(item)}
+          keyExtractor={(item) => item}
+        />
       </View>
 
       {/* Dynamic Cards */}
-      <View className="px-2 space-y-4">{renderCards()}</View>
+      <FlatList
+        data={data}
+        renderItem={renderItem}
+        keyExtractor={keyExtractor}
+        contentContainerStyle={{ paddingHorizontal: 8, gap: 16 }}
+        showsVerticalScrollIndicator={false}
+        removeClippedSubviews={true}
+        maxToRenderPerBatch={5}
+        windowSize={5}
+      />
     </View>
   );
 };
 
-export default ThaliItems;
+export default React.memo(ThaliItems);

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo, useCallback } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import CustomTextInput from '../common/customTextInput';
 import Heading from '../common/heading';
@@ -18,32 +18,49 @@ interface LoginSectionProps {
 const LoginSection: React.FC<LoginSectionProps> = ({ onNavigateToSignUp, onGetOtp }) => {
     const [email, setEmail] = useState<string>('');
 
-    const loginComponents = [
-        <Heading key="heading" heading="Welcome to Ovenly" />,
-        <Subtitle key="subtitle" subtitle="Enter your email address to get started" />,
-        <CustomTextInput
-            key="email"
-            value={email}
-            onChangeText={setEmail}
-            placeholder="Enter your email address"
-            title="Email Address"
-        />,
-        <SubmitButton
-            key="submit"
-            email={email}
-            title="Get OTP"
-            isLogin={true}
-            onSubmit={() => onGetOtp(email)}
-        />,
-        <HoriontalDividerWithText key="divider" text="OR" />,
-        <GoogleLogin key="google" />,
-        <TermsAndService key="terms" />,
-        <NavigateToLoginSignUp key="navigate" text="  Create Account" question="Don't have an account?" onNavigateToSignUp={onNavigateToSignUp} />
-    ];
+    const handleEmailChange = useCallback((text: string) => {
+        setEmail(text);
+    }, []);
 
-    if (process.env.EXPO_PUBLIC_DEV_MODE === 'true') {
-        loginComponents.push(<DevSkip key="dev" />);
-    }
+    const handleSubmit = useCallback(() => {
+        onGetOtp(email);
+    }, [email, onGetOtp]);
+
+    const loginComponents = useMemo(() => {
+        const components = [
+            <Heading key="heading" heading="Welcome to Ovenly" />,
+            <Subtitle key="subtitle" subtitle="Enter your email address to get started" />,
+            <CustomTextInput
+                key="email"
+                value={email}
+                onChangeText={handleEmailChange}
+                placeholder="Enter your email address"
+                title="Email Address"
+            />,
+            <SubmitButton
+                key="submit"
+                email={email}
+                title="Get OTP"
+                isLogin={true}
+                onSubmit={handleSubmit}
+            />,
+            <HoriontalDividerWithText key="divider" text="OR" />,
+            <GoogleLogin key="google" />,
+            <TermsAndService key="terms" />,
+            <NavigateToLoginSignUp 
+                key="navigate" 
+                text="  Create Account" 
+                question="Don't have an account?" 
+                onNavigateToSignUp={onNavigateToSignUp} 
+            />
+        ];
+
+        if (process.env.EXPO_PUBLIC_DEV_MODE === 'true') {
+            components.push(<DevSkip key="dev" />);
+        }
+
+        return components;
+    }, [email, handleEmailChange, handleSubmit, onNavigateToSignUp]);
 
     return (
         <View className="bg-white px-6 pt-6 h-[650px] bottom-0 absolute left-0 right-0">
@@ -52,4 +69,4 @@ const LoginSection: React.FC<LoginSectionProps> = ({ onNavigateToSignUp, onGetOt
     );
 };
 
-export default LoginSection;
+export default React.memo(LoginSection);

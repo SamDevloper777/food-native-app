@@ -1,9 +1,18 @@
 import { router } from 'expo-router';
 import { Heart } from 'lucide-react-native';
-import React from 'react';
-import { Image, Text, TouchableOpacity, View } from 'react-native';
+import React, { memo } from 'react';
+import { Text, TouchableOpacity, View } from 'react-native';
+import { Image } from 'expo-image';
 
-const ThaliCard = ({ Title, Cost, Time, Rating, Url, description, thaliOffer }: { Title: string, Cost: string, Time: string, Rating: string, Url: string, description: string, thaliOffer?: string }) => {
+const ThaliCard = memo(({ Title, Cost, Time, Rating, Url, description, thaliOffer }: { 
+  Title: string, 
+  Cost: string, 
+  Time: string, 
+  Rating: string, 
+  Url: string, 
+  description: string, 
+  thaliOffer?: string 
+}) => {
     return (
         <TouchableOpacity
             className="flex-row items-center gap-2 bg-white p-4 rounded-2xl shadow-md w-full h-[148px] py-8 my-2 mx-auto"
@@ -16,7 +25,9 @@ const ThaliCard = ({ Title, Cost, Time, Rating, Url, description, thaliOffer }: 
                 <Image
                     source={{ uri: Url }}
                     style={{ width: '100%', height: '100%', borderRadius: 100 }}
-                    resizeMode="cover"
+                    contentFit="cover"
+                    transition={200}
+                    cachePolicy="memory-disk"
                 />
             </View>
             <View className="flex-1 ml-4">
@@ -47,6 +58,8 @@ const ThaliCard = ({ Title, Cost, Time, Rating, Url, description, thaliOffer }: 
             </View>
         </TouchableOpacity>
     );
-};
+});
 
-export default ThaliCard
+ThaliCard.displayName = 'ThaliCard';
+
+export default ThaliCard;

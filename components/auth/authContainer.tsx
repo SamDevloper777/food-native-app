@@ -1,5 +1,5 @@
-import React, { useRef, useState, useEffect } from 'react';
-import { View, Animated, Dimensions, BackHandler } from 'react-native';
+import React, { useRef, useState, useEffect, useCallback, useMemo } from 'react';
+import { View, Animated, Dimensions, BackHandler, ViewStyle } from 'react-native';
 import LoginSection from './loginSection';
 import SignUpSection from './signUpSection';
 import VerifyOtp from './VerifyOtp';
@@ -26,25 +26,54 @@ const AuthContainer = () => {
         return () => backHandler.remove();
     }, [showOtp, otpSlideAnim]);
 
-    const handleOtpRequest = () => handleGetOtp(email, setEmail, setShowOtp, otpSlideAnim, width);
-    const handleBack = () => handleBackFromOtp(otpSlideAnim, width, setShowOtp);
-    const navigateToSignup = () => slideTo('signup', slideAnim, width, setActiveTab);
-    const navigateToLogin = () => slideTo('login', slideAnim, width, setActiveTab);
+    const handleOtpRequest = useCallback(() => 
+        handleGetOtp(email, setEmail, setShowOtp, otpSlideAnim, width),
+        [email, otpSlideAnim]
+    );
 
-    const sliderTransform = slideAnim.interpolate({
-        inputRange: [-width, 0],
-        outputRange: [width * 0.3, 0],
-    });
+    const handleBack = useCallback(() => 
+        handleBackFromOtp(otpSlideAnim, width, setShowOtp),
+        [otpSlideAnim]
+    );
+
+    const navigateToSignup = useCallback(() => 
+        slideTo('signup', slideAnim, width, setActiveTab),
+        [slideAnim]
+    );
+
+    const navigateToLogin = useCallback(() => 
+        slideTo('login', slideAnim, width, setActiveTab),
+        [slideAnim]
+    );
+
+    const sliderTransform = useMemo(() => 
+        slideAnim.interpolate({
+            inputRange: [-width, 0],
+            outputRange: [width * 0.3, 0],
+        }),
+        [slideAnim]
+    );
+
+    const animatedStyle = useMemo<Animated.WithAnimatedValue<ViewStyle>>(() => ({
+        flexDirection: 'row' as const,
+        transform: [{ translateX: slideAnim }],
+        width: width * 2,
+    }), [slideAnim]);
+
+    const otpAnimatedStyle = useMemo<Animated.WithAnimatedValue<ViewStyle>>(() => ({
+        position: 'absolute' as const,
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        transform: [{ translateX: otpSlideAnim }],
+    }), [otpSlideAnim]);
 
     return (
         <View className="flex-1">
             <View className="flex-1 overflow-hidden">
                 <Animated.View
-                    style={{
-                        flexDirection: 'row',
-                        transform: [{ translateX: slideAnim }],
-                        width: width * 2,
-                    }}
+                    style={animatedStyle}
                     className="flex-1"
                 >
                     <View style={{ width }} className="flex-1">
@@ -59,16 +88,7 @@ const AuthContainer = () => {
                 </Animated.View>
 
                 {showOtp && (
-                    <Animated.View
-                        style={{
-                            position: 'absolute',
-                            top: 0,
-                            left: 0,
-                            right: 0,
-                            bottom: 0,
-                            transform: [{ translateX: otpSlideAnim }],
-                        }}
-                    >
+                    <Animated.View style={otpAnimatedStyle}>
                         <VerifyOtp 
                             email={email}
                             onBack={handleBack}
@@ -97,4 +117,4 @@ const AuthContainer = () => {
     );
 };
 
-export default AuthContainer;
+export default React.memo(AuthContainer);

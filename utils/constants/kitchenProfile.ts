@@ -1,4 +1,4 @@
-import { Category } from "../types/recommendedSectionKitchenProfile";
+import { kitchenProfileCategory } from "@/utils/types";
 
 export const kitchenProfileConstants = {
     name: "StarBucks",
@@ -23,7 +23,7 @@ export const offersConstants = [
     },
 ]
 
-export const categories: Category[] = ["All Thalis", "Vegetarian", "Specials"];
+export const categories: kitchenProfileCategory[] = ["All Thalis", "Vegetarian", "Specials"];
 
 export const thalis = [
     {

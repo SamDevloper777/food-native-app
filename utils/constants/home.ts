@@ -1,3 +1,5 @@
+import { homeCategory } from "@/utils/types";
+
 export const thalis = [
     {
         title: "Pepperoni Pizza",
@@ -80,6 +82,4 @@ export const specials = [
     },
 ];
 
-export type Category = "All Thalis" | "Kitchens" | "Specials";
-
-export const categories: Category[] = ["All Thalis", "Kitchens", "Specials"];
+export const categories: homeCategory[] = ["All Thalis", "Kitchens", "Specials"];

@@ -6,21 +6,13 @@ import { FlatList, View } from "react-native";
 import { useSelector } from "react-redux";
 import ShimmerPlaceholder from "react-native-shimmer-placeholder";
 import LinearGradient from "react-native-linear-gradient";
+import { profileButtons } from "@/utils/constants/profile";
 
 const MemoizedProfileHeader = memo(ProfileHeader);
 
-const profileButtons = [
-  "Profile Setting",
-  "Manage Delivery Address",
-  "My Wishlist",
-  "Manage Payment",
-  "My Orders History",
-  "Log out",
-];
-
 const Profile = () => {
   const { user } = useSelector((state: RootState) => state.auth);
-  const loading = !user; // Replace with your actual loading condition if available
+  const loading = !user; 
 
   const renderButton = ({ item }: { item: string }) => (
     <ProfileButton title={item} />

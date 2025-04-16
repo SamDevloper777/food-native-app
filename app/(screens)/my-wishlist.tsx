@@ -1,51 +1,27 @@
 import Navigation from '@/components/common/navigation'
 import WishlistCard from '@/components/Profile/wishlist/wishlistCard'
+import { wishlistData } from '@/utils/constants/wishlist'
 import React from 'react'
-import { ScrollView } from 'react-native'
+import { ScrollView, View } from 'react-native'
 
 const MyWishlist = () => {
   return (
-    <ScrollView className="flex-1 bg-white">
-      <Navigation title='My Wishlist'/>
-      <WishlistCard 
-        title='AWS-USA' 
-        description='Classic bacon & eggs...' 
-        rating={4.5} city='New York' 
-        cost={100} 
-        distance={10} 
-        time='10:00' 
-        url='https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=75&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
-      />
-      <WishlistCard 
-        title='Cactus Club Cafe' 
-        description='Spicy ahi roll, prwan, and avocado' 
-        rating={4.8} 
-        city='Los Angeles' 
-        cost={70} 
-        distance={8} 
-        time='11:00' 
-        url='https://images.unsplash.com/photo-1511690656952-34342bb7c2f2?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
-      />
-      <WishlistCard 
-        title='Moxes Cafe' 
-        description='Tasty breakfast' 
-        rating={4.2} 
-        city='Chicago' 
-        cost={80} 
-        distance={12} 
-        time='9:00' 
-        url='https://images.unsplash.com/photo-1555939594-58d7cb561ad1?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
-      />
-      <WishlistCard 
-        title='Rainbow Cafe' 
-        description='Cozy atmosphere' 
-        rating={4.9} 
-        city='Las Vegas' 
-        cost={110} 
-        distance={15} 
-        time='12:00' 
-        url='https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?q=80&w=1981&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
-      />
+    <ScrollView className="flex-1 bg-white pt-4">
+      <Navigation title='My Wishlist' />
+      {wishlistData.map((item, index) => (
+        <WishlistCard
+          key={index}
+          title={item.title}
+          description={item.description}
+          rating={item.rating}
+          city={item.city}
+          cost={item.cost}
+          distance={item.distance}
+          time={item.time}
+          url={item.url}
+        />
+      ))}
+      <View className="h-12" />
     </ScrollView>
   )
 }

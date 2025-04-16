@@ -73,19 +73,19 @@ const CartItemCard = memo(({
                     {title}
                 </Text>
                 <Text
-                    className="text-[14px] text-gray-600 mt-1"
+                    className="text-[14px] text-gray-600"
                     numberOfLines={2}
                     ellipsizeMode="tail"
                 >
                     Delicious paneer dish made with fresh ingredients and authentic spices
                 </Text>
-                <Text className="text-lg font-semibold text-gray-500 mt-1">
+                <Text className="text-lg font-semibold text-gray-500 mt-7">
                     ₹{cost}
                 </Text>
             </View>
             <View className="w-[1px] h-[70%] bg-gray-200" />
             <View className="flex flex-col justify-between items-center h-full gap-8">
-                <View className='flex-row gap-4'>
+                <View className='flex-row gap-8 justify-between'>
                     <TouchableOpacity
                         onPress={() => {router.push('/(screens)/customizeThali')}}
                         className="bg-[#FC913A] p-2 rounded-full"

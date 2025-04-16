@@ -103,7 +103,6 @@ export const vegetarian = [
     },
 ];
 
-
 export const specials = [
     {
         title: "Pepperoni Pizza",

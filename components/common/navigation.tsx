@@ -2,14 +2,20 @@ import { View, Text, TouchableOpacity } from 'react-native'
 import React from 'react'
 import { router } from 'expo-router'
 import { ChevronLeft } from 'lucide-react-native'
+import { Ionicons } from '@expo/vector-icons'
 
-const Navigation = ({title}: {title: string}) => {
+const Navigation = ({title, hasHeart}: {title?: string, hasHeart?: boolean}) => {
     return (
-        <View className="flex-row items-center p-4 gap-2">
+        <View className="flex-row items-center px-4 justify-between">
             <TouchableOpacity onPress={() => router.back()}>
                 <ChevronLeft size={24} color="black" />
             </TouchableOpacity>
-            <Text className="text-[22px] font-bold">{title}</Text>
+            {title && <Text className="text-[22px] font-bold">{title}</Text>}
+            {hasHeart && (
+                <TouchableOpacity onPress={() => {}}>
+                    <Ionicons name="heart-outline" size={24} color="black" />
+                </TouchableOpacity>
+            )}
         </View>
     )
 }

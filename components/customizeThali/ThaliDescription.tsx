@@ -1,14 +1,14 @@
 import { View, Text, TouchableOpacity } from 'react-native'
 import React, { useState } from 'react'
 
-const ThaliDescription = ({ title, time }: { title: string, time: string }) => {
+const ThaliDescription = ({ thaliTitle, deliveryTime, kitchenName }: { thaliTitle: string, deliveryTime: string, kitchenName: string }) => {
     const [isExpanded, setIsExpanded] = useState(false);
     
     const fullDescription = "A deliciously crafted thali, offering a perfect balance of flavors and textures. Each thali comes with a thoughtfully curated selection of dishes including dal, rice, roti, and various vegetable preparations. Our chefs ensure authentic taste and premium quality ingredients in every serving.";
     
     return (
-        <View className="bg-gray-100 p-4 rounded-lg mx-2">
-            <Text className="text-xl font-bold">ABC Kitchen | {title}</Text>
+        <View className="bg-gray-100 p-4 mb-8 mt-4 rounded-lg mx-2">
+            <Text className="text-xl font-bold">{kitchenName} | {thaliTitle}</Text>
             <View>
                 <Text className="text-gray-500 mt-2">
                     {isExpanded ? fullDescription : fullDescription.slice(0, 60) + "..."}
@@ -20,7 +20,7 @@ const ThaliDescription = ({ title, time }: { title: string, time: string }) => {
                 </TouchableOpacity>
             </View>
             <View className="flex-row justify-between mt-4">
-                <Text className="text-md text-gray-500">⏱️ {time}</Text>
+                <Text className="text-md text-gray-500">⏱️ {deliveryTime}</Text>
             </View>
         </View>
     )

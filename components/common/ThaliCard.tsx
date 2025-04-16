@@ -21,7 +21,11 @@ const ThaliCard = ({ Title, Cost, Time, Rating, Url, description, thaliOffer }: 
             </View>
             <View className="flex-1 ml-4">
                 <Text numberOfLines={1} className="text-lg font-bold">{Title}</Text>
-                <Text numberOfLines={2} className="text-gray-500">{description}</Text>
+                <View>
+                    <Text numberOfLines={2} className="text-gray-500">
+                        {description.length > 80 ? description.substring(0, 80) + '...' : description}
+                    </Text>
+                </View>
                 <View className="flex-row items-center align-middle gap-3 space-x-2 mt-1">
                     <Text className="text-gray-500">{Time}</Text>
                     <View className="w-1 h-1 bg-[#c7c7c7] rounded-full" />

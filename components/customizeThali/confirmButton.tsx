@@ -8,7 +8,7 @@ const ConfirmButton = ({ id, title, cost, quantity, dispatch, thaliItems, button
         <TouchableOpacity
             className="bg-[#FC913A] px-6 py-3 rounded-full flex-row items-center justify-between absolute bottom-0 z-10 left-1/2 -translate-x-1/2 mb-3 gap-3"
             onPress={() => handleAddToCart(id, title, cost.toString(), quantity.toString(), dispatch)}
-            activeOpacity={0.8}
+            activeOpacity={0.9}
         >
             <View className="flex flex-row">
                 {

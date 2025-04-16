@@ -14,9 +14,10 @@ interface CustomizeThaliComponentProps {
   thaliTitle?: string;
   deliveryTime?: string;
   kitchenName?: string;
+  confirmButtonText: string;
 }
 
-const CustomizeThaliComponent = ({ thaliTitle, deliveryTime, kitchenName }: CustomizeThaliComponentProps) => {
+const CustomizeThaliComponent = ({ thaliTitle, deliveryTime, kitchenName, confirmButtonText }: CustomizeThaliComponentProps) => {
   const { id, title, cost } = useLocalSearchParams<{
     id: string;
     title: string;
@@ -43,7 +44,7 @@ const CustomizeThaliComponent = ({ thaliTitle, deliveryTime, kitchenName }: Cust
         )}
         <ThaliItems />
       </ScrollView>
-      <ConfirmButton id={id} title={title} cost={price} quantity={quantity} dispatch={dispatch} thaliItems={thaliItems} />
+      <ConfirmButton id={id} title={title} cost={price} quantity={quantity} dispatch={dispatch} thaliItems={thaliItems} buttonText={confirmButtonText} />
     </>
   );
 };

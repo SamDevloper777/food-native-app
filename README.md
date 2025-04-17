@@ -1,6 +1,5 @@
 # TODO
-- Cart Screen
-- Checkout Screen
+- PostCheckout
 - Optimize Loading
 - See All
 - Search 

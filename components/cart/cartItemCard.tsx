@@ -7,46 +7,34 @@ import {
     TouchableOpacity,
     View
 } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
-import {
-    addItem,
-    decrementQuantity,
-    getItemQuantity,
-    incrementQuantity,
-    isItemSelected,
-    removeItem,
-} from '../../utils/slice/customizeOwnThaliSlice';
-import { Ionicons } from '@expo/vector-icons';
+import { useDispatch } from 'react-redux';
 import { router } from 'expo-router';
+import { addThaliItem, removeThaliItem } from '../../utils/slice/cartSlice';
 
 interface CartItemCardProps {
-    id: string;
-    title: string;
-    cost: string;
+    id: number;
+    name: string;
+    price: number;
+    quantity: number;
     url: string;
 }
 
 const CartItemCard = memo(({
     id,
-    title,
-    cost,
+    name,
+    price,
+    quantity,
     url,
 }: CartItemCardProps) => {
     const dispatch = useDispatch();
 
-    const isSelected = useSelector(isItemSelected(id));
-    const quantity = useSelector(getItemQuantity(id));
-
-    const handleIncrement = useCallback(() =>
-        dispatch(incrementQuantity(id)),
-        [id, dispatch]
-    );
+    const handleIncrement = useCallback(() => {
+        dispatch(addThaliItem({ id, name, price, quantity: 1 }));
+    }, [id, name, price, dispatch]);
 
     const handleDecrement = useCallback(() => {
-        if (quantity > 0) {
-            dispatch(decrementQuantity(id));
-        }
-    }, [id, dispatch, quantity]);
+        dispatch(removeThaliItem(id));
+    }, [id, dispatch]);
 
     const buttonStyle = useCallback(({ pressed }: { pressed: boolean }) => ({
         opacity: pressed ? 0.6 : 1,
@@ -70,17 +58,17 @@ const CartItemCard = memo(({
                     numberOfLines={2}
                     ellipsizeMode="tail"
                 >
-                    {title}
+                    {name}
                 </Text>
                 <Text
                     className="text-[14px] text-gray-600"
                     numberOfLines={2}
                     ellipsizeMode="tail"
                 >
-                    Delicious paneer dish made with fresh ingredients and authentic spices
+                    Delicious dish made with fresh ingredients and authentic spices
                 </Text>
                 <Text className="text-lg font-semibold text-gray-500 mt-7">
-                    ₹{cost}
+                    ₹{price}
                 </Text>
             </View>
             <View className="w-[1px] h-[70%] bg-gray-200 mr-2" />
@@ -94,7 +82,12 @@ const CartItemCard = memo(({
                         <Pencil size={20} color="white" />
                     </TouchableOpacity>
                     <TouchableOpacity
-                        onPress={() => dispatch(removeItem(id))}
+                        onPress={() => {
+                            // Remove all quantities of this item
+                            for (let i = 0; i < quantity; i++) {
+                                dispatch(removeThaliItem(id));
+                            }
+                        }}
                         className="bg-white p-2 rounded-full border border-[#FC913A]"
                         activeOpacity={0.8}
                     >

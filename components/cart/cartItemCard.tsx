@@ -1,4 +1,4 @@
-import { Minus, Plus, Trash } from 'lucide-react-native';
+import { Minus, Pencil, Plus, Trash } from 'lucide-react-native';
 import React, { memo, useCallback } from 'react';
 import {
     Image,
@@ -55,7 +55,7 @@ const CartItemCard = memo(({
 
     return (
         <View
-            className='flex-row items-center justify-between gap-4 bg-white rounded-2xl shadow-md w-full h-[148px] py-4 px-4 my-2 mx-auto'
+            className='flex-row items-center justify-between bg-white rounded-2xl shadow-lg w-[90%] h-[148px] py-4 px-4 my-2 mx-auto shadow-gray-600'
         >
             <View className="w-32 h-32 bg-gray-200 rounded-full overflow-hidden">
                 <Image
@@ -64,7 +64,7 @@ const CartItemCard = memo(({
                     resizeMode="cover"
                 />
             </View>
-            <View className="flex-1 flex-col justify-center items-start h-full">
+            <View className="flex flex-col justify-center items-start h-full w-[20%]">
                 <Text
                     className="text-[16px] font-bold"
                     numberOfLines={2}
@@ -83,22 +83,22 @@ const CartItemCard = memo(({
                     ₹{cost}
                 </Text>
             </View>
-            <View className="w-[1px] h-[70%] bg-gray-200" />
-            <View className="flex flex-col justify-between items-center h-full gap-8">
+            <View className="w-[1px] h-[70%] bg-gray-200 mr-2" />
+            <View className="flex flex-col justify-between items-center h-full py-2 w-[33%]">
                 <View className='flex-row gap-8 justify-between'>
                     <TouchableOpacity
                         onPress={() => {router.push('/(screens)/customizeThali')}}
-                        className="bg-[#FC913A] p-2 rounded-full"
+                        className="bg-[#FC913A] p-2 rounded-full items-center justify-center"
                         activeOpacity={0.8}
                     >
-                        <Ionicons name='pencil-sharp' size={20} color="white" />
+                        <Pencil size={20} color="white" />
                     </TouchableOpacity>
                     <TouchableOpacity
                         onPress={() => dispatch(removeItem(id))}
-                        className="bg-[#FC913A] p-2 rounded-full"
+                        className="bg-white p-2 rounded-full border border-[#FC913A]"
                         activeOpacity={0.8}
                     >
-                        <Trash size={20} color="white" />
+                        <Trash size={20} color={"#FC913A"} />
                     </TouchableOpacity>
                 </View>
                 <View

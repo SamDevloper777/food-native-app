@@ -1,7 +1,9 @@
-import ThaliCard from '@/components/common/ThaliCard'
-import Navigation from '@/components/common/navigation'
-import { thalis } from '@/utils/constants/home'
-import React, { useEffect, useState } from 'react'
+import { useLocalSearchParams } from 'expo-router';
+import ThaliCard from '@/components/common/ThaliCard';
+import Navigation from '@/components/common/navigation';
+import KitchenCard from '@/components/home/KitchenCard';
+import { thalis, kitchens, specials } from '@/utils/constants/home';
+import React, { useEffect, useState } from 'react';
 import {
   ScrollView,
   Text,
@@ -9,30 +11,84 @@ import {
   TouchableOpacity,
   View,
   Keyboard,
-  TouchableWithoutFeedback
-} from 'react-native'
-import { AdjustmentsHorizontalIcon, MagnifyingGlassIcon } from 'react-native-heroicons/outline'
+  TouchableWithoutFeedback,
+} from 'react-native';
+import {
+  AdjustmentsHorizontalIcon,
+  MagnifyingGlassIcon,
+} from 'react-native-heroicons/outline';
 
 const SeeAll = () => {
-  const [searchTerm, setSearchTerm] = useState('')
-  const [filteredThalis, setFilteredThalis] = useState(thalis)
+  // Retrieve listType from navigation params
+  const { listType } = useLocalSearchParams<{ listType: 'All Thalis' | 'Kitchens' | 'Specials' }>();
+  
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filteredData, setFilteredData] = useState<any[]>([]);
 
-  // Debounced search effect
+  // Ensure listType is valid, default to 'All Thalis' if undefined
+  const validListType = listType && ['All Thalis', 'Kitchens', 'Specials'].includes(listType)
+    ? listType
+    : 'All Thalis';
+
+  const getData = () => {
+    if (validListType === 'All Thalis') return thalis;
+    if (validListType === 'Kitchens') return kitchens;
+    return specials;
+  };
+
   useEffect(() => {
     const timeout = setTimeout(() => {
-      const results = thalis.filter(thali =>
-        thali.title.toLowerCase().includes(searchTerm.toLowerCase())
-      )
-      setFilteredThalis(results)
-    }, 150) // Slight debounce to reduce unnecessary re-renders
+      const originalData = getData();
+      const filtered = originalData.filter(item =>
+        item.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        item.title?.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+      setFilteredData(filtered);
+    }, 150);
 
-    return () => clearTimeout(timeout)
-  }, [searchTerm])
+    return () => clearTimeout(timeout);
+  }, [searchTerm, validListType]);
+
+  const renderItems = () => {
+    if (validListType === 'Kitchens') {
+      return filteredData.map(kitchen => (
+        <KitchenCard
+          key={kitchen.id}
+          id={kitchen.id}
+          Title={kitchen.name || kitchen.title}
+          Rating={kitchen.rating}
+          Time={kitchen.time}
+          Url={kitchen.url}
+        />
+      ));
+    }
+
+    // For both thalis and specials (same component)
+    return filteredData.map(thali => (
+      <ThaliCard
+        key={thali.id}
+        id={thali.id}
+        Title={thali.title}
+        Cost={thali.cost}
+        Rating={thali.rating}
+        Time={thali.time}
+        Url={thali.url}
+        description={thali.description}
+      />
+    ));
+  };
+
+  const placeholder = `Search your favourite ${
+    validListType === 'All Thalis' ? 'thali' : validListType === 'Kitchens' ? 'kitchen' : 'special'
+  }`;
+
+  const title =
+    validListType === 'All Thalis' ? 'All Thalis' : validListType === 'Kitchens' ? 'Kitchens' : 'Specials';
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <ScrollView className="flex-1 bg-white px-4">
-        <Navigation title="All Thalis" />
+        <Navigation title={title} />
 
         {/* Search Bar */}
         <View className="flex-row items-center justify-between bg-[#fcfcfc] rounded-full px-4 py-3 mb-6 shadow-md">
@@ -41,7 +97,7 @@ const SeeAll = () => {
             <TextInput
               value={searchTerm}
               onChangeText={setSearchTerm}
-              placeholder="Search your favourite kitchen"
+              placeholder={placeholder}
               placeholderTextColor="#9CA3AF"
               className="text-gray-500 flex-1 text-[16px]"
             />
@@ -51,28 +107,20 @@ const SeeAll = () => {
           </TouchableOpacity>
         </View>
 
-        {/* Results */}
-        {filteredThalis.length > 0 ? (
-          filteredThalis.map(thali => (
-            <ThaliCard
-              key={thali.id}
-              id={thali.id}
-              Title={thali.title}
-              Cost={thali.cost}
-              Rating={thali.rating}
-              Time={thali.time}
-              Url={thali.url}
-              description={thali.description}
-            />
-          ))
+        {/* Render Results */}
+        {filteredData.length > 0 ? (
+          renderItems()
         ) : (
           <View className="items-center justify-center p-4">
-            <Text className="text-gray-500 text-center">No thalis found with the given search term</Text>
+            <Text className="text-gray-500 text-center">
+              No {validListType === 'All Thalis' ? 'thali' : validListType === 'Kitchens' ? 'kitchen' : 'special'}{' '}
+              found with the given search term
+            </Text>
           </View>
         )}
       </ScrollView>
     </TouchableWithoutFeedback>
-  )
-}
+  );
+};
 
-export default SeeAll
+export default SeeAll;

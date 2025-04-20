@@ -29,7 +29,6 @@ const PopularSection: React.FC = () => {
           key={index}
           id={item.id}
           Title={item.title}
-          Cost={item.cost}
           Rating={item.rating}
           Time={item.time}
           Url={item.url}
@@ -59,7 +58,7 @@ const PopularSection: React.FC = () => {
       <View className="px-4 mb-6">
         <View className="flex-row items-center justify-between mb-3">
           <Text className="text-[22px] font-bold">Popular Choices</Text>
-          <SeeAllButton/>
+          <SeeAllButton listType={activeCategory} />
         </View>
 
         {/* Category Tabs */}

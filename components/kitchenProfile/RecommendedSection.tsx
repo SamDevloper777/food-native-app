@@ -1,25 +1,25 @@
-import { categories, specials, thalis, vegetarian } from "@/utils/constants/kitchenProfile";
+import { categories, thalis } from "@/utils/constants/kitchenProfile";
 import { Category } from "@/utils/types/recommendedSectionKitchenProfile";
 import React, { useState } from "react";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import ThaliCard from "../common/ThaliCard";
 
-const RecommendedSection: React.FC = () => {
+const RecommendedSection = ({ kitchenId }: { kitchenId: string }): JSX.Element => {
   const [activeCategory, setActiveCategory] = useState<Category>("All Thalis");
 
   const renderCards = () => {
     switch (activeCategory) {
       case "All Thalis":
-        return thalis.map((item, idx) => (
-          <ThaliCard key={idx} Title={item.title} Cost={item.cost} Rating={item.rating} Time={item.time} Url={item.url} description={item.description} thaliOffer={item.thaliOffer} />
+        return thalis.filter(item => item.kitchenId.toString() === kitchenId).map((item, idx) => (
+          <ThaliCard key={idx} Title={item.title} Cost={item.cost} Rating={item.rating} Time={item.time} Url={item.url} description={item.description} id={item.id} />
         ));
       case "Vegetarian":
-        return vegetarian.map((item, idx) => (
-          <ThaliCard key={idx} Title={item.title} Cost={item.cost} Rating={item.rating} Time={item.time} Url={item.url} description={item.description} thaliOffer={item.thaliOffer} />
+        return thalis.filter(item => item.type === "veg" && item.kitchenId.toString() === kitchenId).map((item, idx) => (
+          <ThaliCard key={idx} Title={item.title} Cost={item.cost} Rating={item.rating} Time={item.time} Url={item.url} description={item.description} id={item.id} />
         ));
       case "Specials":
-        return specials.map((item, idx) => (
-          <ThaliCard key={idx} Title={item.title} Cost={item.cost} Rating={item.rating} Time={item.time} Url={item.url} description={item.description} thaliOffer={item.thaliOffer} />
+        return thalis.filter(item => item.special && item.kitchenId.toString() === kitchenId).map((item, idx) => (
+          <ThaliCard key={idx} Title={item.title} Cost={item.cost} Rating={item.rating} Time={item.time} Url={item.url} description={item.description} id={item.id} />
         ));
       default:
         return null;
@@ -61,3 +61,4 @@ const RecommendedSection: React.FC = () => {
 };
 
 export default RecommendedSection;
+

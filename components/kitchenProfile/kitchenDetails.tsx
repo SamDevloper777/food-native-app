@@ -53,7 +53,7 @@ const KitchenDetails = ({url, title, tagline, rating, reviewCount, deliveryFee, 
                         <Text className="ml-1 text-gray-500 text-[14px]">({reviewCount}k+ Reviews)</Text>
                     </View>
                     <Text className="text-[14px] font-medium">
-                        <Text className="text-gray-500">{deliveryFee === 0 ? "Free Delivery" : "Delivery Fee"}</Text>
+                        <Text className="text-gray-500">{deliveryFee === 0 ? "Free Delivery" : `Delivery Charges: ₹${deliveryFee}`}</Text>
                     </Text>
                 </View>
 

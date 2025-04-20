@@ -3,11 +3,11 @@ import React from 'react'
 import { offersConstants } from '@/utils/constants/kitchenProfile'
 import { Ionicons } from '@expo/vector-icons'
 
-const OfferSection = () => {
+const OfferSection = ({ kitchenId }: { kitchenId: string }) => {
     return (
         <ScrollView horizontal showsHorizontalScrollIndicator={false} className="mt-10 pb-6" contentContainerStyle={{ paddingHorizontal: (Dimensions.get('window').width / 4) - 60 }}>
             <View className="flex flex-row gap-10">
-                {offersConstants.map((offer, index) => (
+                {offersConstants.filter(offer => offer.kitchenId.toString() === kitchenId).map((offer, index) => (
                     <TouchableOpacity key={index} className="bg-[#fcfcfc] w-[250px] h-28 rounded-[25px] flex flex-row overflow-hidden justify-center items-center px-4 shadow-md shadow-gray-400" activeOpacity={0.8}>
                         <View className="w-[35%] h-full">
                             <Ionicons name='pricetag-outline' color={'#fc913a'} size={48} className='font-thick align-middle text-center my-auto' />

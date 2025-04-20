@@ -35,8 +35,8 @@ const KitchenProfile = () => {
         deliveryFee={parseInt(deliveryFee)}
         reviewCount={parseInt(reviewCount)}
       />
-      <OfferSection />
-      <RecommendedSection />
+      <OfferSection kitchenId={id}/>
+      <RecommendedSection kitchenId={id}/>
     </ScrollView>
   );
 };

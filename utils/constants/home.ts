@@ -95,7 +95,7 @@ export const thalis = [
 
 export const kitchens = [
     {
-        id: 5,
+        id: 101,
         title: "Biryani Blues",
         cost: "13.00",
         rating: "4.2",
@@ -109,7 +109,7 @@ export const kitchens = [
         reviewCount: "12",
     },
     {
-        id: 6,
+        id: 102,
         title: "Pizza Palace",
         cost: "10.00",
         rating: "4.5",
@@ -123,7 +123,7 @@ export const kitchens = [
         reviewCount: "20",
     },
     {
-        id: 7,
+        id: 103,
         title: "Indian Spice",
         cost: "8.00",
         rating: "4.6",
@@ -137,7 +137,7 @@ export const kitchens = [
         reviewCount: "30",
     },
     {
-        id: 8,
+        id: 104,
         title: "Chettinad",
         cost: "12.00",
         rating: "4.1",
@@ -151,7 +151,7 @@ export const kitchens = [
         reviewCount: "25",
     },
     {
-        id: 9,
+        id: 105,
         title: "Kebab Corner",
         cost: "13.00",
         rating: "4.2",
@@ -168,7 +168,7 @@ export const kitchens = [
 
 export const specials = [
     {
-        id: 10,
+        id: 201,
         title: "Pepperoni Pizza",
         cost: "10.00",
         rating: "4.5",
@@ -178,7 +178,7 @@ export const specials = [
         thaliOffer: "Buy 1 Get 1 Free",
     },
     {
-        id: 11,
+        id: 202,
         title: "Margherita Pizza",
         cost: "8.00",
         rating: "4.6",
@@ -188,7 +188,7 @@ export const specials = [
         thaliOffer: "30% Off on Large",
     },
     {
-        id: 12,
+        id: 203,
         title: "Shahi Paneer",
         cost: "12.00",
         rating: "4.1",
@@ -198,7 +198,7 @@ export const specials = [
         thaliOffer: "Free Naan",
     },
     {
-        id: 13,
+        id: 204,
         title: "Veg Farmhouse",
         cost: "13.00",
         rating: "4.2",

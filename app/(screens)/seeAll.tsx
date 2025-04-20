@@ -19,13 +19,13 @@ import {
 } from 'react-native-heroicons/outline';
 
 const SeeAll = () => {
-  // Retrieve listType from navigation params
-  const { listType } = useLocalSearchParams<{ listType: 'All Thalis' | 'Kitchens' | 'Specials' }>();
-  
-  const [searchTerm, setSearchTerm] = useState('');
-  const [filteredData, setFilteredData] = useState<any[]>([]);
+  const { listType, searchParam = '' } = useLocalSearchParams<{
+    listType: 'All Thalis' | 'Kitchens' | 'Specials';
+    searchParam?: string;
+  }>();
 
-  // Ensure listType is valid, default to 'All Thalis' if undefined
+  const [searchTerm, setSearchTerm] = useState(searchParam);
+  const [filteredData, setFilteredData] = useState<any[]>([]);
   const validListType = listType && ['All Thalis', 'Kitchens', 'Specials'].includes(listType)
     ? listType
     : 'All Thalis';
@@ -78,9 +78,8 @@ const SeeAll = () => {
     ));
   };
 
-  const placeholder = `Search your favourite ${
-    validListType === 'All Thalis' ? 'thali' : validListType === 'Kitchens' ? 'kitchen' : 'special'
-  }`;
+  const placeholder = `Search your favourite ${validListType === 'All Thalis' ? 'thali' : validListType === 'Kitchens' ? 'kitchen' : 'special'
+    }`;
 
   const title =
     validListType === 'All Thalis' ? 'All Thalis' : validListType === 'Kitchens' ? 'Kitchens' : 'Specials';

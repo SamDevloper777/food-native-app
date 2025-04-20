@@ -35,15 +35,16 @@ const PostCheckout = () => {
 
       {/* Service Provider */}
       <Text className="mt-6 mb-2 text-base font-semibold">About Kitchen</Text>
-      <View className="bg-gray-100 p-4 rounded-xl flex-row justify-between items-center">
-        <View>
+      <View className="bg-gray-100 p-4 rounded-xl flex-row justify-between items-center mx-auto w-full">
+        <View className='flex flex-col items-start justify-center'>
           <Text className="font-bold text-lg">Kitchen El-Classico</Text>
           <Text className="text-gray-600">Rachit Naik</Text>
         </View>
-        <View className="flex-row space-x-3 gap-3">
+        <View className="flex-row space-x-3 gap-6">
           <Pressable className="bg-[#FC913A] p-2 rounded-full">
             <PhoneCall color="white" size={20} />
           </Pressable>
+          <View className="bg-gray-300 w-[1px]"/>
           <Pressable className="bg-gray-200 p-2 rounded-full">
             <MessageSquare color="#000" size={20} />
           </Pressable>
@@ -55,20 +56,22 @@ const PostCheckout = () => {
       <View className="ml-3 border-l-2 border-gray-200 pl-3 border-dashed">
         <View className="mb-6 relative">
           <View className="w-4 h-4 bg-[#FC913A] rounded-full absolute -left-[19px] top-1" />
-          <Text className="font-bold">Order Successfully Confirmed</Text>
-          <Text className="text-gray-600 text-sm">Your order has been accepted by the kitchen. Tuesday, September 28, 2024</Text>
-          <Text className="text-gray-600 text-sm">Vendor has assign the person for your service Mon, Sep 28, 2024 at 10:00 AM</Text>
+          <Text className="font-bold">Order Confirmed</Text>
+          <Text className="text-gray-600 text-sm">Your order has been confirmed.</Text>
+          <Text className="text-gray-600 text-sm">Tuesday, September 28, 2024</Text>
+          <Text className="text-gray-600 text-sm">11:30 AM</Text>
         </View>
         <View className="mb-6 relative">
           <View className="w-4 h-4 border-2 border-[#FC913A] bg-white rounded-full absolute -left-[19px] top-1" />
-          <Text className="font-bold">Photographers En Route</Text>
-          <Text className="text-gray-600 text-sm">The assigned photographer is on their way to your location.</Text>
-          <Text className="text-gray-600 text-sm">Tuesday, September 29, 2024, at 09:00 AM</Text>
+          <Text className="font-bold">Preparing your order</Text>
+          <Text className="text-gray-600 text-sm">Your food is being prepared.</Text>
+          <Text className="text-gray-600 text-sm">11:36 AM</Text>
         </View>
         <View className="relative">
           <View className="w-4 h-4 border-2 border-gray-300 bg-white rounded-full absolute -left-[19px] top-1" />
-          <Text className="font-bold">Service Successfully Completed</Text>
-          <Text className="text-gray-600 text-sm">Your service has been successfully completed. Tuesday, 28 May 2024</Text>
+          <Text className="font-bold">Order Completed</Text>
+          <Text className="text-gray-600 text-sm">Your order has been successfully delivered.</Text>
+          <Text className="text-gray-600 text-sm">11:54 AM</Text>
         </View>
       </View>
 
@@ -108,3 +111,4 @@ const PostCheckout = () => {
 }
 
 export default PostCheckout
+

@@ -3,6 +3,7 @@ import { Category } from "@/utils/types/recommendedSectionKitchenProfile";
 import React, { useState } from "react";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import ThaliCard from "../common/ThaliCard";
+import SeeAll from "@/app/(screens)/seeAll";
 
 const RecommendedSection = ({ kitchenId }: { kitchenId: string }): JSX.Element => {
   const [activeCategory, setActiveCategory] = useState<Category>("All Thalis");
@@ -32,9 +33,7 @@ const RecommendedSection = ({ kitchenId }: { kitchenId: string }): JSX.Element =
       <View className="px-8 mb-6">
         <View className="flex-row items-center justify-between mb-3">
           <Text className="text-[22px] font-bold">Recommended</Text>
-          <TouchableOpacity activeOpacity={0.8}>
-            <Text className="text-[#FC913A] font-medium">See All</Text>
-          </TouchableOpacity>
+          {/* <SeeAll listType="All Thalis" /> */} // TODO
         </View>
 
         {/* Category Tabs */}

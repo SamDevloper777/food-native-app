@@ -4,7 +4,8 @@ import React, { memo } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import { Image } from 'expo-image';
 
-const ThaliCard = memo(({ Title, Cost, Time, Rating, Url, description, thaliOffer }: { 
+const ThaliCard = memo(({ id, Title, Cost, Time, Rating, Url, description, thaliOffer }: { 
+  id: number,
   Title: string, 
   Cost: string, 
   Time: string, 
@@ -18,7 +19,7 @@ const ThaliCard = memo(({ Title, Cost, Time, Rating, Url, description, thaliOffe
             className="flex-row items-center gap-2 bg-white p-4 rounded-2xl shadow-md w-full h-[148px] py-8 my-2 mx-auto"
             activeOpacity={0.8}
             onPress={() => {
-                router.push({ pathname: '/(screens)/customizeThali', params: { title: Title, cost: Cost, rating: Rating, id: "1", time: Time } })
+                router.push({ pathname: '/(screens)/customizeThali', params: { title: Title, cost: Cost, rating: Rating, id: id.toString(), time: Time } })
             }}
         >
             <View className="w-32 h-32 bg-gray-200 rounded-full">

@@ -8,7 +8,6 @@ type homeCategory = "All Thalis" | "Kitchens" | "Specials";
 
 const PopularSection: React.FC = () => {
   const [activeCategory, setActiveCategory] = useState<homeCategory>("All Thalis");
-
   const data = useMemo(() => {
     switch (activeCategory) {
       case "All Thalis":
@@ -27,6 +26,7 @@ const PopularSection: React.FC = () => {
       return (
         <KitchenCard
           key={index}
+          id={item.id}
           Title={item.title}
           Cost={item.cost}
           Rating={item.rating}
@@ -38,17 +38,19 @@ const PopularSection: React.FC = () => {
     return (
       <ThaliCard
         key={index}
+        id={item.id}
         Title={item.title}
         Cost={item.cost}
         Rating={item.rating}
         Time={item.time}
         Url={item.url}
         description={item.description || ""}
+        thaliOffer={item.thaliOffer}
       />
     );
   };
 
-  const keyExtractor = (item: any, index: number) => `${item.title}-${index}`;
+  const keyExtractor = (item: any, index: number) => `${item.id}-${index}`;
 
   return (
     <View className="pt-4 my-6">

@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { router } from 'expo-router';
-import { addThaliItem, removeThaliItem } from '../../utils/slice/cartSlice';
+import { addThaliItem, removeThaliItem, removeItemCompletely } from '../../utils/slice/cartSlice';
 
 interface CartItemCardProps {
     id: number;
@@ -33,7 +33,13 @@ const CartItemCard = memo(({
     }, [id, name, price, dispatch]);
 
     const handleDecrement = useCallback(() => {
-        dispatch(removeThaliItem(id));
+        if (quantity > 1) {
+            dispatch(removeThaliItem(id));
+        }
+    }, [id, dispatch, quantity]);
+
+    const handleRemove = useCallback(() => {
+        dispatch(removeItemCompletely(id));
     }, [id, dispatch]);
 
     const buttonStyle = useCallback(({ pressed }: { pressed: boolean }) => ({
@@ -82,12 +88,7 @@ const CartItemCard = memo(({
                         <Pencil size={20} color="white" />
                     </TouchableOpacity>
                     <TouchableOpacity
-                        onPress={() => {
-                            // Remove all quantities of this item
-                            for (let i = 0; i < quantity; i++) {
-                                dispatch(removeThaliItem(id));
-                            }
-                        }}
+                        onPress={handleRemove}
                         className="bg-white p-2 rounded-full border border-[#FC913A]"
                         activeOpacity={0.8}
                     >
@@ -101,8 +102,9 @@ const CartItemCard = memo(({
                         onPress={handleDecrement}
                         hitSlop={10}
                         style={buttonStyle}
+                        disabled={quantity === 1}
                     >
-                        <Minus size={18} color="white" />
+                        <Minus size={18} color={quantity === 1 ? "#A0A0A0" : "white"} />
                     </Pressable>
                     <Text className="text-white text-md font-bold">
                         {quantity < 10 ? `0${quantity}` : quantity}

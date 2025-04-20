@@ -2,6 +2,7 @@ import { homeCategory } from "@/utils/types";
 
 export const thalis = [
     {
+        id: 1,
         title: "Pepperoni Pizza",
         cost: "10.00",
         rating: "4.5",
@@ -10,6 +11,7 @@ export const thalis = [
         description: "A delicious pizza with pepperoni and cheese lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.",
     },
     {
+        id: 2,
         title: "Margherita Pizza",
         cost: "8.00",
         rating: "4.6",
@@ -18,6 +20,7 @@ export const thalis = [
         description: "A delicious pizza with pepperoni and cheese lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.",
     },
     {
+        id: 3,
         title: "Shahi Paneer",
         cost: "12.00",
         rating: "4.1",
@@ -26,6 +29,7 @@ export const thalis = [
         description: "A delicious pizza with pepperoni and cheese lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.",
     },
     {
+        id: 4,
         title: "Veg Farmhouse",
         cost: "13.00",
         rating: "4.2",
@@ -36,15 +40,16 @@ export const thalis = [
 ];
 
 export const kitchens = [
-    { title: "Biryani Blues", cost: "13.00", rating: "4.2", time: "20min", url: thalis[3].url },
-    { title: "Pizza Palace", cost: "10.00", rating: "4.5", time: "20min", url: thalis[0].url },
-    { title: "Indian Spice", cost: "8.00", rating: "4.6", time: "30min", url: thalis[1].url },
-    { title: "Chettinad", cost: "12.00", rating: "4.1", time: "25min", url: thalis[2].url },
-    { title: "Kebab Corner", cost: "13.00", rating: "4.2", time: "20min", url: thalis[3].url },
+    { id: 5, title: "Biryani Blues", cost: "13.00", rating: "4.2", time: "20min", url: thalis[3].url },
+    { id: 6, title: "Pizza Palace", cost: "10.00", rating: "4.5", time: "20min", url: thalis[0].url },
+    { id: 7, title: "Indian Spice", cost: "8.00", rating: "4.6", time: "30min", url: thalis[1].url },
+    { id: 8, title: "Chettinad", cost: "12.00", rating: "4.1", time: "25min", url: thalis[2].url },
+    { id: 9, title: "Kebab Corner", cost: "13.00", rating: "4.2", time: "20min", url: thalis[3].url },
 ];
 
 export const specials = [
     {
+        id: 10,
         title: "Pepperoni Pizza",
         cost: "10.00",
         rating: "4.5",
@@ -54,6 +59,7 @@ export const specials = [
         thaliOffer: "Buy 1 Get 1 Free",
     },
     {
+        id: 11,
         title: "Margherita Pizza",
         cost: "8.00",
         rating: "4.6",
@@ -63,6 +69,7 @@ export const specials = [
         thaliOffer: "30% Off on Large",
     },
     {
+        id: 12,
         title: "Shahi Paneer",
         cost: "12.00",
         rating: "4.1",
@@ -72,6 +79,7 @@ export const specials = [
         thaliOffer: "Free Naan",
     },
     {
+        id: 13,
         title: "Veg Farmhouse",
         cost: "13.00",
         rating: "4.2",

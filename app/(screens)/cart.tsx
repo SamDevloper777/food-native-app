@@ -80,7 +80,7 @@ const Cart = () => {
               <TouchableOpacity 
                 className='bg-white p-4 rounded-[25px] border border-[#FC913A] mt-4 flex-row items-center justify-center gap-2 flex-1' 
                 activeOpacity={0.8} 
-                onPress={() => router.back()}
+                onPress={() => router.push('/(tabs)/home')}
               >
                 <Text className='text-[#FC913A] text-center text-lg font-bold'>Continue Shopping</Text>
               </TouchableOpacity>

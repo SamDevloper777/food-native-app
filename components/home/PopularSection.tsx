@@ -31,7 +31,12 @@ const PopularSection: React.FC = () => {
           Title={item.title}
           Rating={item.rating}
           Time={item.time}
-          Url={item.url}
+          CoverUrl={item.coverUrl}
+          LogoUrl={item.logoUrl}
+          Tagline={item.tagline}
+          Distance={item.distance}
+          DeliveryFee={item.deliveryFee}
+          ReviewCount={item.reviewCount}
         />
       );
     }

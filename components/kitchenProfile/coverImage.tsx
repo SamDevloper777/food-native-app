@@ -1,13 +1,12 @@
-import { View, Text, Image, Dimensions } from 'react-native'
-import React from 'react'
-import { kitchenProfileConstants } from '@/utils/constants/kitchenProfile'
+import React from 'react';
+import { Dimensions, Image } from 'react-native';
 
-const CoverImage = () => {
+const CoverImage = ({url}: {url: string}) => {
   const { height } = Dimensions.get('window');
 
     return (
         <Image
-            source={{ uri: kitchenProfileConstants.coverImage }}
+            source={{ uri: url }}
             style={{ height: height * 0.3 }}
             resizeMode="cover"
             className="w-full"

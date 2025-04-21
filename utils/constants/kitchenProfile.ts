@@ -1,64 +1,63 @@
 import { kitchenProfileCategory } from "@/utils/types";
-
 export const offersConstants = [
     {
         id: 1,
         kitchenId: 101,
-        title: "50% off upto Rs.100",
+        title: "50% off upto Rs.100 - Kitchen 101",
         code: "STARBUCKS50",
     },
     {
         id: 2,
         kitchenId: 101,
-        title: "10% off",
+        title: "10% off - Kitchen 101",
         code: "STARBUCKS10",
     },
     {
         id: 3,
         kitchenId: 102,
-        title: "20% off on orders above Rs.200",
+        title: "20% off on orders above Rs.200 - Kitchen 102",
         code: "CAFE20",
     },
     {
         id: 4,
         kitchenId: 102,
-        title: "Free dessert on orders above Rs.500",
+        title: "Free dessert on orders above Rs.500 - Kitchen 102",
         code: "DESSERTFREE",
     },
     {
         id: 5,
         kitchenId: 103,
-        title: "Flat Rs.50 off",
+        title: "Flat Rs.50 off - Kitchen 103",
         code: "FLAT50",
     },
     {
         id: 6,
         kitchenId: 103,
-        title: "Buy 1 Get 1 Free",
+        title: "Buy 1 Get 1 Free - Kitchen 103",
         code: "BOGO",
     },
     {
         id: 7,
         kitchenId: 104,
-        title: "15% off on all orders",
+        title: "15% off on all orders - Kitchen 104",
         code: "SAVE15",
     },
     {
         id: 8,
         kitchenId: 104,
-        title: "Free delivery on first order",
+        title: "Free delivery on first order - Kitchen 104",
         code: "FREEDEL",
     },
     {
         id: 9,
         kitchenId: 105,
-        title: "10% cashback",
+        title: "10% cashback - Kitchen 105",
         code: "CASHBACK10",
     },
     {
         id: 10,
         kitchenId: 105,
-        title: "Rs.100 off on orders above Rs.1000",
+        title: "Rs.100 off on orders above Rs.1000 - Kitchen 105",
         code: "SAVE100",
     },
 ];
@@ -70,7 +69,7 @@ export const thalis = [
     {
         id: 1,
         kitchenId: 101,
-        title: "Pepperoni Pizza",
+        title: "Kitchen 101 - Pepperoni Pizza",
         cost: "10.00",
         rating: "4.5",
         time: "20 min",
@@ -82,7 +81,7 @@ export const thalis = [
     {
         id: 2,
         kitchenId: 101,
-        title: "Margherita Pizza",
+        title: "Kitchen 101 - Margherita Pizza",
         cost: "8.00",
         rating: "4.6",
         time: "30 min",
@@ -94,7 +93,7 @@ export const thalis = [
     {
         id: 3,
         kitchenId: 101,
-        title: "Shahi Paneer",
+        title: "Kitchen 101 - Shahi Paneer",
         cost: "12.00",
         rating: "4.1",
         time: "25 min",
@@ -106,7 +105,7 @@ export const thalis = [
     {
         id: 4,
         kitchenId: 101,
-        title: "Paneer Butter Masala",
+        title: "Kitchen 101 - Paneer Butter Masala",
         cost: "11.00",
         rating: "4.5",
         time: "30 min",
@@ -118,7 +117,7 @@ export const thalis = [
     {
         id: 5,
         kitchenId: 101,
-        title: "Chicken Curry",
+        title: "Kitchen 101 - Chicken Curry",
         cost: "13.00",
         rating: "4.2",
         time: "35 min",
@@ -130,7 +129,7 @@ export const thalis = [
     {
         id: 6,
         kitchenId: 101,
-        title: "Veg Biryani",
+        title: "Kitchen 101 - Veg Biryani",
         cost: "10.00",
         rating: "4.4",
         time: "25 min",
@@ -142,20 +141,20 @@ export const thalis = [
     {
         id: 7,
         kitchenId: 101,
-        title: "Mixed Veg Curry",
+        title: "Kitchen 101 - Mixed Veg Curry",
         cost: "9.00",
         rating: "4.3",
         time: "20 min",
         type: "veg",
         special: false,
         url: "https://images.unsplash.com/photo-1600891964599-f61ba0e24092?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-        description: "Mixed vegetables in a rich gravy.",
+        description: "Spicy and flavorful mixed vegetable curry.",
     },
     // Kitchen 102
     {
         id: 11,
         kitchenId: 102,
-        title: "Paneer Tikka",
+        title: "Kitchen 102 - Paneer Tikka",
         cost: "11.00",
         rating: "4.3",
         time: "25 min",
@@ -167,7 +166,7 @@ export const thalis = [
     {
         id: 12,
         kitchenId: 102,
-        title: "Chicken Tikka",
+        title: "Kitchen 102 - Chicken Tikka",
         cost: "13.00",
         rating: "4.7",
         time: "45 min",
@@ -179,7 +178,7 @@ export const thalis = [
     {
         id: 13,
         kitchenId: 102,
-        title: "Veg Biryani",
+        title: "Kitchen 102 - Veg Biryani",
         cost: "10.00",
         rating: "4.4",
         time: "15 min",
@@ -191,7 +190,7 @@ export const thalis = [
     {
         id: 14,
         kitchenId: 102,
-        title: "Chicken Biryani",
+        title: "Kitchen 102 - Chicken Biryani",
         cost: "12.00",
         rating: "4.5",
         time: "30 min",
@@ -203,7 +202,7 @@ export const thalis = [
     {
         id: 15,
         kitchenId: 102,
-        title: "Mixed Salad",
+        title: "Kitchen 102 - Mixed Salad",
         cost: "8.00",
         rating: "4.2",
         time: "10 min",
@@ -216,7 +215,7 @@ export const thalis = [
     {
         id: 21,
         kitchenId: 103,
-        title: "Paneer Butter Masala",
+        title: "Kitchen 103 - Paneer Butter Masala",
         cost: "11.00",
         rating: "4.5",
         time: "30 min",
@@ -228,7 +227,7 @@ export const thalis = [
     {
         id: 22,
         kitchenId: 103,
-        title: "Chicken Curry",
+        title: "Kitchen 103 - Chicken Curry",
         cost: "13.00",
         rating: "4.2",
         time: "35 min",
@@ -240,7 +239,7 @@ export const thalis = [
     {
         id: 23,
         kitchenId: 103,
-        title: "Mixed Veg Curry",
+        title: "Kitchen 103 - Mixed Veg Curry",
         cost: "9.00",
         rating: "4.3",
         time: "20 min",
@@ -252,7 +251,7 @@ export const thalis = [
     {
         id: 24,
         kitchenId: 103,
-        title: "Veg Pulao",
+        title: "Kitchen 103 - Veg Pulao",
         cost: "8.00",
         rating: "4.1",
         time: "25 min",
@@ -264,7 +263,7 @@ export const thalis = [
     {
         id: 25,
         kitchenId: 103,
-        title: "Dal Tadka",
+        title: "Kitchen 103 - Dal Tadka",
         cost: "7.00",
         rating: "4.0",
         time: "15 min",
@@ -276,7 +275,7 @@ export const thalis = [
     {
         id: 26,
         kitchenId: 103,
-        title: "Aloo Gobi",
+        title: "Kitchen 103 - Aloo Gobi",
         cost: "9.00",
         rating: "4.1",
         time: "20 min",
@@ -301,7 +300,7 @@ export const thalis = [
     {
         id: 32,
         kitchenId: 104,
-        title: "Paneer Lababdar",
+        title: "Kitchen 104 - Paneer Lababdar",
         cost: "12.00",
         rating: "4.6",
         time: "30 min",
@@ -313,7 +312,7 @@ export const thalis = [
     {
         id: 33,
         kitchenId: 104,
-        title: "Chicken Korma",
+        title: "Kitchen 104 - Chicken Korma",
         cost: "15.00",
         rating: "4.5",
         time: "50 min",
@@ -325,7 +324,7 @@ export const thalis = [
     {
         id: 34,
         kitchenId: 104,
-        title: "Veg Kofta",
+        title: "Kitchen 104 - Veg Kofta",
         cost: "11.00",
         rating: "4.3",
         time: "35 min",
@@ -337,7 +336,7 @@ export const thalis = [
     {
         id: 35,
         kitchenId: 104,
-        title: "Fish Curry",
+        title: "Kitchen 104 - Fish Curry",
         cost: "16.00",
         rating: "4.6",
         time: "45 min",
@@ -349,7 +348,7 @@ export const thalis = [
     {
         id: 36,
         kitchenId: 104,
-        title: "Palak Paneer",
+        title: "Kitchen 104 - Palak Paneer",
         cost: "10.00",
         rating: "4.4",
         time: "25 min",
@@ -361,7 +360,7 @@ export const thalis = [
     {
         id: 37,
         kitchenId: 105,
-        title: "Palak Paneer",
+        title: "Kitchen 105 - Palak Paneer",
         cost: "10.00",
         rating: "4.4",
         time: "25 min",
@@ -373,7 +372,7 @@ export const thalis = [
     {
         id: 38,
         kitchenId: 105,
-        title: "Palak Paneer",
+        title: "Kitchen 105 - Palak Paneer",
         cost: "10.00",
         rating: "4.4",
         time: "25 min",
@@ -385,7 +384,7 @@ export const thalis = [
     {
         id: 39,
         kitchenId: 105,
-        title: "Palak Paneer",
+        title: "Kitchen 105 - Palak Paneer",
         cost: "10.00",
         rating: "4.4",
         time: "25 min",

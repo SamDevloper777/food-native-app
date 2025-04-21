@@ -3,7 +3,7 @@ import { homeCategory } from "@/utils/types";
 export const kitchens = [
     {
         id: 101,
-        title: "Biryani Blues",
+        title: "Biryani Blues 101",
         cost: "13.00",
         rating: "4.2",
         time: "20 min",
@@ -17,7 +17,7 @@ export const kitchens = [
     },
     {
         id: 102,
-        title: "Pizza Palace",
+        title: "Pizza Palace 102",
         cost: "10.00",
         rating: "4.5",
         time: "20 min",
@@ -31,7 +31,7 @@ export const kitchens = [
     },
     {
         id: 103,
-        title: "Indian Spice",
+        title: "Indian Spice 103",
         cost: "8.00",
         rating: "4.6",
         time: "30 min",
@@ -45,7 +45,7 @@ export const kitchens = [
     },
     {
         id: 104,
-        title: "Chettinad",
+        title: "Chettinad 104",
         cost: "12.00",
         rating: "4.1",
         time: "25 min",
@@ -59,7 +59,7 @@ export const kitchens = [
     },
     {
         id: 105,
-        title: "Kebab Corner",
+        title: "Kebab Corner 105",
         cost: "13.00",
         rating: "4.2",
         time: "20 min",
@@ -74,3 +74,4 @@ export const kitchens = [
 ];
 
 export const categories: homeCategory[] = ["All Thalis", "Kitchens", "Specials"];
+

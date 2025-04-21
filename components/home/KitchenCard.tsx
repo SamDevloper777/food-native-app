@@ -33,7 +33,7 @@ const KitchenCard = ({ id, Title, Time, Rating, CoverUrl, LogoUrl, Tagline, Dist
             <View className="flex-1 ml-4 gap-1">
                 <View className='flex flex-col justify-between'>
                     <Text className="text-lg font-bold">{Title}</Text>
-                    <Text className="text-gray-500">{Tagline}</Text>
+                    <Text numberOfLines={2} className="text-gray-500 text-ellipsis max-w-[160px]">{Tagline}</Text>
                 </View>
                 <View className="flex-row items-center align-middle gap-3 space-x-2 mt-1">
                     <Text className="text-gray-500">{Time}</Text>

@@ -98,7 +98,7 @@ const SeeAll = () => {
    return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <ScrollView className="flex-1 bg-white px-4">
-        <Navigation title={validListType.slice(8)} />
+        <Navigation title={validListType === 'All Thalis' ? 'All Thalis' : validListType === 'Kitchens' ? 'Kitchens' : validListType === 'Specials' ? 'Specials' : validListType.slice(8)} />
 
         {/* Search Bar */}
         <View className="flex-row items-center justify-between bg-[#fcfcfc] rounded-full px-4 py-3 mb-6 shadow-md">

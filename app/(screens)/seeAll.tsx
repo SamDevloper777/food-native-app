@@ -1,17 +1,18 @@
-import { useLocalSearchParams } from 'expo-router';
 import ThaliCard from '@/components/common/ThaliCard';
 import Navigation from '@/components/common/navigation';
 import KitchenCard from '@/components/home/KitchenCard';
-import { thalis, kitchens, specials } from '@/utils/constants/home';
-import React, { useEffect, useState } from 'react';
+import { kitchens } from '@/utils/constants/home';
+import { thalis } from '@/utils/constants/kitchenProfile';
+import { useLocalSearchParams } from 'expo-router';
+import React, { useEffect, useMemo, useState } from 'react';
 import {
+  Keyboard,
   ScrollView,
   Text,
   TextInput,
   TouchableOpacity,
-  View,
-  Keyboard,
   TouchableWithoutFeedback,
+  View,
 } from 'react-native';
 import {
   AdjustmentsHorizontalIcon,
@@ -19,28 +20,41 @@ import {
 } from 'react-native-heroicons/outline';
 
 const SeeAll = () => {
-  const { listType, searchParam = '' } = useLocalSearchParams<{
-    listType: 'All Thalis' | 'Kitchens' | 'Specials';
+  const { listType, searchParam = '', kitchenId } = useLocalSearchParams<{
+    listType: 'All Thalis' | 'Kitchens' | 'Specials' | 'Kitchen Vegetarian' | 'Kitchen Specials' | 'Kitchen All Thalis';
     searchParam?: string;
+    kitchenId?: string
   }>();
 
   const [searchTerm, setSearchTerm] = useState(searchParam);
   const [filteredData, setFilteredData] = useState<any[]>([]);
-  const validListType = listType && ['All Thalis', 'Kitchens', 'Specials'].includes(listType)
+  const validListType = listType && ['All Thalis', 'Kitchens', 'Specials', 'Kitchen Vegetarian', 'Kitchen Specials', 'Kitchen All Thalis'].includes(listType)
     ? listType
     : 'All Thalis';
 
-  const getData = () => {
-    if (validListType === 'All Thalis') return thalis;
-    if (validListType === 'Kitchens') return kitchens;
-    return specials;
-  };
+  const data = useMemo(() => {
+    switch (validListType) {
+      case "All Thalis":
+        return thalis;
+      case "Kitchens":
+        return kitchens;
+      case "Specials":
+        return thalis.filter(thali => thali.special);
+      case "Kitchen Vegetarian":
+        return thalis.filter(thali => thali.type === 'veg' && thali.kitchenId.toString() === kitchenId);
+      case "Kitchen Specials":
+        return thalis.filter(thali => thali.special && thali.kitchenId.toString() === kitchenId);
+      case "Kitchen All Thalis":
+        return thalis.filter(thali => thali.kitchenId.toString() === kitchenId);
+      default:
+        return [];
+    }
+  }, [validListType]);
 
   useEffect(() => {
     const timeout = setTimeout(() => {
-      const originalData = getData();
+      const originalData = data;
       const filtered = originalData.filter(item =>
-        item.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
         item.title?.toLowerCase().includes(searchTerm.toLowerCase())
       );
       setFilteredData(filtered);
@@ -48,6 +62,7 @@ const SeeAll = () => {
 
     return () => clearTimeout(timeout);
   }, [searchTerm, validListType]);
+
 
   const renderItems = () => {
     if (validListType === 'Kitchens') {
@@ -58,12 +73,11 @@ const SeeAll = () => {
           Title={kitchen.name || kitchen.title}
           Rating={kitchen.rating}
           Time={kitchen.time}
-          Url={kitchen.url}
+          LogoUrl={kitchen.url}
         />
       ));
     }
 
-    // For both thalis and specials (same component)
     return filteredData.map(thali => (
       <ThaliCard
         key={thali.id}
@@ -81,13 +95,10 @@ const SeeAll = () => {
   const placeholder = `Search your favourite ${validListType === 'All Thalis' ? 'thali' : validListType === 'Kitchens' ? 'kitchen' : 'special'
     }`;
 
-  const title =
-    validListType === 'All Thalis' ? 'All Thalis' : validListType === 'Kitchens' ? 'Kitchens' : 'Specials';
-
-  return (
+   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <ScrollView className="flex-1 bg-white px-4">
-        <Navigation title={title} />
+        <Navigation title={validListType.slice(8)} />
 
         {/* Search Bar */}
         <View className="flex-row items-center justify-between bg-[#fcfcfc] rounded-full px-4 py-3 mb-6 shadow-md">

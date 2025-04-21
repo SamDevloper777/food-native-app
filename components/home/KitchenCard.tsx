@@ -8,19 +8,19 @@ const KitchenCard = ({ id, Title, Time, Rating, CoverUrl, LogoUrl, Tagline, Dist
     Title: string, 
     Time: string, 
     Rating: string, 
-    CoverUrl: string,
+    CoverUrl?: string,
     LogoUrl: string,
-    Tagline: string,
-    Distance: string,
-    DeliveryFee: number,
-    ReviewCount: number
+    Tagline?: string,
+    Distance?: string,
+    DeliveryFee?: number,
+    ReviewCount?: number
 }) => {
     return (
         <TouchableOpacity
             className="flex-row items-center gap-2 bg-white p-4 rounded-2xl shadow-md w-full h-[148px] py-8 my-2 mx-auto"
             activeOpacity={0.8}
             onPress={() => {
-                router.push({ pathname: '/(screens)/kitchenProfile', params: { title: Title, rating: Rating, id: id.toString(), time: Time, coverUrl: CoverUrl, logoUrl: LogoUrl, tagline: Tagline, distance: Distance, deliveryFee: DeliveryFee.toString(), reviewCount: ReviewCount.toString()} })
+                router.push({ pathname: '/(screens)/kitchenProfile', params: { title: Title, rating: Rating, id: id.toString(), time: Time, coverUrl: CoverUrl, logoUrl: LogoUrl, tagline: Tagline, distance: Distance, deliveryFee: DeliveryFee?.toString(), reviewCount: ReviewCount?.toString()} })
             }}
         >
             <View className="w-32 h-32 bg-gray-200 rounded-full">

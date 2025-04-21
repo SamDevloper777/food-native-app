@@ -1,12 +1,26 @@
 import { categories, thalis } from "@/utils/constants/kitchenProfile";
 import { Category } from "@/utils/types/recommendedSectionKitchenProfile";
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import ThaliCard from "../common/ThaliCard";
 import SeeAll from "@/app/(screens)/seeAll";
+import SeeAllButton from "../common/seeAllButton";
 
 const RecommendedSection = ({ kitchenId }: { kitchenId: string }): JSX.Element => {
   const [activeCategory, setActiveCategory] = useState<Category>("All Thalis");
+
+  const data = useMemo(() => {
+    switch (activeCategory) {
+      case "All Thalis":
+        return thalis.filter(item => item.kitchenId.toString() === kitchenId);
+      case "Vegetarian":
+        return thalis.filter(item => item.type === "veg" && item.kitchenId.toString() === kitchenId);
+      case "Specials":
+        return thalis.filter(item => item.special && item.kitchenId.toString() === kitchenId);
+      default:
+        return [];
+    }
+  }, [activeCategory]);
 
   const renderCards = () => {
     switch (activeCategory) {
@@ -33,7 +47,7 @@ const RecommendedSection = ({ kitchenId }: { kitchenId: string }): JSX.Element =
       <View className="px-8 mb-6">
         <View className="flex-row items-center justify-between mb-3">
           <Text className="text-[22px] font-bold">Recommended</Text>
-          {/* <SeeAll listType="All Thalis" /> */} // TODO
+          <SeeAllButton listType={activeCategory === "All Thalis" ?  "Kitchen All Thalis" : activeCategory === "Vegetarian" ? "Kitchen Vegetarian" : "Kitchen Specials"} kitchenId={kitchenId}/>
         </View>
 
         {/* Category Tabs */}

@@ -1,9 +1,10 @@
-import { kitchens, thalis, specials, categories } from "@/utils/constants/home";
+import { kitchens, categories } from "@/utils/constants/home";
 import React, { useState, useMemo } from "react";
 import { FlatList, Text, TouchableOpacity, View } from "react-native";
 import ThaliCard from "../common/ThaliCard";
 import KitchenCard from "./KitchenCard";
 import SeeAllButton from "../common/seeAllButton";
+import { thalis } from "@/utils/constants/kitchenProfile";
 
 type homeCategory = "All Thalis" | "Kitchens" | "Specials";
 
@@ -12,11 +13,11 @@ const PopularSection: React.FC = () => {
   const data = useMemo(() => {
     switch (activeCategory) {
       case "All Thalis":
-        return thalis.slice(0, 4);
+        return thalis;
       case "Kitchens":
         return kitchens;
       case "Specials":
-        return specials;
+        return thalis.filter(thali => thali.special);
       default:
         return [];
     }
@@ -63,7 +64,7 @@ const PopularSection: React.FC = () => {
       <View className="px-4 mb-6">
         <View className="flex-row items-center justify-between mb-3">
           <Text className="text-[22px] font-bold">Popular Choices</Text>
-          <SeeAllButton listType={activeCategory} />
+          <SeeAllButton listType={activeCategory}/>
         </View>
 
         {/* Category Tabs */}
@@ -94,7 +95,7 @@ const PopularSection: React.FC = () => {
 
       {/* Dynamic Cards */}
       <FlatList
-        data={data}
+        data={data.slice(0, Math.min(5, data.length))}
         renderItem={renderItem}
         keyExtractor={keyExtractor}
         contentContainerStyle={{ paddingHorizontal: 16, gap: 16 }}

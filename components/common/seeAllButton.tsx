@@ -3,12 +3,13 @@ import React from 'react'
 import { router } from 'expo-router'
 
 interface SeeAllButtonProps {
-    listType: 'All Thalis' | 'Kitchens' | 'Specials'
+    listType: 'All Thalis' | 'Kitchens' | 'Specials' | 'Kitchen Vegetarian' | 'Kitchen Specials' | 'Kitchen All Thalis';
+    kitchenId?: string
 }
 
-const SeeAllButton = ({ listType }: SeeAllButtonProps) => {
+const SeeAllButton = ({ listType, kitchenId }: SeeAllButtonProps) => {
     return (
-        <TouchableOpacity activeOpacity={0.8} onPress={() => router.push({ pathname: '/(screens)/seeAll', params: { listType } })}>
+        <TouchableOpacity activeOpacity={0.8} onPress={() => router.push({ pathname: '/(screens)/seeAll', params: { listType, searchParam: '', kitchenId: kitchenId }})}>
             <Text className="text-[#FC913A] font-medium">See All</Text>
         </TouchableOpacity>
     )

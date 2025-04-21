@@ -108,6 +108,14 @@ const PopularSection: React.FC = () => {
           See More  
         </Text>
       </TouchableOpacity>
+      <View className="bg-gray-100 w-full flex flex-col justify-center items-start px-4 py-8">
+          <Text className="text-[20px] font-bold">
+            Are You a Kitchen Partner?
+          </Text>
+          <Text className="text-[14px] text-gray-500">
+            Join Ovenly to connect with thousands of customers
+          </Text>
+      </View>
     </View>
   );
 };

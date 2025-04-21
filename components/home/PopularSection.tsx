@@ -53,6 +53,7 @@ const PopularSection: React.FC = () => {
         Url={item.url}
         description={item.description || ""}
         thaliOffer={item.thaliOffer}
+        kitchenId={item.kitchenId}
       />
     );
   };

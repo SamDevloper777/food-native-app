@@ -1,40 +1,74 @@
 import React, { useState, useCallback, useMemo } from 'react';
 import { FlatList, Text, TouchableOpacity, View } from 'react-native';
 import ThaliItemCard from './ThaliItemCard';
-import { categories, Category, MainCourse } from '@/utils/constants/thaliItems';
-import { Desserts, Starters } from '@/utils/constants/thaliItems';
+import { categories, Category } from '@/utils/constants/thaliItems';
+import { thalis } from '@/utils/constants/kitchenProfile';
 
-const ThaliItems: React.FC = () => {
+interface ThaliItemsProps {
+  kitchenId: string;
+  thaliId: string
+}
+
+interface ThaliItem {
+  title: string;
+  cost: number;
+  url: string;
+}
+
+const ThaliItems: React.FC<ThaliItemsProps> = ({ kitchenId, thaliId }) => {
   const [activeCategory, setActiveCategory] = useState<Category>('Main Course');
 
   const handleCategoryChange = useCallback((category: Category) => {
     setActiveCategory(category);
   }, []);
 
-  const data = useMemo(() => {
+  const mainCourse = useMemo(() => {
+    return thalis
+      .filter(item => item.kitchenId.toString() === kitchenId && item.id === parseInt(thaliId))
+      .map(item => item.mainCourse)
+      .flat()
+      .map(i => ({ ...i, cost: Number(i.cost) }));
+  }, [kitchenId]);
+  
+  const starters = useMemo(() => {
+    return thalis
+      .filter(item => item.kitchenId.toString() === kitchenId && item.id === parseInt(thaliId))
+      .map(item => item.starters)
+      .flat()
+      .map(i => ({ ...i, cost: Number(i.cost) }));
+  }, [kitchenId]);
+  
+  const desserts = useMemo(() => {
+    return thalis
+      .filter(item => item.kitchenId.toString() === kitchenId && item.id === parseInt(thaliId))
+      .map(item => item.desserts)
+      .flat()
+      .map(i => ({ ...i, cost: Number(i.cost) }));
+  }, [kitchenId]);
+  
+  const data = useMemo<ThaliItem[]>(() => {
     switch (activeCategory) {
       case 'Main Course':
-        return MainCourse;
+        return mainCourse;
       case 'Starters':
-        return Starters;
+        return starters;
       case 'Desserts':
-        return Desserts;
+        return desserts;
       default:
         return [];
     }
-  }, [activeCategory]);
+  }, [activeCategory, mainCourse, starters, desserts]);
 
-  const renderItem = useCallback(({ item }: { item: typeof MainCourse[0] }) => (
+  const renderItem = useCallback(({ item }: { item: ThaliItem }) => (
     <ThaliItemCard
-      key={`${activeCategory}-${item.title}`}
       id={`${activeCategory}-${item.title}`}
       title={item.title}
-      cost={item.cost}
+      cost={item.cost.toString()}
       url={item.url}
     />
   ), [activeCategory]);
 
-  const keyExtractor = useCallback((item: typeof MainCourse[0]) => 
+  const keyExtractor = useCallback((item: ThaliItem) => 
     `${activeCategory}-${item.title}`, 
     [activeCategory]
   );

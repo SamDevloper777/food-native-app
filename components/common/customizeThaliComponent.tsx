@@ -15,20 +15,22 @@ interface CustomizeThaliComponentProps {
   deliveryTime?: string;
   kitchenName?: string;
   confirmButtonText: string;
+  id: string;
+  title: string;
+  cost: string;
+  kitchenId: string
 }
 
 const CustomizeThaliComponent = ({ 
   thaliTitle, 
   deliveryTime, 
   kitchenName, 
-  confirmButtonText 
+  confirmButtonText,
+  id, 
+  title,
+  cost,
+  kitchenId
 }: CustomizeThaliComponentProps) => {
-  const { id, title, cost } = useLocalSearchParams<{
-    id: string;
-    title: string;
-    cost: string;
-  }>();
-
   const price = parseFloat(cost);
   const dispatch = useDispatch();
   const thaliItems = useSelector(selectThaliItems);
@@ -85,7 +87,7 @@ const CustomizeThaliComponent = ({
           {renderSelectedItemsList()}
           {renderThaliDescription()}
         </View>
-        <ThaliItems />
+        <ThaliItems kitchenId={kitchenId} thaliId={id}/>
       </ScrollView>
       {renderConfirmButton()}
     </View>

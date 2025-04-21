@@ -1,8 +1,5 @@
 # TODO
-- PostCheckout
 - Optimize Loading
-- See All
-- Search 
 - Filters
 
 ``` json

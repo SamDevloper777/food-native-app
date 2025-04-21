@@ -58,7 +58,7 @@ export default function TabLayout() {
                 strokeWidth={focused ? 2 : 1.8}
               />
             ),
-            title: "Customize Thali",
+            title: "My Thali",
             tabBarButton: (props) => (
               <TouchableOpacity
                 activeOpacity={0.5}

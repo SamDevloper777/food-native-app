@@ -28,7 +28,7 @@ const LocationHeader = () => {
           </View>
           <View className="w-3 h-3 bg-[#FC913A] rounded-full absolute top-1 right-1" />
         </TouchableOpacity>
-        <TouchableOpacity className="relative">
+        <TouchableOpacity className="relative" onPress={() => router.push('/(screens)/notification')} activeOpacity={0.8}>
           <View className="bg-gray-100 rounded-full p-2">
             <BellIcon size={32} color="black" />
           </View>

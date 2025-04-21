@@ -26,15 +26,15 @@ const RecommendedSection = ({ kitchenId }: { kitchenId: string }): JSX.Element =
     switch (activeCategory) {
       case "All Thalis":
         return thalis.filter(item => item.kitchenId.toString() === kitchenId).map((item, idx) => (
-          <ThaliCard key={idx} Title={item.title} Cost={item.cost} Rating={item.rating} Time={item.time} Url={item.url} description={item.description} id={item.id} />
+          <ThaliCard key={idx} Title={item.title} Cost={item.cost} Rating={item.rating} Time={item.time} Url={item.url} description={item.description} id={item.id} kitchenId={item.kitchenId}/>
         ));
       case "Vegetarian":
         return thalis.filter(item => item.type === "veg" && item.kitchenId.toString() === kitchenId).map((item, idx) => (
-          <ThaliCard key={idx} Title={item.title} Cost={item.cost} Rating={item.rating} Time={item.time} Url={item.url} description={item.description} id={item.id} />
+          <ThaliCard key={idx} Title={item.title} Cost={item.cost} Rating={item.rating} Time={item.time} Url={item.url} description={item.description} id={item.id} kitchenId={item.kitchenId}/>
         ));
       case "Specials":
         return thalis.filter(item => item.special && item.kitchenId.toString() === kitchenId).map((item, idx) => (
-          <ThaliCard key={idx} Title={item.title} Cost={item.cost} Rating={item.rating} Time={item.time} Url={item.url} description={item.description} id={item.id} />
+          <ThaliCard key={idx} Title={item.title} Cost={item.cost} Rating={item.rating} Time={item.time} Url={item.url} description={item.description} id={item.id} kitchenId={item.kitchenId}/>
         ));
       default:
         return null;

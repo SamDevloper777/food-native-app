@@ -73,7 +73,8 @@ const SeeAll = () => {
           Title={kitchen.name || kitchen.title}
           Rating={kitchen.rating}
           Time={kitchen.time}
-          LogoUrl={kitchen.url}
+          LogoUrl={kitchen.logoUrl}
+          Tagline={kitchen.tagline}
         />
       ));
     }

@@ -10,7 +10,7 @@ interface SeeAllButtonProps {
 const SeeAllButton = ({ listType, kitchenId }: SeeAllButtonProps) => {
     return (
         <TouchableOpacity activeOpacity={0.8} onPress={() => router.push({ pathname: '/(screens)/seeAll', params: { listType, searchParam: '', kitchenId: kitchenId }})}>
-            <Text className="text-[#FC913A] font-medium">See All</Text>
+            <Text className="text-[#FC913A] font-bold text-lg">See All</Text>
         </TouchableOpacity>
     )
 }

@@ -5,6 +5,7 @@ import ThaliCard from "../common/ThaliCard";
 import KitchenCard from "./KitchenCard";
 import SeeAllButton from "../common/seeAllButton";
 import { thalis } from "@/utils/constants/kitchenProfile";
+import { router } from "expo-router";
 
 type homeCategory = "All Thalis" | "Kitchens" | "Specials";
 
@@ -64,7 +65,7 @@ const PopularSection: React.FC = () => {
       <View className="px-4 mb-6">
         <View className="flex-row items-center justify-between mb-3">
           <Text className="text-[22px] font-bold">Popular Choices</Text>
-          <SeeAllButton listType={activeCategory}/>
+          <SeeAllButton listType={activeCategory} />
         </View>
 
         {/* Category Tabs */}
@@ -77,14 +78,12 @@ const PopularSection: React.FC = () => {
             <TouchableOpacity
               onPress={() => setActiveCategory(item)}
               activeOpacity={0.8}
-              className={`px-4 py-2 rounded-full mr-2 ${
-                activeCategory === item ? "bg-[#FC913A]" : "bg-gray-100"
-              }`}
+              className={`px-4 py-2 rounded-full mr-2 ${activeCategory === item ? "bg-[#FC913A]" : "bg-gray-100"
+                }`}
             >
               <Text
-                className={`text-[16px] font-medium ${
-                  activeCategory === item ? "text-white" : "text-gray-700"
-                }`}
+                className={`text-[16px] font-medium ${activeCategory === item ? "text-white" : "text-gray-700"
+                  }`}
               >
                 {item}
               </Text>
@@ -104,6 +103,11 @@ const PopularSection: React.FC = () => {
         maxToRenderPerBatch={5}
         windowSize={5}
       />
+      <TouchableOpacity activeOpacity={0.9} className="border-2 border-[#FC913A] rounded-full mx-4 py-4 my-8" onPress={() => router.push({ pathname: '/(screens)/seeAll', params: { listType: activeCategory, searchParam: '' }})}>
+        <Text className="text-[#FC913A] text-center text-[16px] font-bold">
+          See More  
+        </Text>
+      </TouchableOpacity>
     </View>
   );
 };

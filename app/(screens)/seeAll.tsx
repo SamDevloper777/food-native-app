@@ -89,6 +89,7 @@ const SeeAll = () => {
         Time={thali.time}
         Url={thali.url}
         description={thali.description}
+        kitchenId={thali.kitchenId}
       />
     ));
   };

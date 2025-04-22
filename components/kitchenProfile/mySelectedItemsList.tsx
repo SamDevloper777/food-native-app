@@ -18,7 +18,7 @@ const SelectedItemsList = ({ id, title, cost, quantity, dispatch, thaliItems }: 
             <View className="flex flex-row">
                 <Ionicons name="bag-handle-outline" size={20} color="#fc913a" className="font-thick align-middle text-center my-auto" />
                 <Text className="text-[#fc913a] font-bold ml-2 text-lg">
-                    {thaliItems.length || 0} Items Selected
+                    {thaliItems["mainCourse"].length + thaliItems["starters"].length + thaliItems["desserts"].length || 0} Items Selected
                 </Text>
             </View>
             {cost !== undefined &&

@@ -2,7 +2,7 @@ import Navigation from "@/components/common/navigation";
 import ConfirmButton from "@/components/customizeThali/confirmButton";
 import Thali from "@/components/customizeThali/Thali";
 import ThaliDescription from "@/components/customizeThali/ThaliDescription";
-import SelectedItemsList from "@/components/kitchenProfile/selectedItemsList";
+import SelectedItemsList from "@/components/kitchenProfile/mySelectedItemsList";
 import { selectFilterParams, selectThaliItems } from "@/utils/slice/myThaliSlice";
 import React, { useCallback, useMemo } from "react";
 import { ScrollView, Touchable, TouchableOpacity, View } from "react-native";

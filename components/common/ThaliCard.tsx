@@ -45,7 +45,7 @@ const ThaliCard = memo(({ id, kitchenId, Title, Cost, Time, Rating, Url, descrip
                     <Text className="text-gray-500">{Rating} ⭐</Text>
                 </View>
                 <View className="flex-row items-center mt-2">
-                    <Text className="text-xl font-bold">₹{Cost}</Text>
+                    <Text className="text-xl font-bold">₹ {Cost}</Text>
                     {thaliOffer && (
                         <View className="ml-2 bg-[#FC913A] px-2 py-1 rounded-md">
                             <Text numberOfLines={1} className="text-white text-xs font-bold">{thaliOffer}</Text>

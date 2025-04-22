@@ -25,6 +25,12 @@ const PopularSection: React.FC = () => {
   }, [activeCategory]);
 
   const renderItem = ({ item, index }: { item: any; index: number }) => {
+    const mainCourseTotal = item.mainCourse.reduce((sum: number, course: any) => sum + parseFloat(course.cost), 0);
+    const startersTotal = item.starters.reduce((sum: number, starter: any) => sum + parseFloat(starter.cost), 0);
+    const dessertsTotal = item.desserts.reduce((sum: number, dessert: any) => sum + parseFloat(dessert.cost), 0);
+
+    const totalCost = mainCourseTotal + startersTotal + dessertsTotal;
+
     if (activeCategory === "Kitchens") {
       return (
         <KitchenCard
@@ -47,7 +53,7 @@ const PopularSection: React.FC = () => {
         key={index}
         id={item.id}
         Title={item.title}
-        Cost={item.cost}
+        Cost={totalCost || 0}
         Rating={item.rating}
         Time={item.time}
         Url={item.url}
@@ -104,18 +110,18 @@ const PopularSection: React.FC = () => {
         maxToRenderPerBatch={5}
         windowSize={5}
       />
-      <TouchableOpacity activeOpacity={0.9} className="border-2 border-[#FC913A] rounded-full mx-4 py-4 my-8" onPress={() => router.push({ pathname: '/(screens)/seeAll', params: { listType: activeCategory, searchParam: '' }})}>
+      <TouchableOpacity activeOpacity={0.9} className="border-2 border-[#FC913A] rounded-full mx-4 py-4 my-8" onPress={() => router.push({ pathname: '/(screens)/seeAll', params: { listType: activeCategory, searchParam: '' } })}>
         <Text className="text-[#FC913A] text-center text-[16px] font-bold">
-          See More  
+          See More
         </Text>
       </TouchableOpacity>
       <View className="bg-gray-100 w-full flex flex-col justify-center items-start px-4 py-8">
-          <Text className="text-[20px] font-bold">
-            Are You a Kitchen Partner?
-          </Text>
-          <Text className="text-[14px] text-gray-500">
-            Join Ovenly to connect with thousands of customers
-          </Text>
+        <Text className="text-[20px] font-bold">
+          Are You a Kitchen Partner?
+        </Text>
+        <Text className="text-[14px] text-gray-500">
+          Join Ovenly to connect with thousands of customers
+        </Text>
       </View>
     </View>
   );

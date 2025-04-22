@@ -94,7 +94,7 @@ const ThaliItems: React.FC<ThaliItemsProps> = ({ kitchenId, thaliId }) => {
   ), [activeCategory, handleCategoryChange]);
 
   return (
-    <View className="pb-[76px]">
+    <View>
       <View className="px-4 mb-6">
         <View className="flex-row items-center justify-between mb-3">
           <Text className="text-[22px] font-bold">Add items to Thali</Text>

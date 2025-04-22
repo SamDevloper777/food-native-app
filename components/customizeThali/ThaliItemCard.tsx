@@ -23,47 +23,36 @@ interface ThaliItemCardProps {
   title: string;
   cost: string;
   url: string;
+  thaliId: string; // Assuming thaliId should be passed here as well
 }
 
-const ThaliItemCard = memo(({
-  id,
-  title,
-  cost,
-  url,
-}: ThaliItemCardProps) => {
+const ThaliItemCard = memo(({ id, title, cost, url, thaliId }: ThaliItemCardProps) => {
   const dispatch = useDispatch();
-  
-  const isSelected = useSelector(isItemSelected(id));
-  const quantity = useSelector(getItemQuantity(id));
-  
+
+  // Access Redux state
+  const isSelected = useSelector((state: any) => isItemSelected(thaliId, id)(state));  // Pass both thaliId and id
+  const quantity = useSelector((state: any) => getItemQuantity(thaliId, id)(state));    // Pass both thaliId and id
+
   const handleToggle = useCallback(() => {
     if (isSelected) {
-      dispatch(removeItem(id));
+      dispatch(removeItem({thaliId, itemId: id})); // Pass both thaliId and id
     } else {
-      dispatch(addItem({ id, title, cost, url }));
+      dispatch(addItem({ id, title, cost, url, quantity: 1, thaliId })); // Pass thaliId here as well
     }
   }, [isSelected, id, title, cost, url, dispatch]);
-  
-  const handleIncrement = useCallback(() => 
-    dispatch(incrementQuantity(id)),
-    [id, dispatch]
-  );
 
-  const handleDecrement = useCallback(() => 
-    dispatch(decrementQuantity(id)),
-    [id, dispatch]
-  );
+  const handleIncrement = useCallback(() => dispatch(incrementQuantity({thaliId, itemId: id})), [id, dispatch]);
+
+  const handleDecrement = useCallback(() => dispatch(decrementQuantity({thaliId, itemId: id})), [id, dispatch]);
 
   const buttonStyle = useCallback(({ pressed }: { pressed: boolean }) => ({
     opacity: pressed || !isSelected ? 0.6 : 1,
     padding: 4,
   }), [isSelected]);
-  
+
   return (
     <TouchableOpacity
-      className={`flex-row items-center justify-between gap-4 bg-white rounded-2xl shadow-md w-full h-[148px] py-4 px-4 my-2 mx-auto ${
-        isSelected ? 'border border-[#FC913A]' : ''
-      }`}
+      className={`flex-row items-center justify-between gap-4 bg-white rounded-2xl shadow-md w-full h-[148px] py-4 px-4 my-2 mx-auto ${isSelected ? 'border border-[#FC913A]' : ''}`}
       activeOpacity={0.9}
       onPress={handleToggle}
     >
@@ -75,26 +64,23 @@ const ThaliItemCard = memo(({
           resizeMode="cover"
         />
       </View>
-      
+
       {/* Info */}
       <View className="flex-1 flex-col justify-center items-start h-full">
-        <Text
-          className="text-[16px] font-bold"
-          numberOfLines={2}
-          ellipsizeMode="tail"
-        >
+        <Text className="text-[16px] font-bold" numberOfLines={2} ellipsizeMode="tail">
           {title}
         </Text>
         <Text className="text-lg font-semibold text-gray-500 mt-1">
           ₹{cost}
         </Text>
       </View>
-      
+
       {/* Divider */}
       <View className="w-[1px] h-[70%] bg-gray-200" />
-      
+
       {/* Switch + Quantity Controls */}
       <View className="flex flex-col justify-between items-center h-full gap-8">
+        {/* Switch */}
         <Switch
           trackColor={{ false: '#e0e0e0', true: '#FFCDA4' }}
           thumbColor={isSelected ? '#FC913A' : '#e0e0e0'}
@@ -102,12 +88,9 @@ const ThaliItemCard = memo(({
           ios_backgroundColor="#e0e0e0"
           value={isSelected}
         />
-        
-        <View
-          className={`flex-row ${
-            isSelected ? 'bg-[#FC913A]' : 'bg-[#e0e0e0]'
-          } rounded-full px-6 py-3 items-center gap-4`}
-        >
+
+        {/* Quantity Controls */}
+        <View className={`flex-row ${isSelected ? 'bg-[#FC913A]' : 'bg-[#e0e0e0]'} rounded-full px-6 py-3 items-center gap-4`}>
           {/* Decrement */}
           <Pressable
             onPress={handleDecrement}
@@ -117,12 +100,12 @@ const ThaliItemCard = memo(({
           >
             <Minus size={18} color="white" />
           </Pressable>
-          
+
           {/* Quantity */}
           <Text className="text-white text-md font-bold">
             {quantity < 10 ? `0${quantity}` : quantity}
           </Text>
-          
+
           {/* Increment */}
           <Pressable
             onPress={handleIncrement}

@@ -10,7 +10,7 @@ type ThaliItem = {
 };
 
 type ThaliState = {
-  items: Record<string, ThaliItem>; // using a map for O(1) lookup
+  items: Record<string, ThaliItem[]>; // Using thaliId as the key and an array of ThaliItems as the value
 };
 
 const initialState: ThaliState = {
@@ -21,29 +21,53 @@ const customizeOwnThaliSlice = createSlice({
   name: 'customizeOwnThali',
   initialState,
   reducers: {
-    addItem: (state, action: PayloadAction<Omit<ThaliItem, 'quantity'>>) => {
-      const { id, title, cost, url } = action.payload;
-      state.items[id] = { id, title, cost, url, quantity: 1 };
+    addItem: (state, action: PayloadAction<ThaliItem & { thaliId: string }>) => {
+      const { thaliId, id, title, cost, url } = action.payload;
+      
+      // Check if the thaliId already exists
+      if (state.items[thaliId]) {
+        // Find if the item already exists in the array
+        const existingItem = state.items[thaliId].find(item => item.id === id);
+        
+        if (existingItem) {
+          // If item exists, just increment the quantity
+          existingItem.quantity += 1;
+        } else {
+          // Otherwise, add the new item
+          state.items[thaliId].push({ id, title, cost, url, quantity: 1 });
+        }
+        
+        // Sort the items by their ID after the update
+        state.items[thaliId].sort((a, b) => a.id.localeCompare(b.id));
+      } else {
+        // If thaliId doesn't exist, create a new entry with the item
+        state.items[thaliId] = [{ id, title, cost, url, quantity: 1 }];
+      }
     },
-    
-    removeItem: (state, action: PayloadAction<string>) => {
-      delete state.items[action.payload];
+
+    removeItem: (state, action: PayloadAction<{ thaliId: string, itemId: string }>) => {
+      const { thaliId, itemId } = action.payload;
+      if (state.items[thaliId]) {
+        state.items[thaliId] = state.items[thaliId].filter(item => item.id !== itemId);
+      }
     },
-    
-    incrementQuantity: (state, action: PayloadAction<string>) => {
-      const item = state.items[action.payload];
+
+    incrementQuantity: (state, action: PayloadAction<{ thaliId: string, itemId: string }>) => {
+      const { thaliId, itemId } = action.payload;
+      const item = state.items[thaliId]?.find(item => item.id === itemId);
       if (item) item.quantity += 1;
     },
-    
-    decrementQuantity: (state, action: PayloadAction<string>) => {
-      const item = state.items[action.payload];
+
+    decrementQuantity: (state, action: PayloadAction<{ thaliId: string, itemId: string }>) => {
+      const { thaliId, itemId } = action.payload;
+      const item = state.items[thaliId]?.find(item => item.id === itemId);
       if (item && item.quantity > 1) {
         item.quantity -= 1;
       } else {
-        delete state.items[action.payload];
+        state.items[thaliId] = state.items[thaliId]?.filter(item => item.id !== itemId);
       }
     },
-    
+
     clearAll: (state) => {
       state.items = {};
     },
@@ -58,14 +82,13 @@ export const {
   clearAll,
 } = customizeOwnThaliSlice.actions;
 
-// Updated selectors to work with the RootState
-export const selectThaliItems = (state: RootState) =>
-  Object.values(state.customizeOwnThali.items);
+// Selectors
+export const selectThaliItems = (state: RootState) => state.customizeOwnThali.items;
 
-export const isItemSelected = (id: string) => (state: RootState) =>
-  Boolean(state.customizeOwnThali.items[id]);
+export const isItemSelected = (thaliId: string, id: string) => (state: RootState) =>
+  Boolean(state.customizeOwnThali.items[thaliId]?.find(item => item.id === id));
 
-export const getItemQuantity = (id: string) => (state: RootState) =>
-  state.customizeOwnThali.items[id]?.quantity || 0;
+export const getItemQuantity = (thaliId: string, id: string) => (state: RootState) =>
+  state.customizeOwnThali.items[thaliId]?.find(item => item.id === id)?.quantity || 0;
 
 export default customizeOwnThaliSlice.reducer;

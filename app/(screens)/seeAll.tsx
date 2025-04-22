@@ -19,88 +19,200 @@ import {
   MagnifyingGlassIcon,
 } from 'react-native-heroicons/outline';
 
+// Define types for the data structures
+interface MenuItem {
+  title: string;
+  cost: string;
+  url: string;
+}
+
+interface Thali {
+  id: number;
+  kitchenId: number;
+  title: string;
+  cost: string;
+  rating: string;
+  time: string;
+  type: "veg" | "non-veg";
+  special: boolean;
+  url: string;
+  description: string;
+  mainCourse?: MenuItem[];
+  starters?: MenuItem[];
+  desserts?: MenuItem[];
+}
+
+interface Kitchen {
+  id: number;
+  name?: string;
+  title?: string;
+  rating: string;
+  time: string;
+  logoUrl: string;
+  tagline: string;
+}
+
 const SeeAll = () => {
-  const { listType, searchParam = '', kitchenId } = useLocalSearchParams<{
-    listType: 'All Thalis' | 'Kitchens' | 'Specials' | 'Kitchen Vegetarian' | 'Kitchen Specials' | 'Kitchen All Thalis';
+  const { listType, searchParam = '', kitchenId, filterParams } = useLocalSearchParams<{
+    listType:
+      | 'All Thalis'
+      | 'Kitchens'
+      | 'Specials'
+      | 'Kitchen Vegetarian'
+      | 'Kitchen Specials'
+      | 'Kitchen All Thalis';
     searchParam?: string;
-    kitchenId?: string
+    kitchenId?: string;
+    filterParams?: string; // <-- Expecting JSON stringified object
   }>();
 
   const [searchTerm, setSearchTerm] = useState(searchParam);
-  const [filteredData, setFilteredData] = useState<any[]>([]);
-  const validListType = listType && ['All Thalis', 'Kitchens', 'Specials', 'Kitchen Vegetarian', 'Kitchen Specials', 'Kitchen All Thalis'].includes(listType)
-    ? listType
-    : 'All Thalis';
+  const [filteredData, setFilteredData] = useState<(Thali | Kitchen)[]>([]);
+
+  // Parse filterParams into a proper object if it's passed in the params
+  const parsedFilterParams: {
+    mainCourse?: string[];
+    starters?: string[];
+    desserts?: string[];
+  } = useMemo(() => {
+    try {
+      return filterParams ? JSON.parse(filterParams) : {};
+    } catch {
+      return {};
+    }
+  }, [filterParams]);
+
+  const validListType =
+    listType &&
+    [
+      'All Thalis',
+      'Kitchens',
+      'Specials',
+      'Kitchen Vegetarian',
+      'Kitchen Specials',
+      'Kitchen All Thalis',
+    ].includes(listType)
+      ? listType
+      : 'All Thalis';
 
   const data = useMemo(() => {
     switch (validListType) {
-      case "All Thalis":
-        return thalis;
-      case "Kitchens":
-        return kitchens;
-      case "Specials":
-        return thalis.filter(thali => thali.special);
-      case "Kitchen Vegetarian":
-        return thalis.filter(thali => thali.type === 'veg' && thali.kitchenId.toString() === kitchenId);
-      case "Kitchen Specials":
-        return thalis.filter(thali => thali.special && thali.kitchenId.toString() === kitchenId);
-      case "Kitchen All Thalis":
-        return thalis.filter(thali => thali.kitchenId.toString() === kitchenId);
+      case 'All Thalis':
+        return thalis as Thali[];
+      case 'Kitchens':
+        return kitchens as Kitchen[];
+      case 'Specials':
+        return (thalis as Thali[]).filter((thali) => thali.special);
+      case 'Kitchen Vegetarian':
+        return (thalis as Thali[]).filter(
+          (thali) =>
+            thali.type === 'veg' && thali.kitchenId.toString() === kitchenId
+        );
+      case 'Kitchen Specials':
+        return (thalis as Thali[]).filter(
+          (thali) =>
+            thali.special && thali.kitchenId.toString() === kitchenId
+        );
+      case 'Kitchen All Thalis':
+        return (thalis as Thali[]).filter(
+          (thali) => thali.kitchenId.toString() === kitchenId
+        );
       default:
-        return [];
+        return [] as (Thali | Kitchen)[];
     }
-  }, [validListType]);
+  }, [validListType, kitchenId]);
 
   useEffect(() => {
     const timeout = setTimeout(() => {
-      const originalData = data;
-      const filtered = originalData.filter(item =>
-        item.title?.toLowerCase().includes(searchTerm.toLowerCase())
-      );
+      let filtered: (Thali | Kitchen)[] = [];
+
+      if (Object.keys(parsedFilterParams).length > 0) {
+        // Use filterParams object for advanced filtering
+        filtered = (data as Thali[]).filter((thali) => {
+          return Object.entries(parsedFilterParams).every(([section, items]) => {
+            const lowerItems = (items as string[]).map((s) => s.toLowerCase());
+            const thaliItems = (thali[section as keyof Thali] as MenuItem[] | undefined)?.map(
+              (m) => m.title.toLowerCase()
+            ) || [];
+
+            return lowerItems.every((item) =>
+              thaliItems.some((title) => title.includes(item))
+            );
+          });
+        });
+      } else {
+        // Only search by title
+        const term = searchTerm.toLowerCase();
+        filtered = data.filter((item) => {
+          if ('logoUrl' in item) return false;
+          return (item.title || '').toLowerCase().includes(term);
+        });
+      }
+
       setFilteredData(filtered);
     }, 150);
 
     return () => clearTimeout(timeout);
-  }, [searchTerm, validListType]);
-
+  }, [searchTerm, data, parsedFilterParams]);
 
   const renderItems = () => {
     if (validListType === 'Kitchens') {
-      return filteredData.map(kitchen => (
-        <KitchenCard
-          key={kitchen.id}
-          id={kitchen.id}
-          Title={kitchen.name || kitchen.title}
-          Rating={kitchen.rating}
-          Time={kitchen.time}
-          LogoUrl={kitchen.logoUrl}
-          Tagline={kitchen.tagline}
-        />
-      ));
+      return filteredData.map((item) => {
+        const kitchen = item as Kitchen;
+        return (
+          <KitchenCard
+            key={kitchen.id}
+            id={kitchen.id}
+            Title={kitchen.name || kitchen.title || ''}
+            Rating={kitchen.rating}
+            Time={kitchen.time}
+            LogoUrl={kitchen.logoUrl}
+            Tagline={kitchen.tagline}
+          />
+        );
+      });
     }
 
-    return filteredData.map(thali => (
-      <ThaliCard
-        key={thali.id}
-        id={thali.id}
-        Title={thali.title}
-        Cost={thali.cost}
-        Rating={thali.rating}
-        Time={thali.time}
-        Url={thali.url}
-        description={thali.description}
-        kitchenId={thali.kitchenId}
-      />
-    ));
+    return filteredData.map((item) => {
+      const thali = item as Thali;
+      return (
+        <ThaliCard
+          key={thali.id}
+          id={thali.id}
+          Title={thali.title}
+          Cost={thali.cost}
+          Rating={thali.rating}
+          Time={thali.time}
+          Url={thali.url}
+          description={thali.description}
+          kitchenId={thali.kitchenId}
+        />
+      );
+    });
   };
 
-  const placeholder = `Search your favourite ${validListType === 'All Thalis' ? 'thali' : validListType === 'Kitchens' ? 'kitchen' : 'special'
-    }`;
+  const placeholder = `Search your favourite ${
+    validListType === 'All Thalis'
+      ? 'thali'
+      : validListType === 'Kitchens'
+      ? 'kitchen'
+      : 'special'
+  }`;
 
-   return (
+  return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <ScrollView className="flex-1 bg-white px-4">
-        <Navigation title={validListType === 'All Thalis' ? 'All Thalis' : validListType === 'Kitchens' ? 'Kitchens' : validListType === 'Specials' ? 'Specials' : validListType.slice(8)} />
+        <Navigation
+          title={
+            validListType === 'All Thalis'
+              ? 'All Thalis'
+              : validListType === 'Kitchens'
+              ? 'Kitchens'
+              : validListType === 'Specials'
+              ? 'Specials'
+              : validListType.slice(8)
+          }
+        />
 
         {/* Search Bar */}
         <View className="flex-row items-center justify-between bg-[#fcfcfc] rounded-full px-4 py-3 mb-6 shadow-md">
@@ -125,7 +237,12 @@ const SeeAll = () => {
         ) : (
           <View className="items-center justify-center p-4">
             <Text className="text-gray-500 text-center">
-              No {validListType === 'All Thalis' ? 'thali' : validListType === 'Kitchens' ? 'kitchen' : 'special'}{' '}
+              No{' '}
+              {validListType === 'All Thalis'
+                ? 'thali'
+                : validListType === 'Kitchens'
+                ? 'kitchen'
+                : 'special'}{' '}
               found with the given search term
             </Text>
           </View>

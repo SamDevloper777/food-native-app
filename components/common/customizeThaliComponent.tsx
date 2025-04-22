@@ -1,14 +1,13 @@
 import Navigation from "@/components/common/navigation";
 import ConfirmButton from "@/components/customizeThali/confirmButton";
 import Thali from "@/components/customizeThali/Thali";
-import ThaliItems from "@/components/customizeThali/ThaliItems";
-import SelectedItemsList from "@/components/kitchenProfile/selectedItemsList";
-import { selectThaliItems } from "@/utils/slice/customizeOwnThaliSlice";
-import { useLocalSearchParams } from "expo-router";
-import React, { useMemo, useCallback } from "react";
-import { View, ScrollView } from "react-native";
-import { useDispatch, useSelector } from "react-redux";
 import ThaliDescription from "@/components/customizeThali/ThaliDescription";
+import SelectedItemsList from "@/components/kitchenProfile/selectedItemsList";
+import { selectThaliItems } from "@/utils/slice/myThaliSlice";
+import React, { useCallback, useMemo } from "react";
+import { ScrollView, View } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
+import MyThaliItems from "../customizeThali/MyThaliItems";
 
 interface CustomizeThaliComponentProps {
   thaliTitle?: string;
@@ -66,7 +65,6 @@ const CustomizeThaliComponent = ({
     <ConfirmButton 
       id={id} 
       title={title} 
-      cost={price} 
       quantity={1} 
       dispatch={dispatch} 
       thaliItems={thaliItems} 
@@ -87,7 +85,7 @@ const CustomizeThaliComponent = ({
           {renderSelectedItemsList()}
           {renderThaliDescription()}
         </View>
-        <ThaliItems kitchenId={kitchenId} thaliId={id}/>
+        <MyThaliItems />
       </ScrollView>
       {renderConfirmButton()}
     </View>

@@ -61,7 +61,7 @@ const CartItemCard = memo(({ thaliId, object, thaliName, kitchenId }: CartItemCa
     };
 
     return (
-        <View className="bg-white rounded-2xl shadow-lg p-4 my-2 mx-4 shadow-gray-600 flex flex-col gap-4">
+        <View className="bg-white rounded-2xl shadow-lg px-4 py-6 my-4 mx-4 shadow-gray-600 flex flex-col gap-4">
             <View className="flex flex-row items-center justify-between">
                 <Text className="text-lg font-bold text-center my-auto">{thaliName}</Text>
                 <View className="w-[1px] h-[90%] bg-gray-300" />
@@ -98,15 +98,26 @@ const CartItemCard = memo(({ thaliId, object, thaliName, kitchenId }: CartItemCa
                         key={item.id}
                         className="flex-row items-center justify-between mb-1"
                     >
-                        <Text className="text-slate-600 font-semibold" numberOfLines={1}>
+                        <Text className="text-slate-500 font-normal" numberOfLines={1}>
                             {item.title}
                         </Text>
                         <View className="w-[50%] h-[1px] border-t border-dashed border-gray-300" />
-                        <Text className="text-md mt-1 text-[#FC913A] font-bold">
+                        <Text className="text-md mt-1 text-[#FC913A] font-normal">
                             ₹{item.cost} x {item.quantity}
                         </Text>
                     </View>
                 ))}
+                <View
+                    className="flex-row items-center justify-between mt-3"
+                >
+                    <Text className="text-slate-800 font-semibold" numberOfLines={1}>
+                        Sub Total
+                    </Text>
+                    <View className="w-[50%] h-[1px] border-t border-dashed border-gray-300" />
+                    <Text className="text-md mt-1 text-[#FC913A] font-bold">
+                        ₹{items.reduce((total, item) => total + parseFloat(item.cost) * item.quantity, 0).toFixed(2)}
+                    </Text>
+                </View>
             </View>
             <View className="flex flex-row items-center justify-between gap-2">
                 <TouchableOpacity
@@ -121,14 +132,14 @@ const CartItemCard = memo(({ thaliId, object, thaliName, kitchenId }: CartItemCa
                     onPress={() => {
                         router.push({
                             pathname: '/(screens)/customizeThali',
-                            params: {id: thaliId, kitchenId: kitchenId}
+                            params: { id: thaliId, kitchenId: kitchenId }
                         });
                     }}
-                    className="bg-[#FC913A] p-3 rounded-lg items-center justify-center flex flex-row gap-4 align-middle text-center w-fit"
+                    className="border border-[#FC913A] p-3 rounded-lg items-center justify-center flex flex-row gap-4 align-middle text-center w-fit"
                     activeOpacity={0.8}
                 >
-                    <Pencil size={18} color="#fff" />
-                    <Text className="text-[#fff] text-md mt-1 font-bold">Edit Thali</Text>
+                    <Pencil size={18} color="#FC913A" />
+                    <Text className="text-[#fc913a] text-md mt-1 font-bold">Edit Thali</Text>
                 </TouchableOpacity>
             </View>
         </View>

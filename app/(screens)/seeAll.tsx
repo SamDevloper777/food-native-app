@@ -63,7 +63,7 @@ const SeeAll = () => {
       | 'Kitchen All Thalis';
     searchParam?: string;
     kitchenId?: string;
-    filterParams?: string; // <-- Expecting JSON stringified object
+    filterParams?: string; 
   }>();
 
   const [searchTerm, setSearchTerm] = useState(searchParam);
@@ -175,12 +175,17 @@ const SeeAll = () => {
 
     return filteredData.map((item) => {
       const thali = item as Thali;
+      const mainCourseTotal = thali.mainCourse?.reduce((sum: number, course: any) => sum + parseFloat(course.cost), 0);
+      const startersTotal = thali.starters?.reduce((sum: number, starter: any) => sum + parseFloat(starter.cost), 0);
+      const dessertsTotal = thali.desserts?.reduce((sum: number, dessert: any) => sum + parseFloat(dessert.cost), 0);
+  
+      const totalCost = (mainCourseTotal || 0) + (startersTotal || 0) + (dessertsTotal || 0);
       return (
         <ThaliCard
           key={thali.id}
           id={thali.id}
           Title={thali.title}
-          Cost={thali.cost}
+          Cost={totalCost.toString() || ''}
           Rating={thali.rating}
           Time={thali.time}
           Url={thali.url}
@@ -226,9 +231,6 @@ const SeeAll = () => {
               className="text-gray-500 flex-1 text-[16px]"
             />
           </View>
-          <TouchableOpacity>
-            <AdjustmentsHorizontalIcon size={28} color="black" />
-          </TouchableOpacity>
         </View>
 
         {/* Render Results */}

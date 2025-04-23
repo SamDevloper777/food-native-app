@@ -66,6 +66,7 @@ const ThaliItems: React.FC<ThaliItemsProps> = ({ kitchenId, thaliId }) => {
       cost={item.cost.toString()}
       url={item.url}
       thaliId={thaliId}
+      kitchenId={kitchenId}
     />
   ), [activeCategory]);
 

@@ -10,12 +10,10 @@ import { thalis } from '@/utils/constants/kitchenProfile';
 
 const Cart = () => {
   const cartItems = useSelector(selectThaliItems);
-
-  // Stringify the cartItems object with formatting (for debugging)
-  const cartItemsJson = JSON.stringify(cartItems, null, 2);
   const deliveryCharges = 20;
-  // const tax = totalAmount * 0.18;
-  // const finalTotal = totalAmount + deliveryCharges + tax;
+  const totalAmount = 69
+  const tax = totalAmount * 0.18;
+  const finalTotal = totalAmount + deliveryCharges + tax;
 
   return (
     <>
@@ -23,24 +21,25 @@ const Cart = () => {
         <Navigation hasHeart={false} title="Cart" />
         {cartItems && Object.keys(cartItems).length > 0 ? (
           <>
-            <Text>{cartItemsJson}</Text>
             {Object.entries(cartItems).map(([thaliId, thali]) => (
-              <CartItemCard
-                key={thaliId}
-                thaliId={thaliId}
-                object={{
-                  items: thali.items.map(({ id, title, cost, quantity }) => ({
-                    id,
-                    title,
-                    cost,
-                    quantity,
-                  })),
-                  thaliQuantity: thali.thaliQuantity,
-                }}
-                thaliName={thalis.find((thali) => thali.id.toString() === thaliId)?.title}
-              />
+              <>
+                <CartItemCard
+                  key={thaliId}
+                  thaliId={thaliId}
+                  kitchenId={thali.kitchenId}
+                  object={{
+                    items: thali.items.map(({ id, title, cost, quantity }) => ({
+                      id,
+                      title,
+                      cost,
+                      quantity,
+                    })),
+                    thaliQuantity: thali.thaliQuantity,
+                  }}
+                  thaliName={thalis.find((thali) => thali.id.toString() === thaliId)?.title}
+                />
+              </>
             ))}
-            {/* Commented-out sections preserved for future use */}
             {/*
             <View className='flex flex-col px-4 gap-3'>
               <View className='flex-row justify-between items-center mx-4'>

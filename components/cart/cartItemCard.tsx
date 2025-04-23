@@ -30,9 +30,10 @@ interface CartItemCardProps {
     thaliId: string;
     object: ThaliCartObject;
     thaliName?: string;
+    kitchenId: string;
 }
 
-const CartItemCard = memo(({ thaliId, object, thaliName }: CartItemCardProps) => {
+const CartItemCard = memo(({ thaliId, object, thaliName, kitchenId }: CartItemCardProps) => {
     const dispatch = useDispatch();
     const { items, thaliQuantity } = object;
 
@@ -120,7 +121,7 @@ const CartItemCard = memo(({ thaliId, object, thaliName }: CartItemCardProps) =>
                     onPress={() => {
                         router.push({
                             pathname: '/(screens)/customizeThali',
-                            // params: { title: Title, cost: Cost, rating: Rating, id: id.toString(), time: Time, kitchenId: kitchenId }
+                            params: {id: thaliId, kitchenId: kitchenId}
                         });
                     }}
                     className="bg-[#FC913A] p-3 rounded-lg items-center justify-center flex flex-row gap-4 align-middle text-center w-fit"

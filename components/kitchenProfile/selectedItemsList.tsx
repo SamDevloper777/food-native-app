@@ -7,7 +7,6 @@ type ThaliItem = {
   id: string;
   title: string;
   cost: string;
-  url: string;
   quantity: number;
 };
 
@@ -18,15 +17,9 @@ type Thali = {
 
 const SelectedItemsList = ({
   id,
-  title,
-  cost,
-  quantity,
   thaliItems,
 }: {
   id: string;
-  title: string;
-  cost?: string;
-  quantity: number;
   thaliItems: Record<string, Thali>;
 }) => {
   // Get the thali for the specific thaliId
@@ -42,7 +35,7 @@ const SelectedItemsList = ({
 
   return (
     <TouchableOpacity
-      className="border border-[#FC913A] px-6 py-3 mb-5 mt-2 rounded-full flex-row items-center gap-3 justify-between mx-auto"
+      className="border border-[#FC913A] px-6 py-3 rounded-lg flex-row items-center gap-3 justify-between"
       onPress={() => {
         Alert.alert('Selected Items (Raw)', JSON.stringify(thaliItems, null, 2));
       }}
@@ -59,7 +52,7 @@ const SelectedItemsList = ({
           {items.length} Item{items.length > 1 ? 's' : ''}
         </Text>
       </View>
-      {cost !== undefined && (
+      {totalCost !== '0.00' && (
         <>
           <View className="w-1 h-1 bg-[#fc913a] rounded-full" />
           <Text className="text-[#fc913a] font-bold text-lg">₹{totalCost}</Text>

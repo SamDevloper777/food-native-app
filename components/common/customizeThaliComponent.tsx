@@ -8,73 +8,47 @@ import React, { useCallback, useMemo } from 'react';
 import { ScrollView, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import ThaliItems from '../customizeThali/ThaliItems';
+import { thalis } from '@/utils/constants/kitchenProfile';
 
 interface CustomizeThaliComponentProps {
-  thaliTitle?: string;
-  deliveryTime?: string;
-  kitchenName?: string;
-  confirmButtonText: string;
   id: string;
-  title: string;
   cost: string;
   kitchenId: string;
 }
 
 const CustomizeThaliComponent = ({
-  thaliTitle,
-  deliveryTime,
-  kitchenName,
-  confirmButtonText,
   id,
-  title,
   cost,
   kitchenId,
 }: CustomizeThaliComponentProps) => {
-  const dispatch = useDispatch();
   const thaliItems = useSelector(selectThaliItems);
 
   const showThaliDescription = useMemo(
-    () => thaliTitle && deliveryTime && kitchenName,
-    [thaliTitle, deliveryTime, kitchenName]
+    () => id && kitchenId,
+    [id, kitchenId]
   );
 
   const renderThaliDescription = useCallback(() => {
     if (!showThaliDescription) return null;
     return (
       <ThaliDescription
-        thaliTitle={thaliTitle as string}
-        deliveryTime={deliveryTime as string}
-        kitchenName={kitchenName as string}
+        thaliId={id}
+        kitchenId={kitchenId}
       />
     );
-  }, [showThaliDescription, thaliTitle, deliveryTime, kitchenName]);
+  }, [showThaliDescription, id, kitchenId]);
 
   const renderSelectedItemsList = useCallback(
     () => (
-      <SelectedItemsList
-        id={id}
-        title={title}
-        cost={cost}
-        quantity={thaliItems[id]?.thaliQuantity}
-        thaliItems={thaliItems}
-      />
+      <View className='flex flex-row justify-between items-center my-4 px-4'>
+        <SelectedItemsList
+          id={id}
+          thaliItems={thaliItems}
+        />
+        <ConfirmButton thaliId={id} />
+      </View>
     ),
-    [id, title, cost, thaliItems]
-  );
-
-  const renderConfirmButton = useCallback(
-    () => (
-      <ConfirmButton
-        id={id}
-        title={title}
-        cost={cost}
-        quantity={thaliItems[id]?.thaliQuantity}
-        dispatch={dispatch}
-        thaliItems={thaliItems}
-        buttonText={confirmButtonText}
-      />
-    ),
-    [id, title, cost, dispatch, thaliItems, confirmButtonText]
+    [id, cost, thaliItems]
   );
 
   return (
@@ -92,7 +66,6 @@ const CustomizeThaliComponent = ({
         </View>
         <ThaliItems kitchenId={kitchenId} thaliId={id} />
       </ScrollView>
-      {thaliItems[id]?.items.length > 0 && renderConfirmButton()}
     </View>
   );
 };

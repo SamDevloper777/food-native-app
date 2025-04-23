@@ -23,10 +23,11 @@ interface ThaliItemCardProps {
   title: string;
   cost: string;
   url: string;
-  thaliId: string; // Assuming thaliId should be passed here as well
+  thaliId: string; 
+  kitchenId: string; 
 }
 
-const ThaliItemCard = memo(({ id, title, cost, url, thaliId }: ThaliItemCardProps) => {
+const ThaliItemCard = memo(({ id, title, cost, url, thaliId, kitchenId }: ThaliItemCardProps) => {
   const dispatch = useDispatch();
 
   // Access Redux state
@@ -35,9 +36,9 @@ const ThaliItemCard = memo(({ id, title, cost, url, thaliId }: ThaliItemCardProp
 
   const handleToggle = useCallback(() => {
     if (isSelected) {
-      dispatch(removeItem({thaliId, itemId: id})); // Pass both thaliId and id
+      dispatch(removeItem({thaliId, itemId: id}));
     } else {
-      dispatch(addItem({ id, title, cost, url, quantity: 1, thaliId })); // Pass thaliId here as well
+      dispatch(addItem({ id, title, cost, quantity: 1, thaliId, kitchenId})); 
     }
   }, [isSelected, id, title, cost, url, dispatch]);
 

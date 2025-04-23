@@ -1,14 +1,16 @@
-import { View, Text, TouchableOpacity } from 'react-native'
-import React, { useState } from 'react'
+import { kitchens } from '@/utils/constants/home';
+import { thalis } from '@/utils/constants/kitchenProfile';
+import React, { useState } from 'react';
+import { Text, TouchableOpacity, View } from 'react-native';
 
-const ThaliDescription = ({ thaliTitle, deliveryTime, kitchenName }: { thaliTitle: string, deliveryTime: string, kitchenName: string }) => {
+const ThaliDescription = ({ thaliId, kitchenId }: { thaliId: string, kitchenId: string }) => {
     const [isExpanded, setIsExpanded] = useState(false);
     
-    const fullDescription = "A deliciously crafted thali, offering a perfect balance of flavors and textures. Each thali comes with a thoughtfully curated selection of dishes including dal, rice, roti, and various vegetable preparations. Our chefs ensure authentic taste and premium quality ingredients in every serving.";
+    const fullDescription = thalis.find(thali => thali.id.toString() === thaliId)?.description || "No description available.";
     
     return (
         <View className="bg-gray-100 p-4 mb-8 mt-4 rounded-lg mx-2">
-            <Text className="text-xl font-bold">{kitchenName} | {thaliTitle}</Text>
+            <Text className="text-xl font-bold">{kitchens.find(kitchen => kitchen.id.toString() === kitchenId)?.title} | {thalis.find(thali => thali.id.toString() === thaliId)?.title}</Text>
             <View>
                 <Text className="text-gray-500 mt-2">
                     {isExpanded ? fullDescription : fullDescription.slice(0, 60) + "..."}
@@ -20,7 +22,7 @@ const ThaliDescription = ({ thaliTitle, deliveryTime, kitchenName }: { thaliTitl
                 </TouchableOpacity>
             </View>
             <View className="flex-row justify-between mt-4">
-                <Text className="text-md text-gray-500">⏱️ {deliveryTime}</Text>
+                <Text className="text-md text-gray-500">⏱️ {thalis.find(thali => thali.id.toString() === thaliId)?.time}</Text>
             </View>
         </View>
     )

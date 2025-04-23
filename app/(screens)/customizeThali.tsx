@@ -17,14 +17,9 @@ const CustomizeThali = () => {
 
   return (
     <CustomizeThaliComponent
-      title={title}
       id={id}
       kitchenId={kitchenId}
       cost={cost}
-      deliveryTime={time}
-      thaliTitle={title}
-      confirmButtonText="Confirm Thali"
-      kitchenName="Kitchen Name"
     />
   )
 }

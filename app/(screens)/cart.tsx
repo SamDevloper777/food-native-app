@@ -12,12 +12,12 @@ const Cart = () => {
   const cartItems = useSelector(selectThaliItems);
   const deliveryCharges = 20;
   const totalAmount = Object.values(cartItems).reduce(
-    (previousValue, currentValue) =>
-      previousValue +
-      currentValue.items.reduce(
-        (previousValue, currentValue) => previousValue + parseInt(currentValue.cost) * currentValue.quantity,
+    (accumulator, thali) =>
+      accumulator +
+      thali.items.reduce(
+        (itemAcc, item) => itemAcc + parseInt(item.cost) * item.quantity,
         0
-      ),
+      ) * thali.thaliQuantity,
     0
   );
   const tax = totalAmount * 0.18;

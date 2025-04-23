@@ -115,7 +115,7 @@ const CartItemCard = memo(({ thaliId, object, thaliName, kitchenId }: CartItemCa
                     </Text>
                     <View className="w-[50%] h-[1px] border-t border-dashed border-gray-300" />
                     <Text className="text-md mt-1 text-[#FC913A] font-bold">
-                        ₹{items.reduce((total, item) => total + parseFloat(item.cost) * item.quantity, 0).toFixed(2)}
+                        ₹{items.reduce((total, item) => total + parseFloat(item.cost) * item.quantity, 0).toFixed(2)} x {thaliQuantity}
                     </Text>
                 </View>
             </View>

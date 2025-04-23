@@ -1,3 +1,4 @@
+import { selectThaliItems } from "@/utils/slice/customizeOwnThaliSlice";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import React from "react";
@@ -7,8 +8,10 @@ import {
   BellIcon,
   ChevronDownIcon,
 } from "react-native-heroicons/solid";
+import { useSelector } from "react-redux";
 
 const LocationHeader = () => {
+  const cartItems = useSelector(selectThaliItems);
   return (
     <View className="flex-row items-center justify-between px-4 py-4">
       <View>
@@ -26,7 +29,9 @@ const LocationHeader = () => {
           <View className="bg-gray-100 rounded-full p-2">
             <Ionicons name="cart-outline" size={32} color="black" />
           </View>
-          <View className="w-3 h-3 bg-[#FC913A] rounded-full absolute top-1 right-1" />
+          {cartItems && Object.keys(cartItems).length > 0 &&
+            <View className="w-3 h-3 bg-[#FC913A] rounded-full absolute top-1 right-1" />
+          }
         </TouchableOpacity>
       </View>
     </View>

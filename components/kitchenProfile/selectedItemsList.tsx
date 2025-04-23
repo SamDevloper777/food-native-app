@@ -11,28 +11,32 @@ type ThaliItem = {
   quantity: number;
 };
 
+type Thali = {
+  thaliQuantity: number;
+  items: ThaliItem[];
+};
+
 const SelectedItemsList = ({
   id,
   title,
   cost,
   quantity,
-  dispatch,
   thaliItems,
 }: {
   id: string;
   title: string;
-  cost?: number;
+  cost?: string;
   quantity: number;
-  dispatch: any;
-  thaliItems: Record<string, ThaliItem[]>;
+  thaliItems: Record<string, Thali>;
 }) => {
-  // Get the items for the specific thaliId
-  const items = thaliItems[id] || [];
+  // Get the thali for the specific thaliId
+  const thali = thaliItems[id] || { items: [], thaliQuantity: 0 };
+  const { items, thaliQuantity } = thali;
 
-  // Calculate total cost for the specific thaliId
+  // Calculate total cost for the specific thaliId, including thaliQuantity
   const totalCost = items.length
-    ? items
-        .reduce((total: number, item: ThaliItem) => total + parseFloat(item.cost) * item.quantity, 0)
+    ? (items
+        .reduce((total: number, item: ThaliItem) => total + parseFloat(item.cost) * item.quantity, 0) * thaliQuantity)
         .toFixed(2)
     : '0.00';
 
@@ -52,13 +56,13 @@ const SelectedItemsList = ({
           className="font-thick align-middle text-center my-auto"
         />
         <Text className="text-[#fc913a] font-bold ml-2 text-lg">
-          {items.length} Items Selected
+          {items.length} Item{items.length > 1 ? 's' : ''}
         </Text>
       </View>
       {cost !== undefined && (
         <>
           <View className="w-1 h-1 bg-[#fc913a] rounded-full" />
-          <Text className="text-[#fc913a] font-bold text-lg">₹ {totalCost}</Text>
+          <Text className="text-[#fc913a] font-bold text-lg">₹{totalCost}</Text>
         </>
       )}
     </TouchableOpacity>

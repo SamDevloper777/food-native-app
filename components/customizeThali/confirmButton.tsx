@@ -1,8 +1,8 @@
-import { View, Text, TouchableOpacity } from "react-native";
-import React from "react";
-import { handleAddToCart } from "@/utils/scripts/customizeThali";
-import { Ionicons } from "@expo/vector-icons";
-import { AppDispatch } from "@/utils/store";
+import { View, Text, TouchableOpacity } from 'react-native';
+import React from 'react';
+import { handleAddToCart } from '@/utils/scripts/customizeThali';
+import { Ionicons } from '@expo/vector-icons';
+import { AppDispatch } from '@/utils/store';
 
 type ThaliItem = {
   id: string;
@@ -10,6 +10,11 @@ type ThaliItem = {
   cost: string;
   url: string;
   quantity: number;
+};
+
+type Thali = {
+  thaliQuantity: number;
+  items: ThaliItem[];
 };
 
 const ConfirmButton = ({
@@ -23,17 +28,22 @@ const ConfirmButton = ({
 }: {
   id: string;
   title: string;
-  cost: number;
-  quantity: number;
+  cost?: string;
+  quantity?: number; // Optional, unused unless clarified
   dispatch: AppDispatch;
-  thaliItems: Record<string, ThaliItem[]>;
+  thaliItems: Record<string, Thali>;
   buttonText: string;
 }) => {
-  const totalCost = thaliItems[id]
-    ? thaliItems[id]
-        .reduce((total: number, item: ThaliItem) => total + parseFloat(item.cost) * item.quantity, 0)
+  // Get the thali for the specific thaliId
+  const thali = thaliItems[id] || { items: [], thaliQuantity: 0 };
+  const { items, thaliQuantity } = thali;
+
+  // Calculate total cost, including thaliQuantity
+  const totalCost = items.length
+    ? (items
+        .reduce((total: number, item: ThaliItem) => total + parseFloat(item.cost) * item.quantity, 0) * thaliQuantity)
         .toFixed(2)
-    : "0.00";
+    : '0.00';
 
   return (
     <TouchableOpacity
@@ -42,18 +52,18 @@ const ConfirmButton = ({
         handleAddToCart(
           id,
           title,
-          cost.toString(),
-          quantity.toString(),
+          cost || totalCost, // Use provided cost or calculated totalCost
+          thaliQuantity.toString(), // Pass thaliQuantity instead of quantity
           id,
-          "Default description",
+          'Default description',
           dispatch,
-          thaliItems[id]
+          items // Pass thali.items
         )
       }
       activeOpacity={0.9}
     >
       <View className="flex flex-row">
-        {buttonText === "Confirm Thali" ? (
+        {buttonText === 'Confirm Thali' ? (
           <Ionicons name="cart-outline" size={20} color="white" />
         ) : (
           <Ionicons name="bag-handle-outline" size={20} color="white" />

@@ -26,15 +26,21 @@ const RecommendedSection = ({ kitchenId }: { kitchenId: string }): JSX.Element =
     switch (activeCategory) {
       case "All Thalis":
         return thalis.filter(item => item.kitchenId.toString() === kitchenId).map((item, idx) => (
-          <ThaliCard key={idx} Title={item.title} Cost={item.cost} Rating={item.rating} Time={item.time} Url={item.url} description={item.description} id={item.id} kitchenId={item.kitchenId}/>
+          <ThaliCard key={idx} Title={item.title} Cost={
+            (item.mainCourse.reduce((sum: number, course: any) => sum + parseFloat(course.cost), 0) + item.starters.reduce((sum: number, starter: any) => sum + parseFloat(starter.cost), 0) + item.desserts.reduce((sum: number, dessert: any) => sum + parseFloat(dessert.cost), 0)).toString() || ''
+          } Rating={item.rating} Time={item.time} Url={item.url} description={item.description} id={item.id} kitchenId={item.kitchenId} />
         ));
       case "Vegetarian":
         return thalis.filter(item => item.type === "veg" && item.kitchenId.toString() === kitchenId).map((item, idx) => (
-          <ThaliCard key={idx} Title={item.title} Cost={item.cost} Rating={item.rating} Time={item.time} Url={item.url} description={item.description} id={item.id} kitchenId={item.kitchenId}/>
+          <ThaliCard key={idx} Title={item.title} Cost={
+            (item.mainCourse.reduce((sum: number, course: any) => sum + parseFloat(course.cost), 0) + item.starters.reduce((sum: number, starter: any) => sum + parseFloat(starter.cost), 0) + item.desserts.reduce((sum: number, dessert: any) => sum + parseFloat(dessert.cost), 0)).toString() || ''
+          } Rating={item.rating} Time={item.time} Url={item.url} description={item.description} id={item.id} kitchenId={item.kitchenId} />
         ));
       case "Specials":
         return thalis.filter(item => item.special && item.kitchenId.toString() === kitchenId).map((item, idx) => (
-          <ThaliCard key={idx} Title={item.title} Cost={item.cost} Rating={item.rating} Time={item.time} Url={item.url} description={item.description} id={item.id} kitchenId={item.kitchenId}/>
+          <ThaliCard key={idx} Title={item.title} Cost={
+            (item.mainCourse.reduce((sum: number, course: any) => sum + parseFloat(course.cost), 0) + item.starters.reduce((sum: number, starter: any) => sum + parseFloat(starter.cost), 0) + item.desserts.reduce((sum: number, dessert: any) => sum + parseFloat(dessert.cost), 0)).toString() || ''
+          } Rating={item.rating} Time={item.time} Url={item.url} description={item.description} id={item.id} kitchenId={item.kitchenId} />
         ));
       default:
         return null;
@@ -47,7 +53,7 @@ const RecommendedSection = ({ kitchenId }: { kitchenId: string }): JSX.Element =
       <View className="px-8 mb-6">
         <View className="flex-row items-center justify-between mb-3">
           <Text className="text-[22px] font-bold">Recommended</Text>
-          <SeeAllButton listType={activeCategory === "All Thalis" ?  "Kitchen All Thalis" : activeCategory === "Vegetarian" ? "Kitchen Vegetarian" : "Kitchen Specials"} kitchenId={kitchenId}/>
+          <SeeAllButton listType={activeCategory === "All Thalis" ? "Kitchen All Thalis" : activeCategory === "Vegetarian" ? "Kitchen Vegetarian" : "Kitchen Specials"} kitchenId={kitchenId} />
         </View>
 
         {/* Category Tabs */}

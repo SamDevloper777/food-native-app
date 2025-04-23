@@ -25,9 +25,9 @@ const PopularSection: React.FC = () => {
   }, [activeCategory]);
 
   const renderItem = ({ item, index }: { item: any; index: number }) => {
-    const mainCourseTotal = item.mainCourse.reduce((sum: number, course: any) => sum + parseFloat(course.cost), 0);
-    const startersTotal = item.starters.reduce((sum: number, starter: any) => sum + parseFloat(starter.cost), 0);
-    const dessertsTotal = item.desserts.reduce((sum: number, dessert: any) => sum + parseFloat(dessert.cost), 0);
+    const mainCourseTotal = item.mainCourse?.reduce((sum: number, course: any) => sum + parseFloat(course.cost), 0);
+    const startersTotal = item.starters?.reduce((sum: number, starter: any) => sum + parseFloat(starter.cost), 0);
+    const dessertsTotal = item.desserts?.reduce((sum: number, dessert: any) => sum + parseFloat(dessert.cost), 0);
 
     const totalCost = mainCourseTotal + startersTotal + dessertsTotal;
 

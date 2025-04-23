@@ -36,7 +36,7 @@ const KitchenProfile = () => {
         reviewCount={parseInt(reviewCount)}
       />
       <OfferSection kitchenId={id}/>
-      <RecommendedSection kitchenId={id}/>
+      <RecommendedSection kitchenId={id}/>  
     </ScrollView>
   );
 };

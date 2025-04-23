@@ -50,6 +50,9 @@ const customizeOwnThaliSlice = createSlice({
       if (state.items[thaliId]) {
         state.items[thaliId] = state.items[thaliId].filter(item => item.id !== itemId);
       }
+      if (state.items[thaliId].length === 0) {
+        delete state.items[thaliId];
+      }
     },
 
     incrementQuantity: (state, action: PayloadAction<{ thaliId: string, itemId: string }>) => {

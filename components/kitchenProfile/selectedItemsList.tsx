@@ -40,7 +40,7 @@ const SelectedItemsList = ({
     <TouchableOpacity
       className="border border-[#FC913A] px-6 py-3 mb-5 mt-2 rounded-full flex-row items-center gap-3 justify-between mx-auto"
       onPress={() => {
-        Alert.alert('Selected Items (Raw)', JSON.stringify(items, null, 2));
+        Alert.alert('Selected Items (Raw)', JSON.stringify(thaliItems, null, 2));
       }}
       activeOpacity={0.8}
     >

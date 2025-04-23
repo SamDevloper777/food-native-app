@@ -1,15 +1,34 @@
 import { router } from "expo-router";
+import { AppDispatch } from "@/utils/store";
 
-import { addThaliItem } from "../slice/cartSlice";
+type ThaliItem = {
+  id: string;
+  title: string;
+  cost: string;
+  url: string;
+  quantity: number;
+  description?: string;
+};
 
-export const handleAddToCart = (id: string, title: string, price: string, quantity: string, dispatch: any) => {
-    dispatch(
-      addThaliItem({
-        id: parseInt(id),
-        name: title,
-        price: parseFloat(price),
-        quantity: parseInt(quantity),
-      })
-    );
-    router.push("/(screens)/cart");
-  };
+export const handleAddToCart = (
+  id: string,
+  title: string,
+  cost: string,
+  quantity: string,
+  thaliId: string,
+  description: string = "Default description",
+  dispatch: AppDispatch,
+  thaliItems?: ThaliItem[]
+) => {
+  const parsedCost = parseFloat(cost);
+  const parsedQuantity = parseInt(quantity);
+
+  if (isNaN(parsedCost) || isNaN(parsedQuantity)) {
+    console.error("Invalid cost or quantity");
+    return;
+  }
+
+  // No need to dispatch to cartSlice since we're using thaliItems directly
+  // Simply navigate to the Cart screen
+  router.push("/(screens)/cart");
+};

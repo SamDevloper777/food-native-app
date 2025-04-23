@@ -7,7 +7,7 @@ import myThaliReducer from "./slice/myThaliSlice";
 const store = configureStore({
   reducer: {
     auth: authReducer,
-    cart: cartReducer,
+    // cart: cartReducer,
     customizeOwnThali: customizeOwnThaliReducer,
     myThali: myThaliReducer,
   },

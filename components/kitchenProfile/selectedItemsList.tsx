@@ -29,7 +29,7 @@ const SelectedItemsList = ({
   // Calculate total cost for the specific thaliId, including thaliQuantity
   const totalCost = items.length
     ? (items
-        .reduce((total: number, item: ThaliItem) => total + parseFloat(item.cost) * item.quantity, 0) * thaliQuantity)
+        .reduce((total: number, item: ThaliItem) => total + parseFloat(item.cost) * item.quantity, 0))
         .toFixed(2)
     : '0.00';
 

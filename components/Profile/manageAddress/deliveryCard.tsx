@@ -2,6 +2,9 @@ import { Feather, Ionicons } from '@expo/vector-icons';
 import React, { useState } from 'react';
 import { Pressable, Text, View } from 'react-native';
 import Checkbox from 'expo-checkbox';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '@/utils/store';
+import { setDefaultAddress } from '@/utils/slice/userSlice';
 // import { styled } from 'nativewind';
 
 // const View = styled(View);
@@ -9,15 +12,15 @@ import Checkbox from 'expo-checkbox';
 // const StyledPressable = styled(Pressable);
 
 const DeliveryCard = ({ title, address }: { title: string, address: string }) => {
-    const [checkBoxState, setCheckBoxState] = useState<boolean>(false)
+    const isDefault = useSelector((state: RootState) => state.user.address?.find((item) => item.title === title)?.isDefault);
+    const dispatch = useDispatch();
+
+    const setCheckBoxState = (value: boolean) => {
+        dispatch(setDefaultAddress({ title, isDefault: value }));
+    };
+
     return (
         <View className="flex-row m-4 px-6">
-            {/* Side Icon */}
-            {/* <View className="bg-orange-100 p-3 rounded-full self-center mr-[-24px] z-10 shadow-md">
-          <FontAwesome name="home" size={20} color="#F97316" />
-        </View> */}
-
-            {/* Card */}
             <View className="flex-1 bg-white p-4 rounded-xl shadow-lg shadow-gray-500">
                 {/* Header */}
                 <View className="flex-row justify-between items-center mb-2">
@@ -42,7 +45,7 @@ const DeliveryCard = ({ title, address }: { title: string, address: string }) =>
                 {/* Footer */}
                 <View className="flex-row justify-between items-center">
                     <View className="flex-row items-center">
-                        <Checkbox value={checkBoxState} onValueChange={setCheckBoxState} color={checkBoxState ? '#FC913A' : undefined} />
+                        <Checkbox value={isDefault} onValueChange={setCheckBoxState} color={isDefault ? '#FC913A' : undefined} />
                         <Text className="ml-2 text-[14px] text-gray-700">Make as a default</Text>
                     </View>
                     <Pressable>
@@ -51,7 +54,8 @@ const DeliveryCard = ({ title, address }: { title: string, address: string }) =>
                 </View>
             </View>
         </View>
-    )
-}
+    );
+};
+
 
 export default DeliveryCard

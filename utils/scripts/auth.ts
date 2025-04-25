@@ -183,7 +183,18 @@ export const handleSkip = (dispatch: any) => {
         emailAddress: dummyData.user.email,
         profilePicture: "https://randomuser.me/api/portraits/men/1.jpg",
         phoneNumber: null,
-        address: null,
+        address: [
+            {
+                title: 'Home',
+                address: '2118 Thornridge,\nCir.Syrucuse, Connecticut\nUSA - 35624',
+                isDefault: true,
+            },
+            {
+                title: 'Work',
+                address: '6589 12th Avenue,\nMintic, New York\nUSA - 35687',
+                isDefault: false,
+            }
+        ],
         accessToken: dummyData.token,
         refreshToken: null,
         paymentMethod: null,

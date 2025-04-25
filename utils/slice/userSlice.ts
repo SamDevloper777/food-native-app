@@ -1,18 +1,9 @@
-// user id
-// user name 
-// phone number
-// email address
-// address
-// profile picture
-// access token
-// refresh token
-// payment method
-
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface DeliveryAddress {
   title: string;
   address: string;
+  isDefault: boolean;
 }
 
 interface UserState {
@@ -63,8 +54,17 @@ const userSlice = createSlice({
     clearUser: (state) => {
       return { ...initialState };
     },
+    setDefaultAddress: (state, action: PayloadAction<{ title: string, isDefault: boolean }>) => {
+      if (state.address) {
+        state.address = state.address.map((addr) =>
+          addr.title === action.payload.title
+            ? { ...addr, isDefault: action.payload.isDefault }
+            : { ...addr, isDefault: false }
+        );
+      }
+    },
   },
 });
 
-export const { setUser, updateUser, setLoading, setError, clearUser } = userSlice.actions;
+export const { setUser, updateUser, setLoading, setError, clearUser, setDefaultAddress } = userSlice.actions;
 export default userSlice.reducer;

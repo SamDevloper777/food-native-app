@@ -1,11 +1,14 @@
-import DeliveryCard from '@/components/Profile/manageAddress/deliveryCard'
 import Navigation from '@/components/common/navigation'
-import Select from '@/components/Profile/manageAddress/select'
+import Add from '@/components/Profile/manageAddress/Add'
+import DeliveryCard from '@/components/Profile/manageAddress/deliveryCard'
+import { RootState } from '@/utils/store'
 import React from 'react'
 import { SafeAreaView } from 'react-native'
-import { deliveryAddresses } from '@/utils/constants/address'
+import { useSelector } from 'react-redux'
 
 const ManageDeliveryAdderss = () => {
+  const user = useSelector((state: RootState) => state.user)
+  const deliveryAddresses = user.address || [] 
   return (
     <SafeAreaView className="flex-1 bg-white">
       <Navigation title='Delivery Address'/>
@@ -16,7 +19,7 @@ const ManageDeliveryAdderss = () => {
           address={address.address}
         />
       ))}
-      <Select />
+      <Add />
     </SafeAreaView>
   )
 }

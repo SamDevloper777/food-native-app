@@ -2,8 +2,28 @@ import axios from "axios";
 import { router } from "expo-router";
 import { Alert, Animated } from "react-native";
 import { loginSuccess } from "../slice/authSlice";
+import { setUser } from "../slice/userSlice"; // ✅ add this import
 
-export const handleSignUp = async (email: string, username: string, password: string, confirmPassword: string, setLoading: (loading: boolean) => void, dispatch: any) => {
+const mapUserToState = (data: any) => ({
+    userId: data.user.id,
+    userName: data.user.name,
+    emailAddress: data.user.email,
+    profilePicture: data.user.profile_picture || null,
+    phoneNumber: data.user.phone_number || null,
+    address: data.user.address || null,
+    accessToken: data.token,
+    refreshToken: data.refresh_token || null,
+    paymentMethod: data.user.payment_method || null,
+});
+
+export const handleSignUp = async (
+    email: string,
+    username: string,
+    password: string,
+    confirmPassword: string,
+    setLoading: (loading: boolean) => void,
+    dispatch: any
+) => {
     const isValidForm =
         email.includes("@") &&
         username.length >= 3 &&
@@ -20,38 +40,43 @@ export const handleSignUp = async (email: string, username: string, password: st
 
     console.log(formData);
 
-    // try {
-    //     const response = await axios.post(
-    //         "http://192.168.1.5:8000/api/user/register/customer/",
-    //         formData,
-    //         {
-    //             headers: { "Content-Type": "application/json" },
-    //         }
-    //     );
+    try {
+        const response = await axios.post(
+            "http://192.168.1.5:8000/api/user/register/customer/",
+            formData,
+            {
+                headers: { "Content-Type": "application/json" },
+            }
+        );
 
-    //     console.log("Registration Successful:", response.data);
+        console.log("Registration Successful:", response.data);
 
-    //     // Save User & Token in Redux
-    //     dispatch(
-    //         loginSuccess({
-    //             user: response.data.user,
-    //             token: response.data.token,
-    //         })
-    //     );
+        dispatch(loginSuccess({
+            user: response.data.user,
+            token: response.data.token,
+        }));
 
-    //     router.replace("/(tabs)/home");
-    // } catch (error: any) {
-    //     console.error("❌ API Error:", error.response?.data || error.message);
-    //     Alert.alert(
-    //         "Error",
-    //         error.response?.data?.message || "Registration failed!"
-    //     );
-    // } finally {
-    //     setLoading(false);
-    // }
+        dispatch(setUser(mapUserToState(response.data)));
+
+        router.replace("/(tabs)/home");
+    } catch (error: any) {
+        console.error("❌ API Error:", error.response?.data || error.message);
+        Alert.alert(
+            "Error",
+            error.response?.data?.message || "Registration failed!"
+        );
+    } finally {
+        setLoading(false);
+    }
 };
 
-export const handleGetOtp = (email: string, setEmail: (email: string) => void, setShowOtp: (showOtp: boolean) => void, otpSlideAnim: Animated.Value, width: number) => {
+export const handleGetOtp = (
+    email: string,
+    setEmail: (email: string) => void,
+    setShowOtp: (showOtp: boolean) => void,
+    otpSlideAnim: Animated.Value,
+    width: number
+) => {
     setEmail(email);
     setShowOtp(true);
     Animated.timing(otpSlideAnim, {
@@ -61,7 +86,11 @@ export const handleGetOtp = (email: string, setEmail: (email: string) => void, s
     }).start();
 };
 
-export const handleBackFromOtp = (otpSlideAnim: Animated.Value, width: number, setShowOtp: (showOtp: boolean) => void) => {
+export const handleBackFromOtp = (
+    otpSlideAnim: Animated.Value,
+    width: number,
+    setShowOtp: (showOtp: boolean) => void
+) => {
     Animated.timing(otpSlideAnim, {
         toValue: width,
         duration: 300,
@@ -71,7 +100,12 @@ export const handleBackFromOtp = (otpSlideAnim: Animated.Value, width: number, s
     });
 };
 
-export const slideTo = (tab: 'login' | 'signup', slideAnim: Animated.Value, width: number, setActiveTab: (activeTab: 'login' | 'signup') => void) => {
+export const slideTo = (
+    tab: 'login' | 'signup',
+    slideAnim: Animated.Value,
+    width: number,
+    setActiveTab: (activeTab: 'login' | 'signup') => void
+) => {
     const toValue = tab === 'login' ? 0 : -width;
     Animated.timing(slideAnim, {
         toValue,
@@ -81,7 +115,12 @@ export const slideTo = (tab: 'login' | 'signup', slideAnim: Animated.Value, widt
     setActiveTab(tab);
 };
 
-export const handleVerifyOtp = async (email: string, otp: string, setIsLoading: (isLoading: boolean) => void, dispatch: any) => {
+export const handleVerifyOtp = async (
+    email: string,
+    otp: string,
+    setIsLoading: (isLoading: boolean) => void,
+    dispatch: any
+) => {
     if (otp.length !== 4) {
         Alert.alert("Invalid OTP", "Please enter a 4-digit OTP.");
         return;
@@ -106,12 +145,12 @@ export const handleVerifyOtp = async (email: string, otp: string, setIsLoading: 
 
         console.log("Verification Success:", response.data);
 
-        dispatch(
-            loginSuccess({
-                user: response.data.user,
-                token: response.data.token,
-            })
-        );
+        dispatch(loginSuccess({
+            user: response.data.user,
+            token: response.data.token,
+        }));
+
+        dispatch(setUser(mapUserToState(response.data)));
 
         Alert.alert("Success", "OTP Verified Successfully!");
         router.replace("/(tabs)/home");
@@ -127,16 +166,29 @@ export const handleVerifyOtp = async (email: string, otp: string, setIsLoading: 
 };
 
 export const handleSkip = (dispatch: any) => {
-    dispatch(
-        loginSuccess({
-            user: {
-                id: 1,
-                name: "Dev User", 
-                email: "dev@ovenly.com",
-            },
-            token: "dummy_dev_token",
-        })
-    );
+    const dummyData = {
+        user: {
+            id: 1,
+            name: "Dev User",
+            email: "dev@ovenly.com",
+        },
+        token: "dummy_dev_token",
+    };
+
+    dispatch(loginSuccess(dummyData));
+
+    dispatch(setUser({
+        userId: dummyData.user.id.toString(),
+        userName: dummyData.user.name,
+        emailAddress: dummyData.user.email,
+        profilePicture: "https://randomuser.me/api/portraits/men/1.jpg",
+        phoneNumber: null,
+        address: null,
+        accessToken: dummyData.token,
+        refreshToken: null,
+        paymentMethod: null,
+    }));
+
     router.replace("/(tabs)/home");
 };
 

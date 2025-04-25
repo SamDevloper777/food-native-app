@@ -11,7 +11,7 @@ import { profileButtons } from "@/utils/constants/profile";
 const MemoizedProfileHeader = memo(ProfileHeader);
 
 const Profile = () => {
-  const { user } = useSelector((state: RootState) => state.auth);
+  const user = useSelector((state: RootState) => state.user);
   const loading = !user; 
 
   const renderButton = ({ item }: { item: string }) => (
@@ -52,9 +52,9 @@ const Profile = () => {
       keyExtractor={(item) => item}
       ListHeaderComponent={
         <MemoizedProfileHeader
-          name={user?.name || "Guest"}
+          name={user?.userName || "Guest"}
           image={
-            user?.image || "https://randomuser.me/api/portraits/men/44.jpg"
+            user?.profilePicture || "https://www.sjbwindsor.uk/wp-content/uploads/2024/01/Group-808.png"
           }
         />
       }

@@ -10,12 +10,17 @@
 
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
+interface DeliveryAddress {
+  title: string;
+  address: string;
+}
+
 interface UserState {
   userId: string | null;
   userName: string | null;
   phoneNumber: string | null;
   emailAddress: string | null;
-  address: string | null;
+  address: DeliveryAddress[] | null;
   profilePicture: string | null;
   accessToken: string | null;
   refreshToken: string | null;

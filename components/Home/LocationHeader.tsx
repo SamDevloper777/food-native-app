@@ -1,4 +1,5 @@
 import { selectThaliItems } from "@/utils/slice/customizeOwnThaliSlice";
+import { RootState } from "@/utils/store";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import React from "react";
@@ -11,17 +12,23 @@ import {
 import { useSelector } from "react-redux";
 
 const LocationHeader = () => {
+  const user = useSelector((state: RootState) => state.user);
   const cartItems = useSelector(selectThaliItems);
+  const location = user?.address?.find((item) => item.isDefault)?.address || "No Address Found";
   return (
     <View className="flex-row items-center justify-between px-4 py-4">
       <View>
         <Text className="text-gray-400 text-md">Location</Text>
         <View className="flex-row items-center mt-1">
           <MapPinIcon size={18} color="#FF7504" />
-          <Text className="text-black font-bold ml-1 text-[18px]">
-            New York, USA
+          <Text
+            numberOfLines={1}
+            className="text-black font-bold ml-1 text-[16px]"
+            style={{ maxWidth: 200 }}
+          >
+            {location.length > 30 ? `${location.slice(0, 30)}...` : location}
           </Text>
-          <ChevronDownIcon size={18} color="black" className="ml-1" />
+          <ChevronDownIcon size={18} color="black" className="ml-1" onPress={() => router.push('/(screens)/manage-delivery-adderss')}/>
         </View>
       </View>
       <View className="flex flex-row gap-5">

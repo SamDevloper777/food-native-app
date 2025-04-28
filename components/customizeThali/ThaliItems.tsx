@@ -3,6 +3,8 @@ import { FlatList, Text, TouchableOpacity, View } from 'react-native';
 import ThaliItemCard from './ThaliItemCard';
 import { categories, Category } from '@/utils/constants/thaliItems';
 import { thalis } from '@/utils/constants/kitchenProfile';
+import { useDispatch } from 'react-redux';
+import { addItem } from '@/utils/slice/customizeOwnThaliSlice';
 
 interface ThaliItemsProps {
   kitchenId: string;
@@ -16,6 +18,7 @@ interface ThaliItem {
 }
 
 const ThaliItems: React.FC<ThaliItemsProps> = ({ kitchenId, thaliId }) => {
+  const dispatch = useDispatch();
   const [activeCategory, setActiveCategory] = useState<Category>('Main Course');
 
   const handleCategoryChange = useCallback((category: Category) => {
@@ -93,13 +96,26 @@ const ThaliItems: React.FC<ThaliItemsProps> = ({ kitchenId, thaliId }) => {
       </Text>
     </TouchableOpacity>
   ), [activeCategory, handleCategoryChange]);
+  
+  const handleSelectAll = useCallback(() => {
+    data.forEach((item) => {
+      dispatch(addItem({
+        id: `${activeCategory}-${item.title}`,
+        title: item.title,
+        cost: item.cost.toString(),
+        quantity: 1,
+        thaliId,
+        kitchenId,
+      }));
+    });
+  }, [data, dispatch, activeCategory, thaliId, kitchenId]);
 
   return (
     <View>
       <View className="px-4 mb-6">
         <View className="flex-row items-center justify-between mb-3">
           <Text className="text-[22px] font-bold">Add items to Thali</Text>
-          <TouchableOpacity activeOpacity={0.8}>
+          <TouchableOpacity activeOpacity={0.8} onPress={handleSelectAll}>
             <Text className="text-[#FC913A] font-bold text-lg">Select All</Text>
           </TouchableOpacity>
         </View>

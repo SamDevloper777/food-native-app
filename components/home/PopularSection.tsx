@@ -67,7 +67,7 @@ const PopularSection: React.FC = () => {
   const keyExtractor = (item: any, index: number) => `${item.id}-${index}`;
 
   return (
-    <View className="pt-4 my-6">
+    <View className="pt-4 mb-6">
       {/* Header */}
       <View className="px-4 mb-6">
         <View className="flex-row items-center justify-between mb-3">

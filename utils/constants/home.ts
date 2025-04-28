@@ -1,5 +1,32 @@
 import { homeCategory } from "@/utils/types";
 
+export const globalOffers = [
+    {
+        id: 1,
+        title: "Welcome Discount",
+        description: "Receive 20% off your first purchase with us!",
+        imageUrl: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?q=80&w=1981&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3",
+    },
+    {
+        id: 2,
+        title: "Delivery Special",
+        description: "Enjoy complimentary delivery for orders exceeding $50!",
+        imageUrl: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?q=80&w=1981&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3",
+    },
+    {
+        id: 3,
+        title: "First Order Deal",
+        description: "Avail 20% discount on your initial order!",
+        imageUrl: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?q=80&w=1981&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3",
+    },
+    {
+        id: 4,
+        title: "Free Shipping Offer",
+        description: "Get free shipping on purchases over $50!",
+        imageUrl: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?q=80&w=1981&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3",
+    },
+];
+
 export const kitchens = [
     {
         id: 101,

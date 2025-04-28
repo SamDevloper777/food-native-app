@@ -519,7 +519,7 @@ export const thalis = [
         "time": "30 min",
         "type": "veg",
         "special": false,
-        "url": "https://images.unsplash.com/photo-1589301771356-6a4e8c9b0d6b?q=80&w=2080&auto=format&fit=crop",
+        "url": "https://images.unsplash.com/photo-1596797038530-2c107229654b?q=80&w=2080&auto=format&fit=crop",
         "description": "Spicy chickpea curry served with fluffy bhature.",
         "mainCourse": [
             {

@@ -5,27 +5,13 @@ import React, { useCallback, useState, useMemo } from 'react'
 import { FlatList, View, Text } from 'react-native'
 
 const MyWishlist = () => {
-  const [wishlistItems, setWishlistItems] = useState(wishlistData);
-
-  const handleRemoveItem = useCallback((index: number) => {
-    setWishlistItems(prevItems => prevItems.filter((_, i) => i !== index));
-  }, []);
-
   const renderItem = useCallback(({ item, index }: { item: typeof wishlistData[0], index: number }) => (
     <WishlistCard
       key={index}
-      title={item.title}
-      description={item.description}
-      rating={item.rating}
-      city={item.city}
-      cost={item.cost}
-      distance={item.distance}
-      time={item.time}
-      url={item.url}
-      onRemove={() => handleRemoveItem(index)}
+      thaliId={item}
     />
-  ), [handleRemoveItem]);
-
+  ), []);
+  
   const keyExtractor = useCallback((_: any, index: number) => index.toString(), []);
 
   const ListEmptyComponent = useMemo(() => (
@@ -44,7 +30,7 @@ const MyWishlist = () => {
     <View className="flex-1 bg-white">
       <Navigation title='My Wishlist' />
       <FlatList
-        data={wishlistItems}
+        data={wishlistData}
         renderItem={renderItem}
         keyExtractor={keyExtractor}
         showsVerticalScrollIndicator={false}
@@ -55,7 +41,7 @@ const MyWishlist = () => {
         getItemLayout={getItemLayout}
         ListEmptyComponent={ListEmptyComponent}
         ListFooterComponent={<View className="h-12" />}
-        contentContainerStyle={wishlistItems.length === 0 ? { flex: 1 } : undefined}
+        contentContainerStyle={wishlistData.length === 0 ? { flex: 1 } : undefined}
       />
     </View>
   )

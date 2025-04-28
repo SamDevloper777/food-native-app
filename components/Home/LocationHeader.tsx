@@ -19,7 +19,7 @@ const LocationHeader = () => {
     <View className="flex-row items-center justify-between px-4 py-4">
       <View>
         <Text className="text-gray-400 text-md">Location</Text>
-        <View className="flex-row items-center mt-1">
+        <TouchableOpacity className="flex-row items-center mt-1" onPress={() => router.push('/(screens)/manage-delivery-adderss')}>
           <MapPinIcon size={18} color="#FF7504" />
           <Text
             numberOfLines={1}
@@ -28,8 +28,8 @@ const LocationHeader = () => {
           >
             {location.length > 30 ? `${location.slice(0, 30)}...` : location}
           </Text>
-          <ChevronDownIcon size={18} color="black" className="ml-1" onPress={() => router.push('/(screens)/manage-delivery-adderss')}/>
-        </View>
+          <ChevronDownIcon size={18} color="black" className="ml-1"/>
+        </TouchableOpacity>
       </View>
       <View className="flex flex-row gap-5">
         <TouchableOpacity className="relative" onPress={() => router.push('/(screens)/cart')}>

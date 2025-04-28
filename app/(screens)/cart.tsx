@@ -48,7 +48,7 @@ const Cart = () => {
           ))}
 
           <TouchableOpacity
-            className="border border-[#FC913A] p-4 rounded-lg mt-6 mb-8 mx-4 flex-row items-center justify-center gap-2"
+            className="border border-[#FC913A] border-dashed p-4 rounded-full mt-6 mb-8 mx-4 flex-row items-center justify-center gap-2"
             activeOpacity={0.8}
             onPress={() => router.push('/(screens)/checkout')}
           >

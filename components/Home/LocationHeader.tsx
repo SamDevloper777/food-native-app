@@ -36,7 +36,7 @@ const LocationHeader = () => {
           <View className="bg-gray-100 rounded-full p-2">
             <Ionicons name="heart-outline" size={32} color="black" />
           </View>
-          {cartItems && Object.keys(cartItems).length > 0 &&
+          {user.wishlist && user.wishlist.length > 0 &&
             <View className="w-3 h-3 bg-[#FC913A] rounded-full absolute top-1 right-1" />
           }
         </TouchableOpacity>

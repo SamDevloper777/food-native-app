@@ -16,6 +16,7 @@ interface UserState {
   accessToken: string | null;
   refreshToken: string | null;
   paymentMethod: string | null;
+  wishlist: string[] | null;
   isLoading: boolean;
   error: string | null;
 }
@@ -30,6 +31,7 @@ const initialState: UserState = {
   accessToken: null,
   refreshToken: null,
   paymentMethod: null,
+  wishlist: null,
   isLoading: false,
   error: null,
 };

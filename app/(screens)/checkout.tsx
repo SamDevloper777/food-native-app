@@ -12,9 +12,6 @@ const Checkout = () => {
 
   return (
     <ScrollView className='bg-white flex-1'>
-      <Text>
-        {JSON.stringify(checkoutObject, null, 2)}
-      </Text>
       <Navigation title='Checkout' />
       <Cards />
       <Other />

@@ -34,10 +34,13 @@ const paymentSlice = createSlice({
     setUserDetails(state, action: PayloadAction<PaymentState['userDetails']>) {
       state.userDetails = action.payload;
     },
+    clearPaymentDetails(state) {
+      state.paymentDetails = initialState.paymentDetails;
+    }
   },
 });
 
-export const { setPaymentDetails, setCartDetails, setUserDetails } =
+export const { setPaymentDetails, setCartDetails, setUserDetails, clearPaymentDetails } =
   paymentSlice.actions;
 
 export default paymentSlice.reducer;

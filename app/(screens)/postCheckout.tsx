@@ -1,34 +1,37 @@
-import React from 'react'
-import { ScrollView, Text, View, Pressable, Image, TouchableOpacity } from 'react-native'
-import { PhoneCall, MessageSquare, Download } from 'lucide-react-native'
+import OrderItem from '@/components/checkout/orderItem'
 import Navigation from '@/components/common/navigation'
+import { kitchens } from '@/utils/constants/home'
+import { clearAll } from '@/utils/slice/customizeOwnThaliSlice'
+import { clearPaymentDetails } from '@/utils/slice/paymentSlice'
+import { RootState } from '@/utils/store'
 import { router } from 'expo-router'
+import { Download, MessageSquare, PhoneCall } from 'lucide-react-native'
+import React from 'react'
+import { Pressable, ScrollView, Text, TouchableOpacity, View } from 'react-native'
+import { useDispatch, useSelector } from 'react-redux'
 
 const PostCheckout = () => {
+  const dispatch = useDispatch()
+  const orderDetails = useSelector((state: RootState) => state.payment)
   return (
     <ScrollView className="bg-white flex-1 px-8">
       <Navigation title="Order Details" />
-
-      <View className="mt-4 flex flex-row gap-4 justify-start items-center">
-        <Image 
-          source={{ uri: 'https://images.unsplash.com/photo-1531297484001-80022131f5a1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80' }}
-          className="w-20 h-20 rounded-full"
+      {Object.entries(orderDetails.cartDetails).map(([thaliId]) => (
+        <OrderItem
+          key={thaliId}
+          id={thaliId}
         />
-        <View className='flex flex-col'>
-          <Text className="text-xl font-semibold">Thali Name</Text>
-          <View className="flex-row items-center">
-            <Text className="text-[#FC913A] text-xl text-center align-middle">★★★★★ </Text>
-            <Text className="text-gray-500 text-sm">(4.5)</Text>
-          </View>
-          <Text className="text-xl font-bold">₹13,000</Text>
-        </View>
-      </View>
+      ))}
 
       <View className="flex-row space-x-4 mt-4 gap-4">
-        <Pressable className="flex-1 border border-gray-300 py-4 rounded-[25px] items-center">
+        <Pressable className="flex-1 border border-gray-400 border-dashed py-4 rounded-[25px] items-center">
           <Text className="text-gray-400 font-semibold">Write a Review</Text>
         </Pressable>
-        <TouchableOpacity className="flex-1 bg-[#FC913A] py-4 rounded-[25px] items-center" activeOpacity={0.8} onPress={() => {router.push('/(screens)/cart')}}>
+        <TouchableOpacity className="flex-1 bg-[#FC913A] py-4 rounded-[25px] items-center" activeOpacity={0.8} onPress={() => {
+          dispatch(clearAll())
+          dispatch(clearPaymentDetails())
+          router.push({ pathname: '/(screens)/kitchenProfile', params: { id: orderDetails.cartDetails[Object.keys(orderDetails.cartDetails)[0]].kitchenId } })
+        }}>
           <Text className="text-white font-semibold">Book Again</Text>
         </TouchableOpacity>
       </View>
@@ -37,14 +40,18 @@ const PostCheckout = () => {
       <Text className="mt-6 mb-2 text-base font-semibold">About Kitchen</Text>
       <View className="bg-gray-100 p-4 rounded-xl flex-row justify-between items-center mx-auto w-full">
         <View className='flex flex-col items-start justify-center'>
-          <Text className="font-bold text-lg">Kitchen El-Classico</Text>
-          <Text className="text-gray-600">Rachit Naik</Text>
+          <Text className="font-bold text-lg" numberOfLines={1}>
+            {kitchens.filter(kitchen => kitchen.id === parseInt(orderDetails.cartDetails[Object.keys(orderDetails.cartDetails)[0]].kitchenId))[0]?.title}
+          </Text>
+          <Text className="text-gray-600" numberOfLines={1}>
+            {kitchens.filter(kitchen => kitchen.id === parseInt(orderDetails.cartDetails[Object.keys(orderDetails.cartDetails)[0]].kitchenId))[0]?.tagline}
+          </Text>
         </View>
         <View className="flex-row space-x-3 gap-6">
           <Pressable className="bg-[#FC913A] p-2 rounded-full">
             <PhoneCall color="white" size={20} />
           </Pressable>
-          <View className="bg-gray-300 w-[1px]"/>
+          <View className="bg-gray-300 w-[1px]" />
           <Pressable className="bg-gray-200 p-2 rounded-full">
             <MessageSquare color="#000" size={20} />
           </Pressable>
@@ -83,27 +90,6 @@ const PostCheckout = () => {
             <Text className="text-[#FC913A] font-semibold">Download invoice</Text>
           </View>
         </Pressable>
-      </View>
-
-      {/* Payment Summary */}
-      <Text className="mt-8 text-base font-semibold">Payment Summary</Text>
-      <View className="mt-2 space-y-1">
-        <View className="flex-row justify-between">
-          <Text className="text-gray-700">Item Total</Text>
-          <Text className="text-gray-700 font-semibold">₹13,000</Text>
-        </View>
-        <View className="flex-row justify-between">
-          <Text className="text-gray-700">Discount</Text>
-          <Text className="text-gray-700 font-semibold">₹0</Text>
-        </View>
-        <View className="flex-row justify-between">
-          <Text className="text-gray-700">Service</Text>
-          <Text className="text-gray-700 font-semibold">₹50</Text>
-        </View>
-        <View className="flex-row justify-between mt-2 border-t border-gray-200 pt-2">
-          <Text className="text-lg font-bold">Grand Total</Text>
-          <Text className="text-lg font-bold">₹13,000</Text>
-        </View>
       </View>
       <View className="w-full h-8" />
     </ScrollView>

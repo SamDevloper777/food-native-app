@@ -116,7 +116,7 @@ const ThaliItems: React.FC<ThaliItemsProps> = ({ kitchenId, thaliId }) => {
         <View className="flex-row items-center justify-between mb-3">
           <Text className="text-[22px] font-bold">Add items to Thali</Text>
           <TouchableOpacity activeOpacity={0.8} onPress={handleSelectAll}>
-            <Text className="text-[#FC913A] font-bold text-lg">Select All</Text>
+            <Text className="text-[#FC913A] font-bold text-lg">Select All ({data.length})</Text>
           </TouchableOpacity>
         </View>
 

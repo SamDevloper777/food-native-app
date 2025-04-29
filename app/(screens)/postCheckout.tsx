@@ -1,7 +1,8 @@
 import React from 'react'
-import { ScrollView, Text, View, Pressable, Image } from 'react-native'
+import { ScrollView, Text, View, Pressable, Image, TouchableOpacity } from 'react-native'
 import { PhoneCall, MessageSquare, Download } from 'lucide-react-native'
 import Navigation from '@/components/common/navigation'
+import { router } from 'expo-router'
 
 const PostCheckout = () => {
   return (
@@ -23,14 +24,13 @@ const PostCheckout = () => {
         </View>
       </View>
 
-      {/* Action Buttons */}
       <View className="flex-row space-x-4 mt-4 gap-4">
         <Pressable className="flex-1 border border-gray-300 py-4 rounded-[25px] items-center">
           <Text className="text-gray-400 font-semibold">Write a Review</Text>
         </Pressable>
-        <Pressable className="flex-1 bg-[#FC913A] py-4 rounded-[25px] items-center">
+        <TouchableOpacity className="flex-1 bg-[#FC913A] py-4 rounded-[25px] items-center" activeOpacity={0.8} onPress={() => {router.push('/(screens)/cart')}}>
           <Text className="text-white font-semibold">Book Again</Text>
-        </Pressable>
+        </TouchableOpacity>
       </View>
 
       {/* Service Provider */}
@@ -56,20 +56,20 @@ const PostCheckout = () => {
       <View className="ml-3 border-l-2 border-gray-200 pl-3 border-dashed">
         <View className="mb-6 relative">
           <View className="w-4 h-4 bg-[#FC913A] rounded-full absolute -left-[19px] top-1" />
-          <Text className="font-bold">Order Confirmed</Text>
+          <Text className="font-bold">Order Confirmed - Started Preparing</Text>
           <Text className="text-gray-600 text-sm">Your order has been confirmed.</Text>
           <Text className="text-gray-600 text-sm">Tuesday, September 28, 2024</Text>
           <Text className="text-gray-600 text-sm">11:30 AM</Text>
         </View>
         <View className="mb-6 relative">
           <View className="w-4 h-4 border-2 border-[#FC913A] bg-white rounded-full absolute -left-[19px] top-1" />
-          <Text className="font-bold">Preparing your order</Text>
+          <Text className="font-bold">Left for Delivery</Text>
           <Text className="text-gray-600 text-sm">Your food is being prepared.</Text>
           <Text className="text-gray-600 text-sm">11:36 AM</Text>
         </View>
         <View className="relative">
           <View className="w-4 h-4 border-2 border-gray-300 bg-white rounded-full absolute -left-[19px] top-1" />
-          <Text className="font-bold">Order Completed</Text>
+          <Text className="font-bold">Order Delivered</Text>
           <Text className="text-gray-600 text-sm">Your order has been successfully delivered.</Text>
           <Text className="text-gray-600 text-sm">11:54 AM</Text>
         </View>

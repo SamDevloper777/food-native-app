@@ -28,10 +28,6 @@ const WishlistCard = memo(({
         setImageLoaded(true);
     }, []);
 
-    const handleRemove = useCallback(() => {
-        wishlistData.splice(wishlistData.indexOf(thaliId), 1);
-    }, []);
-
     const renderInfoSection = useCallback(() => (
         <View className='flex flex-col justify-between h-full p-4'>
             <View>
@@ -43,18 +39,18 @@ const WishlistCard = memo(({
                     ⭐ {thalis.filter(thali => thali.id === thaliId)[0].rating} (300k+ Reviews)
                 </Text>
             </View>
-            <View className='w-full h-[1px] bg-gray-300' />
+            <View className='w-full h-[1px] bg-gray-200' />
             <View className='flex flex-row justify-between px-2'>
                 <View className='flex flex-col justify-center items-center ml-3'>
                     <Text className='text-[#FC913A] font-bold text-lg'>₹{totalCost}/-</Text>
                 </View>
-                <View className='w-[1px] h-full bg-gray-300' />
-                <View className='flex flex-col justify-between items-center mr-2'>
-                    <View className='flex flex-row items-center space-x-1'>
+                <View className='w-[1px] h-full bg-gray-200' />
+                <View className='flex flex-col justify-between items-center mr-2 gap-1'>
+                    <View className='flex flex-row items-center space-x-1 gap-1'>
                         <Entypo name='location-pin' size={16} color='#FC913A' />
                         <Text className='text-sm'>{kitchens.filter(kitchen => kitchen.id === thalis.filter(thali => thali.id === thaliId)[0].kitchenId)[0]?.distance} km</Text>
                     </View>
-                    <View className='flex flex-row items-center space-x-1'>
+                    <View className='flex flex-row items-center space-x-1 gap-1'>
                         <Ionicons name='time-outline' size={16} color='gray' />
                         <Text className='text-sm'>{thalis.filter(thali => thali.id === thaliId)[0].time}</Text>
                     </View>

@@ -109,6 +109,7 @@ const PopularSection: React.FC = () => {
         removeClippedSubviews={true}
         maxToRenderPerBatch={5}
         windowSize={5}
+        className="px-4"
       />
       <TouchableOpacity activeOpacity={0.9} className="border-2 border-[#FC913A] rounded-full mx-4 py-4 my-8" onPress={() => router.push({ pathname: '/(screens)/seeAll', params: { listType: activeCategory, searchParam: '' } })}>
         <Text className="text-[#FC913A] text-center text-[16px] font-bold">

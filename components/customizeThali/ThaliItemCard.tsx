@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   View,
   Switch,
+  Alert,
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -17,6 +18,7 @@ import {
   isItemSelected,
   getItemQuantity,
 } from '../../utils/slice/customizeOwnThaliSlice';
+import { RootState } from '@/utils/store';
 
 interface ThaliItemCardProps {
   id: string;
@@ -29,16 +31,22 @@ interface ThaliItemCardProps {
 
 const ThaliItemCard = memo(({ id, title, cost, url, thaliId, kitchenId }: ThaliItemCardProps) => {
   const dispatch = useDispatch();
-
+  const cartItems = useSelector((state: RootState) => state.customizeOwnThali.items); // Access cart items from Redux state
   // Access Redux state
   const isSelected = useSelector((state: any) => isItemSelected(thaliId, id)(state));  // Pass both thaliId and id
   const quantity = useSelector((state: any) => getItemQuantity(thaliId, id)(state));    // Pass both thaliId and id
 
   const handleToggle = useCallback(() => {
+    const currentKitchenId = Object.values(cartItems)[0]?.kitchenId;  
     if (isSelected) {
       dispatch(removeItem({thaliId, itemId: id}));
-    } else {
+    } else if (!currentKitchenId || currentKitchenId === kitchenId) {
       dispatch(addItem({ id, title, cost, quantity: 1, thaliId, kitchenId})); 
+    } else {
+      Alert.alert(
+        'Error',
+        'You can only add items from the same kitchen to the thali.',
+      )
     }
   }, [isSelected, id, title, cost, url, dispatch]);
 

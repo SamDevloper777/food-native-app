@@ -7,6 +7,7 @@ import SearchBar from '../../components/home/SearchBar';
 import SpecialOfferCard from '../../components/home/SpecialOfferCard';
 
 const Home = () => {
+  const randomGlobalOfferId = Math.floor(Math.random() * globalOffers.length);
   const renderHeader = () => (
     <View>
       <LocationHeader />
@@ -17,9 +18,7 @@ const Home = () => {
         showsHorizontalScrollIndicator={false}
         className="p-4 pt-0"
       >
-        {globalOffers.map((offer) => (
-          <SpecialOfferCard key={offer.id} globalOfferId={String(offer.id)} />
-        ))}
+        <SpecialOfferCard globalOfferId={String(globalOffers[randomGlobalOfferId].id)} />
       </ScrollView>
     </View>
   );

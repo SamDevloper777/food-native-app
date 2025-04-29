@@ -20,7 +20,7 @@ const KitchenCard = ({ id, Title, Time, Rating, CoverUrl, LogoUrl, Tagline, Dist
             className="flex-row items-center gap-2 bg-white p-4 rounded-2xl shadow-md w-full h-[148px] py-8 my-2 mx-auto"
             activeOpacity={0.8}
             onPress={() => {
-                router.push({ pathname: '/(screens)/kitchenProfile', params: { title: Title, rating: Rating, id: id.toString(), time: Time, coverUrl: CoverUrl, logoUrl: LogoUrl, tagline: Tagline, distance: Distance, deliveryFee: DeliveryFee?.toString(), reviewCount: ReviewCount?.toString()} })
+                router.push({ pathname: '/(screens)/kitchenProfile', params: { id: id.toString()}})
             }}
         >
             <View className="w-32 h-32 bg-gray-200 rounded-full">

@@ -1,16 +1,10 @@
 import { View, Text, Image } from 'react-native'
 import React from 'react'
 import { Ionicons } from '@expo/vector-icons'
+import { kitchens } from '@/utils/constants/home'
 
-const KitchenDetails = ({url, title, tagline, rating, reviewCount, deliveryFee, distance, deliveryTime}: {
-    url: string,
-    title: string,
-    tagline: string,
-    rating: string,
-    reviewCount: number,
-    deliveryFee: number,
-    distance: string,
-    deliveryTime: string
+const KitchenDetails = ({id}: {
+    id: string
 }) => {
     return (
         <View className="-mt-[72px] mx-8 bg-white rounded-2xl shadow-md p-4">
@@ -20,7 +14,7 @@ const KitchenDetails = ({url, title, tagline, rating, reviewCount, deliveryFee, 
                     <View className='overflow-hidden fixed w-16 h-16 rounded-full justify-center items-center'>
                         <Image
                             source={{
-                                uri: url,
+                                uri: kitchens.filter((kitchen) => kitchen.id === parseInt(id))[0].logoUrl,
                             }}
                             className="w-full h-full"
                             resizeMode="center"
@@ -28,8 +22,8 @@ const KitchenDetails = ({url, title, tagline, rating, reviewCount, deliveryFee, 
                         />
                     </View>
                     <View className="ml-4">
-                        <Text className="text-[20px] font-bold">{title}</Text>
-                        <Text className="text-md text-gray-500">{tagline}</Text>
+                        <Text className="text-[20px] font-bold" numberOfLines={1}>{kitchens.filter((kitchen) => kitchen.id === parseInt(id))[0].title}</Text>
+                        <Text className="text-md text-gray-500" numberOfLines={1}>{kitchens.filter((kitchen) => kitchen.id === parseInt(id))[0].tagline}</Text>
                     </View>
                 </View>
 
@@ -49,11 +43,11 @@ const KitchenDetails = ({url, title, tagline, rating, reviewCount, deliveryFee, 
                 <View className=''>
                     <View className="flex-row items-center mb-1">
                         <Ionicons name="star" size={16} color="green" />
-                        <Text className="ml-1 font-medium text-[16px]">{rating}</Text>
-                        <Text className="ml-1 text-gray-500 text-[14px]">({reviewCount}k+ Reviews)</Text>
+                        <Text className="ml-1 font-medium text-[16px]">{kitchens.filter((kitchen) => kitchen.id === parseInt(id))[0].rating}</Text>
+                        <Text className="ml-1 text-gray-500 text-[14px]">({kitchens.filter((kitchen) => kitchen.id === parseInt(id))[0].reviewCount}k+ Reviews)</Text>
                     </View>
                     <Text className="text-[14px] font-medium">
-                        <Text className="text-gray-500">{deliveryFee === 0 ? "Free Delivery" : `Delivery Charges: ₹${deliveryFee}`}</Text>
+                        <Text className="text-gray-500">{kitchens.filter((kitchen) => kitchen.id === parseInt(id))[0].deliveryFee === '0' ? "Free Delivery" : `Delivery Charges: ₹${kitchens.filter((kitchen) => kitchen.id === parseInt(id))[0].deliveryFee}`}</Text>
                     </Text>
                 </View>
 
@@ -63,12 +57,12 @@ const KitchenDetails = ({url, title, tagline, rating, reviewCount, deliveryFee, 
                 <View className="flex-col items-center justify-center mr-8 gap-1">
                     <View className="flex-row items-center justify-center">
                         <Ionicons name="location" size={18} color="#fc913a" />
-                        <Text className="ml-1 text-[16px] font-medium">{distance} km</Text>
+                        <Text className="ml-1 text-[16px] font-medium">{kitchens.filter((kitchen) => kitchen.id === parseInt(id))[0].distance} km</Text>
                     </View>
                     <View style={{ borderLeftWidth: 1, borderLeftColor: '#FC913A', borderStyle: 'dashed' }} className="h-6 w-1" />
                     <View className="flex-row items-center justify-center">
                         <Ionicons name="time" size={18} color="#fc913a" />
-                        <Text className="ml-1 text-[16px] font-medium">{deliveryTime}</Text>
+                        <Text className="ml-1 text-[16px] font-medium">{kitchens.filter((kitchen) => kitchen.id === parseInt(id))[0].time}</Text>
                     </View>
                 </View>
             </View>

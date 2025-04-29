@@ -6,37 +6,22 @@ import RecommendedSection from '@/components/kitchenProfile/RecommendedSection';
 import React from 'react';
 import { ScrollView } from 'react-native';
 import { useLocalSearchParams } from 'expo-router';
+import { kitchens } from '@/utils/constants/home';
 
 const KitchenProfile = () => {
-  const { title, rating, id, time, coverUrl, logoUrl, tagline, distance, deliveryFee, reviewCount } = useLocalSearchParams<{
-    title: string;
-    rating: string;
+  const { id } = useLocalSearchParams<{
     id: string;
-    time: string;
-    coverUrl: string;
-    logoUrl: string;
-    tagline: string;
-    distance: string;
-    deliveryFee: string;
-    reviewCount: string;
   }>();
 
   return (
     <ScrollView className="flex-1 bg-white relative">
       <Navigation />
-      <CoverImage url={coverUrl} /> 
-      <KitchenDetails 
-        url={logoUrl}
-        title={title}
-        tagline={tagline}
-        rating={rating}
-        deliveryTime={time}
-        distance={distance}
-        deliveryFee={parseInt(deliveryFee)}
-        reviewCount={parseInt(reviewCount)}
+      <CoverImage url={kitchens.filter((kitchen) => kitchen.id === parseInt(id))[0].coverUrl} />
+      <KitchenDetails
+        id={id}
       />
-      <OfferSection kitchenId={id}/>
-      <RecommendedSection kitchenId={id}/>  
+      <OfferSection kitchenId={id} />
+      <RecommendedSection kitchenId={id} />
     </ScrollView>
   );
 };

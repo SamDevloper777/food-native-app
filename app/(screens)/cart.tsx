@@ -79,7 +79,7 @@ const Cart = () => {
             <TouchableOpacity
               className="bg-white p-4 rounded-lg border border-[#FC913A] mt-4 flex-1"
               activeOpacity={0.8}
-              onPress={() => router.push('/(tabs)/home')}
+              onPress={() => router.push({pathname: '/(screens)/kitchenProfile', params: {id: cartItems[Object.keys(cartItems)[0]].kitchenId}})}
             >
               <Text className="text-[#FC913A] text-center text-lg font-bold">
                 Continue Shopping

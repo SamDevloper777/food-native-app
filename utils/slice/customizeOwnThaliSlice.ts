@@ -8,7 +8,7 @@ type ThaliItem = {
   quantity: number;
 };
 
-type Thali = {
+export type Thali = {
   thaliQuantity: number;
   kitchenId: string;
   items: ThaliItem[];

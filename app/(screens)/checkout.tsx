@@ -1,38 +1,19 @@
-import { View, Text, ScrollView, TouchableOpacity } from 'react-native'
-import React from 'react'
+import Navigation from '@/components/common/navigation'
 import Cards from '@/components/Profile/managePayment/cards'
 import Other from '@/components/Profile/managePayment/other'
+import { RootState } from '@/utils/store'
 import { router } from 'expo-router'
-import Navigation from '@/components/common/navigation'
-import { selectThaliItems } from '@/utils/slice/customizeOwnThaliSlice'
+import React from 'react'
+import { ScrollView, Text, TouchableOpacity } from 'react-native'
 import { useSelector } from 'react-redux'
 
 const Checkout = () => {
-  const cartItems = useSelector(selectThaliItems);
-  const checkoutObject = {
-    userDetails: {
-      userId: 'userId',
-      address: 'address',
-    },
-    paymentDetails: {
-      paymentMethod: 'paymentMethod',
-      cardDetails: {
-        cardNumber: 'cardNumber',
-        expiryDate: 'expiryDate',
-        cvv: 'cvv',
-      },
-    },
-    cartDetails: cartItems,
-  }
-  
+  const checkoutObject = useSelector((state: RootState) => state.payment);
+
   return (
     <ScrollView className='bg-white flex-1'>
       <Text>
-        {Object.keys(cartItems).map(key => (
-          <Text key={key}>
-            {key}: {JSON.stringify(cartItems[key], null, 2)}
-          </Text>
-        ))}
+        {JSON.stringify(checkoutObject, null, 2)}
       </Text>
       <Navigation title='Checkout' />
       <Cards />

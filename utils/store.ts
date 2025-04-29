@@ -4,6 +4,7 @@ import cartReducer from "./slice/cartSlice";
 import customizeOwnThaliReducer from "./slice/customizeOwnThaliSlice";
 import myThaliReducer from "./slice/myThaliSlice";
 import userReducer from "./slice/userSlice";
+import paymentReducer from "./slice/paymentSlice";
 
 const store = configureStore({
   reducer: {
@@ -11,7 +12,8 @@ const store = configureStore({
     // cart: cartReducer,
     customizeOwnThali: customizeOwnThaliReducer,
     myThali: myThaliReducer,
-    user: userReducer
+    user: userReducer,
+    payment: paymentReducer,
   },
 });
 

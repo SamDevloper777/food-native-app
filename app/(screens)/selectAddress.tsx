@@ -1,23 +1,17 @@
-import { View, Text, TouchableOpacity, FlatList, Alert } from 'react-native'
-import React, { useState, useEffect } from 'react'
-import MapView, { Marker, MapPressEvent, Region } from 'react-native-maps'
+import { setUserDetails } from '@/utils/slice/paymentSlice'
+import { RootState } from '@/utils/store'
 import * as Location from 'expo-location'
 import { router } from 'expo-router'
-
-const mockAddresses = [
-  {
-    id: '1',
-    label: 'Home',
-    addressLine: '123 Main Street, Springfield',
-  },
-  {
-    id: '2',
-    label: 'Office',
-    addressLine: '42 Tech Park Road, Silicon City',
-  },
-]
+import React, { useEffect, useState } from 'react'
+import { Alert, FlatList, ScrollView, Text, TouchableOpacity, View } from 'react-native'
+import MapView, { MapPressEvent, Marker, Region } from 'react-native-maps'
+import { useDispatch, useSelector } from 'react-redux'
 
 const SelectAddress = () => {
+  const dispatch = useDispatch()
+  const user = useSelector((state: RootState) => state.user)
+  const paymentObject = useSelector((state: RootState) => state.payment)
+  const deliveryAddresses = user.address || [] 
   const [selectedAddressId, setSelectedAddressId] = useState<string | null>(null)
   const [customLocation, setCustomLocation] = useState<{ latitude: number; longitude: number } | null>(null)
   const [mapRegion, setMapRegion] = useState<Region>({
@@ -26,6 +20,17 @@ const SelectAddress = () => {
     latitudeDelta: 0.005,
     longitudeDelta: 0.005,
   })
+
+  useEffect(() => {
+    const defaultAddr = deliveryAddresses.find(addr => addr.isDefault)
+    if (defaultAddr) {
+      setSelectedAddressId(defaultAddr.title)
+      dispatch(setUserDetails({
+        userId: user.userId?.toString() || '',
+        address: defaultAddr,
+      }))
+    }
+  }, [deliveryAddresses])
 
   useEffect(() => {
     (async () => {
@@ -46,50 +51,44 @@ const SelectAddress = () => {
   }, [])
 
   const handleCheckout = () => {
-    let selectedAddress = null
-
-    if (selectedAddressId) {
-      selectedAddress = mockAddresses.find(addr => addr.id === selectedAddressId)
-    } else if (customLocation) {
-      selectedAddress = {
-        label: 'Custom Location',
-        addressLine: `Lat: ${customLocation.latitude}, Lng: ${customLocation.longitude}`,
-        coordinates: customLocation,
-      }
-    } else {
-      Alert.alert('Select or Add an Address')
+    if (!selectedAddressId) {
+      Alert.alert('Select a delivery address')
       return
     }
-
-    router.push({
-      pathname: '/(screens)/checkout',
-      params: {
-        address: JSON.stringify(selectedAddress),
-      },
-    })
+  
+    router.push('/(screens)/checkout')
   }
+  
 
   return (
     <View className="flex-1 bg-white">
       <View className="p-4">
-        <Text className="text-xl font-bold mb-4">Select Delivery Address</Text>
+        <Text className="text-xl font-bold mb-4">
+          Select Delivery Address
+          {/* {JSON.stringify(paymentObject, null, 2)} */}
+        </Text>
         <FlatList
-          data={mockAddresses}
-          keyExtractor={item => item.id}
+          data={deliveryAddresses}
+          keyExtractor={item => item.title}
           renderItem={({ item }) => {
-            const isSelected = item.id === selectedAddressId
+            const isSelected = selectedAddressId === item.title
             return (
               <TouchableOpacity
                 onPress={() => {
-                  setSelectedAddressId(item.id)
+                  setSelectedAddressId(item.title)
                   setCustomLocation(null)
+                  dispatch(setUserDetails({
+                    userId: user.userId?.toString() || '',
+                    address: item
+                  }))
                 }}
+                activeOpacity={0.8}
                 className={`border p-4 rounded-lg mb-3 ${
                   isSelected ? 'border-[#FC913A] bg-orange-100' : 'border-gray-300'
                 }`}
               >
-                <Text className="font-semibold">{item.label}</Text>
-                <Text className="text-gray-600">{item.addressLine}</Text>
+                <Text className="font-semibold">{item.title}</Text>
+                <Text className="text-gray-600">{item.address}</Text>
               </TouchableOpacity>
             )
           }}
@@ -128,3 +127,4 @@ const SelectAddress = () => {
 }
 
 export default SelectAddress
+

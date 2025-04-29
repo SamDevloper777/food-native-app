@@ -59,7 +59,7 @@ const CustomizeThaliComponent = ({
         contentContainerStyle={{ paddingBottom: 100 }}
       >
         <View className="p-4">
-          <Navigation hasHeart={true} />
+          <Navigation hasHeart={true} id={parseInt(id)}/>
           <Thali />
           {renderSelectedItemsList()}
           {renderThaliDescription()}

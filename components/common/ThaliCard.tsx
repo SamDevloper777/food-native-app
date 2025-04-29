@@ -3,18 +3,25 @@ import { Heart } from 'lucide-react-native';
 import React, { memo } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import { Image } from 'expo-image';
+import { Ionicons } from '@expo/vector-icons';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '@/utils/store';
+import { addToWishlist, removeFromWishlist } from '@/utils/slice/userSlice';
+import HeartIcon from './heartIcon';
 
-const ThaliCard = memo(({ id, kitchenId, Title, Cost, Time, Rating, Url, description, thaliOffer }: { 
-  id: number,
-  kitchenId: number,
-  Title: string, 
-  Cost: string, 
-  Time: string, 
-  Rating: string, 
-  Url: string, 
-  description: string, 
-  thaliOffer?: string 
+const ThaliCard = memo(({ id, kitchenId, Title, Cost, Time, Rating, Url, description, thaliOffer }: {
+    id: number,
+    kitchenId: number,
+    Title: string,
+    Cost: string,
+    Time: string,
+    Rating: string,
+    Url: string,
+    description: string,
+    thaliOffer?: string
 }) => {
+    const dispatch = useDispatch();
+    const user = useSelector((state: RootState) => state.user);
     return (
         <TouchableOpacity
             className="flex-row items-center gap-2 bg-white p-4 rounded-2xl shadow-md w-full h-[148px] py-8 my-2 mx-auto"
@@ -53,10 +60,8 @@ const ThaliCard = memo(({ id, kitchenId, Title, Cost, Time, Rating, Url, descrip
                     )}
                 </View>
             </View>
-            <View className='flex flex-col justify-between items-center h-full'>
-                <TouchableOpacity>
-                    <Heart size={24} color="gray" />
-                </TouchableOpacity>
+            <View className='flex flex-col justify-start items-start h-full mb-12'>
+                <HeartIcon id={id}/>
             </View>
         </TouchableOpacity>
     );

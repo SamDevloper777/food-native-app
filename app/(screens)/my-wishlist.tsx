@@ -1,11 +1,14 @@
 import Navigation from '@/components/common/navigation'
 import WishlistCard from '@/components/Profile/wishlist/wishlistCard'
 import { wishlistData } from '@/utils/constants/wishlist'
+import { RootState } from '@/utils/store'
 import React, { useCallback, useState, useMemo } from 'react'
 import { FlatList, View, Text } from 'react-native'
+import { useSelector } from 'react-redux'
 
 const MyWishlist = () => {
-  const renderItem = useCallback(({ item, index }: { item: typeof wishlistData[0], index: number }) => (
+  const user = useSelector((state: RootState) => state.user);
+  const renderItem = useCallback(({ item, index }: { item: number, index: number }) => (
     <WishlistCard
       key={index}
       thaliId={item}
@@ -21,7 +24,7 @@ const MyWishlist = () => {
   ), []);
 
   const getItemLayout = useCallback((_: any, index: number) => ({
-    length: 200, // Approximate height of each item
+    length: 200, 
     offset: 200 * index,
     index,
   }), []);
@@ -30,7 +33,7 @@ const MyWishlist = () => {
     <View className="flex-1 bg-white">
       <Navigation title='My Wishlist' />
       <FlatList
-        data={wishlistData}
+        data={user.wishlist || []}
         renderItem={renderItem}
         keyExtractor={keyExtractor}
         showsVerticalScrollIndicator={false}

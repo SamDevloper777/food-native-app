@@ -16,7 +16,7 @@ interface UserState {
   accessToken: string | null;
   refreshToken: string | null;
   paymentMethod: string | null;
-  wishlist: string[] | null;
+  wishlist: number[] | null;
   isLoading: boolean;
   error: string | null;
 }
@@ -56,6 +56,18 @@ const userSlice = createSlice({
     clearUser: (state) => {
       return { ...initialState };
     },
+    removeFromWishlist: (state, action: PayloadAction<number>) => {
+      if (state.wishlist) {
+        state.wishlist = state.wishlist.filter((id) => id !== action.payload);
+      }
+    },
+    addToWishlist: (state, action: PayloadAction<number>) => {
+      if (state.wishlist) {
+        state.wishlist = [...new Set([...state.wishlist, action.payload])];
+      } else {
+        state.wishlist = [action.payload];
+      }
+    },
     setDefaultAddress: (state, action: PayloadAction<{ title: string, isDefault: boolean }>) => {
       if (state.address) {
         state.address = state.address.map((addr) =>
@@ -68,5 +80,5 @@ const userSlice = createSlice({
   },
 });
 
-export const { setUser, updateUser, setLoading, setError, clearUser, setDefaultAddress } = userSlice.actions;
+export const { setUser, updateUser, setLoading, setError, clearUser, setDefaultAddress, removeFromWishlist, addToWishlist } = userSlice.actions;
 export default userSlice.reducer;

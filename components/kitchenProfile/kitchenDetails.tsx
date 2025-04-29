@@ -30,7 +30,6 @@ const KitchenDetails = ({id}: {
                 {/* Icons */}
                 <View className="flex-row space-x-3 gap-8 items-center justify-center self-center">
                     <Ionicons name="share-social-outline" size={28} color="black" style={{ alignSelf: 'center' }} />
-                    <Ionicons name="heart" size={28} color="red" style={{ alignSelf: 'center' }} />
                 </View>
             </View>
 

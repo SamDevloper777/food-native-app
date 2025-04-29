@@ -41,11 +41,6 @@ const KitchenCard = ({ id, Title, Time, Rating, CoverUrl, LogoUrl, Tagline, Dist
                     <Text className="text-gray-500">{Rating} ⭐</Text>
                 </View>
             </View>
-            <View className='flex flex-col justify-between items-center h-full'>
-                <TouchableOpacity>
-                    <Heart size={24} color="gray" />
-                </TouchableOpacity>
-            </View>
         </TouchableOpacity>
     );
 };

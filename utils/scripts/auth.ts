@@ -197,6 +197,11 @@ export const handleSkip = (dispatch: any) => {
         ],
         accessToken: dummyData.token,
         refreshToken: null,
+        wishlist: [
+            1033,
+            1011,
+            1051
+        ],
         paymentMethod: null,
     }));
 

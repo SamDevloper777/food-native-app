@@ -6,6 +6,7 @@ import { useWindowDimensions } from 'react-native';
 import { thalis } from '@/utils/constants/kitchenProfile';
 import { kitchens } from '@/utils/constants/home';
 import { wishlistData } from '@/utils/constants/wishlist';
+import HeartIcon from '@/components/common/heartIcon';
 
 interface WishlistCardProps {
     thaliId: number;
@@ -16,7 +17,7 @@ const WishlistCard = memo(({
 }: WishlistCardProps) => {
     const [imageLoaded, setImageLoaded] = useState(false);
     const { width } = useWindowDimensions();
-    const cardWidth = width - 48; 
+    const cardWidth = width - 48;
     const mainCourseTotal = thalis.filter(thali => thali.id === thaliId)[0].mainCourse?.reduce((sum: number, course: any) => sum + parseFloat(course.cost), 0);
     const startersTotal = thalis.filter(thali => thali.id === thaliId)[0].starters?.reduce((sum: number, starter: any) => sum + parseFloat(starter.cost), 0);
     const dessertsTotal = thalis.filter(thali => thali.id === thaliId)[0].desserts?.reduce((sum: number, dessert: any) => sum + parseFloat(dessert.cost), 0);
@@ -83,14 +84,9 @@ const WishlistCard = memo(({
                 <View className='absolute z-10 top-0 right-0 w-[60%] h-full bg-white rounded-r-[25px]'>
                     {renderInfoSection()}
                 </View>
-
-                <TouchableOpacity
-                    className='absolute z-20 top-[3%] left-[27%] bg-white p-1.5 rounded-full'
-                    activeOpacity={0.9}
-                    // onPress={handleRemove}
-                >
-                    <Ionicons name='heart' size={24} color='red' />
-                </TouchableOpacity>
+                <View className='absolute z-20 top-[3%] left-[25%] bg-white rounded-full'>
+                    <HeartIcon id={thaliId} />
+                </View>
             </View>
         </SafeAreaView>
     );

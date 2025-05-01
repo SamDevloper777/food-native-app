@@ -6,7 +6,7 @@ import { Alert, Text, TouchableOpacity, View } from 'react-native'
 const SelectedItemsList = ({ id, title, cost, quantity, dispatch, thaliItems }: { id: string, title: string, cost?: number, quantity: number, dispatch: any, thaliItems: any }) => {
     return (
         <TouchableOpacity
-            className="border border-[#FC913A] px-6 py-3 mb-5 mt-2 rounded-full flex-row items-center gap-3 justify-between mx-auto"
+            className="border border-[#FC913A] px-6 py-3 rounded-lg flex-row items-center gap-3 justify-between"
             onPress={() => {
                 Alert.alert(
                     'Selected Items (Raw)',
@@ -18,7 +18,7 @@ const SelectedItemsList = ({ id, title, cost, quantity, dispatch, thaliItems }: 
             <View className="flex flex-row">
                 <Ionicons name="bag-handle-outline" size={20} color="#fc913a" className="font-thick align-middle text-center my-auto" />
                 <Text className="text-[#fc913a] font-bold ml-2 text-lg">
-                    {thaliItems["mainCourse"].length + thaliItems["starters"].length + thaliItems["desserts"].length || 0} Items Selected
+                    {thaliItems["mainCourse"].length + thaliItems["starters"].length + thaliItems["desserts"].length || 0} Item{thaliItems["mainCourse"].length + thaliItems["starters"].length + thaliItems["desserts"].length <= 1 ? "" : "s"} Selected
                 </Text>
             </View>
             {cost !== undefined &&

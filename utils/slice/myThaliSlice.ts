@@ -8,7 +8,7 @@ type MenuItem = {
   url: string;
 };
 
-type FilterParams = {
+export type FilterParams = {
   mainCourse: string[];
   starters: string[];
   desserts: string[];

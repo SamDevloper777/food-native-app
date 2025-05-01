@@ -1,17 +1,17 @@
 import { Mythali } from '@/utils/constants/myThali';
 import { categories, Category } from '@/utils/constants/thaliItems';
-import React, { useCallback, useMemo, useState } from 'react';
 import { FlatList, Text, TouchableOpacity, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { setFilterParams, selectFilterParams } from '../../utils/slice/myThaliSlice';
+import { setFilterParams, selectFilterParams, addItem, FilterParams } from '../../utils/slice/myThaliSlice';
 import MyThaliItemCard from './MyThaliItemCard';
+import React, { useCallback, useMemo, useState } from 'react';
 
 interface ThaliItem {
   title: string;
   url: string;
 }
 
-const MyThaliItems: React.FC = () => {
+const MyThaliItems = () => {
   const dispatch = useDispatch();
   const filterParams = useSelector(selectFilterParams);
 
@@ -44,8 +44,8 @@ const MyThaliItems: React.FC = () => {
     />
   ), [activeCategory]);
 
-  const keyExtractor = useCallback((item: ThaliItem) => 
-    `${activeCategory}-${item.title}`, 
+  const keyExtractor = useCallback((item: ThaliItem) =>
+    `${activeCategory}-${item.title}`,
     [activeCategory]
   );
 
@@ -62,13 +62,24 @@ const MyThaliItems: React.FC = () => {
     </TouchableOpacity>
   ), [activeCategory, handleCategoryChange]);
 
+  const handleSelectAll = useCallback(() => {
+    data?.forEach((item) => {
+      dispatch(addItem({
+        id: `${activeCategory}-${item.title}`,
+        title: item.title,
+        url: item.url,
+        category: activeCategory as keyof FilterParams,
+      }));
+    });
+  }, [data, dispatch, activeCategory]);
+
   return (
     <View>
       <View className="px-4 mb-6">
         <View className="flex-row items-center justify-between mb-3">
           <Text className="text-[22px] font-bold">Add items to Thali</Text>
-          <TouchableOpacity activeOpacity={0.8}>
-            <Text className="text-[#FC913A] font-medium">See All</Text>
+          <TouchableOpacity activeOpacity={0.8} onPress={handleSelectAll}>
+            <Text className="text-[#FC913A] font-bold text-lg">Select All ({data?.length})</Text>
           </TouchableOpacity>
         </View>
 

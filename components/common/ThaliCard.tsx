@@ -9,13 +9,14 @@ import { RootState } from '@/utils/store';
 import { addToWishlist, removeFromWishlist } from '@/utils/slice/userSlice';
 import HeartIcon from './heartIcon';
 
-const ThaliCard = memo(({ id, kitchenId, Title, Cost, Time, Rating, Url, description, thaliOffer }: {
+const ThaliCard = memo(({ id, kitchenId, Title, Cost, Time, Rating, Url, description, thaliOffer, type }: {
     id: number,
     kitchenId: number,
     Title: string,
     Cost: string,
     Time: string,
     Rating: string,
+    type: string,
     Url: string,
     description: string,
     thaliOffer?: string
@@ -60,8 +61,14 @@ const ThaliCard = memo(({ id, kitchenId, Title, Cost, Time, Rating, Url, descrip
                     )}
                 </View>
             </View>
-            <View className='flex flex-col justify-start items-start h-full mb-12'>
-                <HeartIcon id={id}/>
+            <View className='flex flex-col justify-between items-start h-full mb-10 gap-12 align-middle'>
+                <HeartIcon id={id} />
+                <View className='w-8 h-8 rounded-md border border-black ml-3 px-[4px] py-1'>
+                    {
+                        type === 'veg' ?
+                        <View className='w-5 h-5 rounded-full bg-green-800'/> : <View className='w-5 h-5 rounded-full bg-red-800'/>
+                    }
+                </View>
             </View>
         </TouchableOpacity>
     );

@@ -55,6 +55,7 @@ const PopularSection: React.FC = () => {
         Title={item.title}
         Cost={totalCost || 0}
         Rating={item.rating}
+        type={item.type}
         Time={item.time}
         Url={item.url}
         description={item.description || ""}

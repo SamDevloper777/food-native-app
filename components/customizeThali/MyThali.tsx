@@ -3,7 +3,7 @@ import { View, Image, ImageStyle } from 'react-native';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../utils/store';
 
-const Thali = () => {
+const MyThali = () => {
   const selectedItems = useSelector((state: RootState) => 
     Object.values(state.myThali.items)
   );
@@ -28,7 +28,7 @@ const Thali = () => {
       image: require('../../assets/images/mixveg.png'),
       style: 'absolute top-0 left-0 -translate-x-[105px] z-10 scale-y-[0.25] scale-x-[0.22]',
     },
-    'Main Course-Paneer Butter Masala': {
+    'Main Course-Paneer': {
       image: require('../../assets/images/paneer.png'),
       style: 'absolute top-0 left-0 -translate-x-[44px] -translate-y-[82px] z-10 scale-y-[0.29] scale-x-[0.26]',
     },
@@ -66,4 +66,4 @@ const Thali = () => {
   );
 };
 
-export default Thali;
+export default MyThali;

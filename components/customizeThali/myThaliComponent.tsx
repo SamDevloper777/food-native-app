@@ -11,6 +11,8 @@ import MyThaliItems from "./MyThaliItems";
 import { MoveRight } from "lucide-react-native";
 import { router } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
+import { Mythali } from "@/utils/constants/myThali";
+import MyThali from "./MyThali";
 
 interface MyThaliComponentProps {
   thaliTitle?: string;
@@ -78,7 +80,7 @@ const MyThaliComponent = ({
       >
         <View className="p-4">
           <Navigation hasHeart={true} />
-          <Thali />
+          <MyThali />
           {renderSelectedItemsList()}
         </View>
         <MyThaliItems />

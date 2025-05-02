@@ -42,9 +42,9 @@ const Thali = () => {
       />
 
       {selectedItems.map((item) => {
-        const position = itemPositions[item.id];
+        const position = itemPositions[item.items.map((i) => i.id)[0]];
         if (!position) {
-          console.log('No position found for item:', item.id);
+          console.log('No position found for item:', item.items.map((i) => i.id)[0]);
           return null;
         }
 
@@ -55,10 +55,10 @@ const Thali = () => {
 
         return (
           <Image
-            key={item.id}
-            source={position.image}
-            style={imageStyle}
-            className={`${position.style}`}
+            // key={item.items.map((i) => i.id)[0]}
+            source={require('../../assets/images/rice.png')}
+            // style={imageStyle}
+            className='absolute top-0 left-0 translate-y-11 translate-x-6 z-10 scale-[0.6]'
           />
         );
       })}

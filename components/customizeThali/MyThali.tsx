@@ -4,31 +4,31 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../utils/store';
 
 const MyThali = () => {
-  const selectedItems = useSelector((state: RootState) => 
+  const selectedItems = useSelector((state: RootState) =>
     Object.values(state.myThali.items)
   );
 
-  const itemPositions: Record<string, { 
-    image: any, 
+  const itemPositions: Record<string, {
+    image: any,
     style: string,
   }> = {
-    'Main Course-Rice': {
+    'rice': {
       image: require('../../assets/images/rice.png'),
       style: 'absolute top-0 left-0 translate-y-11 translate-x-6 z-10 scale-[0.6]',
     },
-    'Main Course-Roti': {
+    'roti': {
       image: require('../../assets/images/roti.png'),
       style: 'absolute top-0 left-0 translate-y-11 translate-x-28 z-10 scale-[0.6] rotate-[230deg]',
     },
-    'Main Course-Dal': {
+    'dal': {
       image: require('../../assets/images/dal.png'),
       style: 'absolute top-0 left-0 translate-y-24 -translate-x-[105px] z-10 scale-[0.25]',
     },
-    'Main Course-Mix Veg': {
+    'mix veg': {
       image: require('../../assets/images/mixveg.png'),
       style: 'absolute top-0 left-0 -translate-x-[105px] z-10 scale-y-[0.25] scale-x-[0.22]',
     },
-    'Main Course-Paneer': {
+    'paneer': {
       image: require('../../assets/images/paneer.png'),
       style: 'absolute top-0 left-0 -translate-x-[44px] -translate-y-[82px] z-10 scale-y-[0.29] scale-x-[0.26]',
     },
@@ -42,9 +42,15 @@ const MyThali = () => {
       />
 
       {selectedItems.map((item) => {
-        const position = itemPositions[item.id];
+        const itemTitleLower = item.title.toLowerCase();
+
+        const positionKey = Object.keys(itemPositions).find((key) =>
+          itemTitleLower.includes(key)
+        );
+
+        const position = positionKey ? itemPositions[positionKey] : undefined;
         if (!position) {
-          console.log('No position found for item:', item.id);
+          console.log('No matching image for item:', item.title);
           return null;
         }
 
@@ -58,7 +64,7 @@ const MyThali = () => {
             key={item.id}
             source={position.image}
             style={imageStyle}
-            className={`${position.style}`}
+            className={position.style}
           />
         );
       })}

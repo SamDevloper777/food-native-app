@@ -6,7 +6,7 @@ export const Mythali =
             "url": "https://images.unsplash.com/photo-1516684732162-798a0062be99"
         },
         {
-            "title": "Dal",
+            "title": "Dal Tadka",
             "url": "https://images.unsplash.com/photo-1626500154744-e4b394ffea16"
         },
         {
@@ -18,7 +18,7 @@ export const Mythali =
             "url": "https://i0.wp.com/www.blissofcooking.com/wp-content/uploads/2020/08/Easy-Mix-Vegetables-EOP.jpg?resize=1024%2C683&ssl=1"
         },
         {
-            "title": "Paneer",
+            "title": "Paneer Butter Masala",
             "url": "https://imgs.search.brave.com/zokFzOhSiCrW4U9-fYm4dNn-q3dopKq9rigZf63SGOg/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly90My5m/dGNkbi5uZXQvanBn/LzA3LzY0Lzc3Lzgw/LzM2MF9GXzc2NDc3/ODA3M19TVzNtM1Q3/OTQ0WUtySmtTOVFW/TkxPTmYxUWxzc2Jp/Mi5qcGc"
         }
     ],

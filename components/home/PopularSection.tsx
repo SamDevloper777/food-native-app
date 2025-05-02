@@ -88,7 +88,18 @@ const PopularSection: React.FC = () => {
   const renderItem = useCallback(
     ({ item, index }: { item: any; index: number }) => {
       if (activeCategory === "Kitchens") {
-        return <KitchenCard key={index} {...item} />;
+        return <KitchenCard key={index} 
+          id={item.id}
+          LogoUrl={item.logoUrl}
+          Time={item.time}
+          Title={item.title}
+          Rating={item.rating}
+          CoverUrl={item.coverUrl}
+          DeliveryFee={item.deliveryFee}
+          Distance={item.distance}
+          ReviewCount={item.reviewCount}
+          Tagline={item.tagline}
+        />;
       }
 
       return (

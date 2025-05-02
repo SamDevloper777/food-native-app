@@ -4,7 +4,7 @@ import { View, Text, TouchableOpacity, Image } from "react-native";
 
 const SpecialOfferCard = ({globalOfferId}: {globalOfferId: string}) => {
   return (
-    <View className="bg-[#fdfdfd] rounded-xl p-4 flex-row items-center shadow-md w-[382px] h-[185px] shadow-gray-500 mr-8">
+    <View className="bg-[#fdfdfd] rounded-xl p-4 flex-row items-center shadow-md w-[382px] h-[185px] shadow-gray-500 mx-auto">
       {/* Left Side: Offer Text */}
       <View className="flex-1 gap-2">
         <Text className="text-[22px] font-bold" numberOfLines={1}>{ globalOffers.filter(offer => offer.id.toString() === globalOfferId)[0].title }</Text>

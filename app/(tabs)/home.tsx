@@ -1,35 +1,42 @@
+import React, { useCallback, useMemo, useState, useEffect } from 'react';
+import { FlatList, View, InteractionManager } from 'react-native';
 import CustomizeOwn from '@/components/home/CustomizeOwn';
 import PopularSection from '@/components/home/PopularSection';
 import { globalOffers } from '@/utils/constants/home';
-import { FlatList, Platform, ScrollView, View } from 'react-native';
 import LocationHeader from '../../components/home/LocationHeader';
 import SearchBar from '../../components/home/SearchBar';
 import SpecialOfferCard from '../../components/home/SpecialOfferCard';
 
 const Home = () => {
-  const randomGlobalOfferId = Math.floor(Math.random() * globalOffers.length);
-  const renderHeader = () => (
+  const randomGlobalOfferId = useMemo(() => (
+    Math.floor(Math.random() * globalOffers.length)
+  ), []);
+
+  const renderHeader = useCallback(() => (
     <View>
       <LocationHeader />
       <SearchBar />
       <CustomizeOwn />
-      <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        className="p-4 pt-0"
-      >
-        <SpecialOfferCard globalOfferId={String(globalOffers[randomGlobalOfferId].id)} />
-      </ScrollView>
+      <SpecialOfferCard globalOfferId={String(globalOffers[randomGlobalOfferId].id)} />
     </View>
-  );
+  ), [randomGlobalOfferId]);
+
+  const [showPopular, setShowPopular] = useState(false);
+
+  useEffect(() => {
+    const task = InteractionManager.runAfterInteractions(() => {
+      setShowPopular(true);
+    });
+    return () => task.cancel();
+  }, []);
 
   return (
     <FlatList
       className="flex-1 bg-white"
-      data={[1]}
-      renderItem={() => null}
+      data={[]}
+      renderItem={null}
       ListHeaderComponent={renderHeader}
-      ListFooterComponent={PopularSection}
+      ListFooterComponent={showPopular ? PopularSection : null}
       showsVerticalScrollIndicator={false}
       contentContainerStyle={{ flexGrow: 1 }}
     />

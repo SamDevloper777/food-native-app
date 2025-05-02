@@ -133,7 +133,7 @@ const ThaliItems: React.FC<ThaliItemsProps> = ({ kitchenId, thaliId }) => {
         data={data}
         renderItem={renderItem}
         keyExtractor={keyExtractor}
-        contentContainerStyle={{ paddingHorizontal: 8, gap: 16 }}
+        contentContainerStyle={{ paddingHorizontal: 12, gap: 16 }}
         showsVerticalScrollIndicator={false}
         removeClippedSubviews={true}
         maxToRenderPerBatch={5}

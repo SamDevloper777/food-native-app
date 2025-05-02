@@ -18,7 +18,7 @@ const HeartIcon = ({id}: {id: number}) => {
         }}>
             {
                 user.wishlist?.some((wishlistedThaliId) => wishlistedThaliId === id) ?
-                    <Ionicons name="heart" size={26} color="red" /> :
+                    <Ionicons name="heart" size={26} color="#fc913a" /> :
                     <Ionicons name="heart-outline" size={26} color="gray" />
             }
         </TouchableOpacity>

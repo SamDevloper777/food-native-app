@@ -31,10 +31,9 @@ interface ThaliItemCardProps {
 
 const ThaliItemCard = memo(({ id, title, cost, url, thaliId, kitchenId }: ThaliItemCardProps) => {
   const dispatch = useDispatch();
-  const cartItems = useSelector((state: RootState) => state.customizeOwnThali.items); // Access cart items from Redux state
-  // Access Redux state
-  const isSelected = useSelector((state: any) => isItemSelected(thaliId, id)(state));  // Pass both thaliId and id
-  const quantity = useSelector((state: any) => getItemQuantity(thaliId, id)(state));    // Pass both thaliId and id
+  const cartItems = useSelector((state: RootState) => state.customizeOwnThali.items);
+  const isSelected = useSelector((state: any) => isItemSelected(thaliId, id)(state)); 
+  const quantity = useSelector((state: any) => getItemQuantity(thaliId, id)(state));   
 
   const handleToggle = useCallback(() => {
     const currentKitchenId = Object.values(cartItems)[0]?.kitchenId;  
@@ -61,7 +60,7 @@ const ThaliItemCard = memo(({ id, title, cost, url, thaliId, kitchenId }: ThaliI
 
   return (
     <TouchableOpacity
-      className={`flex-row items-center justify-between gap-4 bg-white rounded-2xl shadow-md w-full h-[148px] py-4 px-4 my-2 mx-auto ${isSelected ? 'border border-[#FC913A]' : ''}`}
+      className={`flex-row items-center justify-between gap-4 bg-white rounded-2xl shadow-md w-[92%] h-[148px] py-4 px-4 my-2 mx-auto ${isSelected ? 'border border-[#FC913A]' : ''}`}
       activeOpacity={0.9}
       onPress={handleToggle}
     >

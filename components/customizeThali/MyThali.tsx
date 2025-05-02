@@ -48,7 +48,7 @@ const MyThali = () => {
           itemTitleLower.includes(key)
         );
 
-        const position = positionKey ? itemPositions[positionKey] : undefined;
+        const position = positionKey ? itemPositions[positionKey.toLowerCase()] : undefined;
         if (!position) {
           console.log('No matching image for item:', item.title);
           return null;

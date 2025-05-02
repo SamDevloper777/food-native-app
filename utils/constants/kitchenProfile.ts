@@ -82,7 +82,7 @@ export const thalis = [
                 "url": "https://media.gettyimages.com/id/1250225999/photo/indian-naan-bread.jpg?s=1024x1024&w=gi&k=20"
             },
             {
-                "title": "Jeera Rice",
+                "title": "Rotiheh",
                 "cost": "10.00",
                 "url": "https://media.gettyimages.com/id/1159967350/photo/jeera-rice.jpg?s=1024x1024&w=gi&k=20"
             },

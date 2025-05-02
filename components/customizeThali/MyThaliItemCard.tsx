@@ -43,7 +43,7 @@ const MyThaliItemCard = memo(({
 
   return (
     <TouchableOpacity
-      className={`flex flex-col items-center justify-between gap-4 bg-white rounded-2xl shadow-md w-[150px] h-fit py-4 px-6 my-2 mr-14 ${isSelected ? 'border-2 border-[#FC913A]' : ''
+      className={`flex flex-col items-center justify-between gap-4 bg-white rounded-2xl shadow-md w-[150px] h-fit py-4 px-6 my-2 m-8 ${isSelected ? 'border-2 border-[#FC913A]' : ''
         }`}
       activeOpacity={0.9}
       onPress={handleToggle}

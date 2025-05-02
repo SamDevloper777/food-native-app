@@ -103,7 +103,7 @@ const MyThaliItems = () => {
         data={data}
         renderItem={renderItem}
         keyExtractor={keyExtractor}
-        contentContainerStyle={{ paddingHorizontal: 28, gap: 16, columnGap: 20 }}
+        contentContainerStyle={{ paddingBottom: 100 }}
         showsVerticalScrollIndicator={false}
         removeClippedSubviews={true}
         maxToRenderPerBatch={5}

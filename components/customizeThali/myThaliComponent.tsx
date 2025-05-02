@@ -1,18 +1,15 @@
-import { FlatList } from "react-native";
 import React, { useCallback, useMemo } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { View, Text, TouchableOpacity, FlatList } from "react-native";
+import { useDispatch, useSelector, shallowEqual } from "react-redux";
 import Navigation from "@/components/common/navigation";
 import ConfirmButton from "@/components/customizeThali/confirmButton";
-import Thali from "@/components/customizeThali/Thali";
-import ThaliDescription from "@/components/customizeThali/ThaliDescription";
-import SelectedItemsList from "@/components/kitchenProfile/mySelectedItemsList";
-import { selectFilterParams, selectThaliItems } from "@/utils/slice/myThaliSlice";
-import { View, Text, TouchableOpacity } from "react-native";
-import MyThaliItems from "./MyThaliItems";
-import { MoveRight } from "lucide-react-native";
-import { router } from "expo-router";
-import { Ionicons } from "@expo/vector-icons";
 import MyThali from "./MyThali";
+import MyThaliItems from "./MyThaliItems";
+import SelectedItemsList from "@/components/kitchenProfile/mySelectedItemsList";
+import ThaliDescription from "@/components/customizeThali/ThaliDescription";
+import { selectFilterParams, selectThaliItems } from "@/utils/slice/myThaliSlice";
+import { Ionicons } from "@expo/vector-icons";
+import { router } from "expo-router";
 
 interface MyThaliComponentProps {
   thaliTitle?: string;
@@ -33,63 +30,60 @@ const MyThaliComponent = ({
   title,
   cost,
 }: MyThaliComponentProps) => {
-  const price = parseFloat(cost);
   const dispatch = useDispatch();
-  const thaliItems = useSelector(selectThaliItems);
-  const filterParams = useSelector(selectFilterParams);
+
+  const thaliItems = useSelector(selectThaliItems, shallowEqual);
+  const filterParams = useSelector(selectFilterParams, shallowEqual);
   const hasItems = thaliItems.length > 0;
 
-  const showThaliDescription = useMemo(
-    () => thaliTitle && deliveryTime && kitchenName,
-    [thaliTitle, deliveryTime, kitchenName]
-  );
+  const showThaliDescription = useMemo(() => {
+    return Boolean(thaliTitle && deliveryTime && kitchenName);
+  }, [thaliTitle, deliveryTime, kitchenName]);
 
-  const renderSelectedItemsList = useCallback(
-    () => (
-      <View className="flex flex-row justify-between items-center px-4 my-2">
-        <SelectedItemsList
-          id={id}
-          title={title}
-          quantity={1}
-          dispatch={dispatch}
-          thaliItems={filterParams}
-        />
-        <TouchableOpacity
-          className={`${
-            hasItems ? "bg-[#fc913a]" : "bg-gray-200"
-          } px-6 py-3 rounded-lg flex-row items-center justify-between gap-3`}
-          activeOpacity={0.9}
-          onPress={() => {
-            router.push({
-              pathname: "/(screens)/seeAll",
-              params: { filterParams: JSON.stringify(filterParams) },
-            });
-          }}
-        >
-          <View className="flex flex-row">
-            <Ionicons name="search-outline" size={20} color="white" />
-            <Text className="text-white font-bold ml-2 text-lg">Search</Text>
-          </View>
-        </TouchableOpacity>
-      </View>
-    ),
-    [id, title, price, dispatch, thaliItems]
-  );
+  const handleSearchPress = useCallback(() => {
+    router.push({
+      pathname: "/(screens)/seeAll",
+      params: { filterParams: JSON.stringify(filterParams) },
+    });
+  }, [filterParams]);
 
-  // Define the header component for the FlatList
-  const renderHeader = () => (
+  const SelectedItemsRow = useMemo(() => (
+    <View className="flex flex-row justify-between items-center px-4 my-2">
+      <SelectedItemsList
+        id={id}
+        title={title}
+        quantity={1}
+        dispatch={dispatch}
+        thaliItems={filterParams}
+      />
+      <TouchableOpacity
+        className={`${
+          hasItems ? "bg-[#fc913a]" : "bg-gray-200"
+        } px-6 py-3 rounded-lg flex-row items-center justify-between gap-3`}
+        activeOpacity={0.9}
+        onPress={handleSearchPress}
+      >
+        <View className="flex flex-row">
+          <Ionicons name="search-outline" size={20} color="white" />
+          <Text className="text-white font-bold ml-2 text-lg">Search</Text>
+        </View>
+      </TouchableOpacity>
+    </View>
+  ), [id, title, hasItems, dispatch, filterParams, handleSearchPress]);
+
+  const renderHeader = useCallback(() => (
     <View className="p-4">
       <Navigation hasHeart={true} />
       <MyThali />
-      {renderSelectedItemsList()}
+      {SelectedItemsRow}
     </View>
-  );
+  ), [SelectedItemsRow]);
 
   return (
     <View className="flex-1 bg-white">
       <FlatList
-        data={[]} 
-        renderItem={() => null} 
+        data={[]} // No list items, just layout
+        renderItem={null}
         ListHeaderComponent={renderHeader}
         ListFooterComponent={<MyThaliItems />}
         showsVerticalScrollIndicator={false}

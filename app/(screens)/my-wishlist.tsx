@@ -1,20 +1,19 @@
-import Navigation from '@/components/common/navigation'
-import WishlistCard from '@/components/Profile/wishlist/wishlistCard'
-import { wishlistData } from '@/utils/constants/wishlist'
-import { RootState } from '@/utils/store'
-import React, { useCallback, useState, useMemo } from 'react'
-import { FlatList, View, Text } from 'react-native'
-import { useSelector } from 'react-redux'
+import React, { useCallback, useMemo } from 'react';
+import { View, Text, FlatList } from 'react-native';
+import { useSelector, shallowEqual } from 'react-redux';
+import Navigation from '@/components/common/navigation';
+import WishlistCard from '@/components/Profile/wishlist/wishlistCard';
+import { RootState } from '@/utils/store';
 
 const MyWishlist = () => {
-  const user = useSelector((state: RootState) => state.user);
-  const renderItem = useCallback(({ item, index }: { item: number, index: number }) => (
-    <WishlistCard
-      key={index}
-      thaliId={item}
-    />
-  ), []);
-  
+  const user = useSelector((state: RootState) => state.user, shallowEqual);
+  const wishlist = user?.wishlist || [];
+
+  const renderItem = useCallback(
+    ({ item }: { item: number }) => <WishlistCard thaliId={item} />,
+    []
+  );
+
   const keyExtractor = useCallback((_: any, index: number) => index.toString(), []);
 
   const ListEmptyComponent = useMemo(() => (
@@ -23,17 +22,22 @@ const MyWishlist = () => {
     </View>
   ), []);
 
-  const getItemLayout = useCallback((_: any, index: number) => ({
-    length: 200, 
-    offset: 200 * index,
-    index,
-  }), []);
+  const getItemLayout = useCallback(
+    (_: any, index: number) => ({
+      length: 200,
+      offset: 200 * index,
+      index,
+    }),
+    []
+  );
+
+  const footerSpacing = useMemo(() => <View className="h-12" />, []);
 
   return (
     <View className="flex-1 bg-white">
-      <Navigation title='My Wishlist' />
+      <Navigation title="My Wishlist" />
       <FlatList
-        data={user.wishlist || []}
+        data={wishlist}
         renderItem={renderItem}
         keyExtractor={keyExtractor}
         showsVerticalScrollIndicator={false}
@@ -43,11 +47,11 @@ const MyWishlist = () => {
         initialNumToRender={3}
         getItemLayout={getItemLayout}
         ListEmptyComponent={ListEmptyComponent}
-        ListFooterComponent={<View className="h-12" />}
-        contentContainerStyle={wishlistData.length === 0 ? { flex: 1 } : undefined}
+        ListFooterComponent={footerSpacing}
+        contentContainerStyle={wishlist.length === 0 ? { flex: 1 } : undefined}
       />
     </View>
-  )
-}
+  );
+};
 
 export default React.memo(MyWishlist);

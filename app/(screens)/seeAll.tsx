@@ -191,6 +191,7 @@ const SeeAll = () => {
           Url={thali.url}
           description={thali.description}
           kitchenId={thali.kitchenId}
+          type={thali.type}
         />
       );
     });

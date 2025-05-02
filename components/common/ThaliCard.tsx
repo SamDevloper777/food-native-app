@@ -1,12 +1,9 @@
+import { RootState } from '@/utils/store';
+import { Image } from 'expo-image';
 import { router } from 'expo-router';
-import { Heart } from 'lucide-react-native';
 import React, { memo } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
-import { Image } from 'expo-image';
-import { Ionicons } from '@expo/vector-icons';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '@/utils/store';
-import { addToWishlist, removeFromWishlist } from '@/utils/slice/userSlice';
 import HeartIcon from './heartIcon';
 
 const ThaliCard = memo(({ id, kitchenId, Title, Cost, Time, Rating, Url, description, thaliOffer, type }: {

@@ -43,13 +43,13 @@ const MyThaliItemCard = memo(({
 
   return (
     <TouchableOpacity
-      className={`flex-row items-center justify-between gap-4 bg-white rounded-2xl shadow-md w-full h-[148px] py-4 px-6 my-2 mx-auto ${isSelected ? 'border border-[#FC913A]' : ''
+      className={`flex flex-col items-center justify-between gap-4 bg-white rounded-2xl shadow-md w-[150px] h-fit py-4 px-6 my-2 mr-14 ${isSelected ? 'border-2 border-[#FC913A]' : ''
         }`}
       activeOpacity={0.9}
       onPress={handleToggle}
     >
       {/* Image */}
-      <View className="w-32 h-32 bg-gray-200 rounded-full overflow-hidden">
+      <View className="w-28 h-28 bg-gray-200 rounded-full overflow-hidden">
         <Image
           source={{ uri: url }}
           style={{ width: '100%', height: '100%' }}
@@ -61,25 +61,12 @@ const MyThaliItemCard = memo(({
       <View className="flex-1 flex-col justify-center items-start h-full">
         <Text
           className="text-[16px] font-bold"
-          numberOfLines={2}
+          numberOfLines={1}
           ellipsizeMode="tail"
         >
           {title}
         </Text>
       </View>
-
-      {/* Divider */}
-      <View className="w-[1px] h-[70%] bg-gray-200 mr-6" />
-
-      {/* Switch */}
-      <Switch
-        trackColor={{ false: '#e0e0e0', true: '#FFCDA4' }}
-        thumbColor={isSelected ? '#FC913A' : '#e0e0e0'}
-        onValueChange={handleToggle}
-        ios_backgroundColor="#e0e0e0"
-        value={isSelected}
-        className='items-center justify-center mx-auto align-middle mr-2'
-      />
     </TouchableOpacity>
   );
 });

@@ -1,6 +1,6 @@
 import { Mythali } from '@/utils/constants/myThali';
 import { categories, Category } from '@/utils/constants/thaliItems';
-import { FlatList, Text, TouchableOpacity, View } from 'react-native';
+import { Alert, FlatList, Text, TouchableOpacity, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { setFilterParams, selectFilterParams, addItem, FilterParams } from '../../utils/slice/myThaliSlice';
 import MyThaliItemCard from './MyThaliItemCard';
@@ -10,6 +10,11 @@ interface ThaliItem {
   title: string;
   url: string;
 }
+const categoryKeyMap: Record<Category, keyof FilterParams> = {
+  'Main Course': 'mainCourse',
+  'Starters': 'starters',
+  'Desserts': 'desserts',
+};
 
 const MyThaliItems = () => {
   const dispatch = useDispatch();
@@ -63,12 +68,14 @@ const MyThaliItems = () => {
   ), [activeCategory, handleCategoryChange]);
 
   const handleSelectAll = useCallback(() => {
-    data?.forEach((item) => {
+    // Alert.alert('', JSON.stringify(data, null, 2))
+    const categoryKey = categoryKeyMap[activeCategory];
+    data.forEach((item) => {
       dispatch(addItem({
         id: `${activeCategory}-${item.title}`,
         title: item.title,
         url: item.url,
-        category: activeCategory as keyof FilterParams,
+        category: categoryKey,
       }));
     });
   }, [data, dispatch, activeCategory]);
